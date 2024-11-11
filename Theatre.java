@@ -59,4 +59,9 @@ public class Theatre {
     public ArrayList<Showtime> getShowtimes(Movie movie) {
         return showtimes.get(movie);
     }
+
+    public void updateShowtime(Movie movie, Showtime oldshowtime, Showtime newShowtime){
+        this.removeShowtime(movie, oldshowtime);
+        this.addShowtime(movie, newShowtime);
+    }
 }

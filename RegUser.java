@@ -28,7 +28,7 @@ public class RegUser extends User {
         return super.toString() + "\nAddress: " + address + "\nPayment Card: " + paymentCard;
     }
 
-    public updateInfo(){
+    public void updateInfo(){
         // To do: Implement updateInfo Method
     }
 }

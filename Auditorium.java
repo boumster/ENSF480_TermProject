@@ -13,7 +13,7 @@ public class Auditorium {
         this.seats = new ArrayList<Seat>();
     }
 
-    public initSeats() {
+    public initSeats(){
         // To do: Implement initSeats Method
         for (int i = 0; i < numSeats; i++) {
             seats.add(new Seat(i));
