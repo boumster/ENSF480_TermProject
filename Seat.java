@@ -8,7 +8,7 @@ public class Seat {
     }
 
     public boolean getStatus() {
-        return isReserved;
+        return isBooked;
     }
 
     public void bookSeat() {

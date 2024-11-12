@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class Showtime {
     private DateTime showtime;
     private Auditorium auditorium;
