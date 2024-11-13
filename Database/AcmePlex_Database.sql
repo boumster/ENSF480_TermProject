@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movies` (
-  `Movie_id` int NOT NULL,
+  `Movie_id` int auto_increment NOT NULL,
   `Movie_name` varchar(60) DEFAULT NULL,
   `Movie_description` varchar(150) DEFAULT NULL,
   `Movie_Genre` varchar(30) DEFAULT NULL,
@@ -40,7 +40,8 @@ DROP TABLE IF EXISTS `showtimes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `showtimes` (
   `times` varchar(50) DEFAULT NULL,
-  `movie_id` int DEFAULT NULL
+  `movie_id` int DEFAULT NULL,
+   CONSTRAINT `movie_id` FOREIGN KEY (`MovieID`) REFERENCES `movies` (`Movie_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,7 +53,7 @@ DROP TABLE IF EXISTS `theatre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `theatre` (
-  `theatre_id` int NOT NULL,
+  `theatre_id` int auto_increment NOT NULL,
   `theatre_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`theatre_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -90,7 +91,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `UserId` int NOT NULL,
+  `UserId` int auto_increment NOT NULL,
   `Email` varchar(50) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `credits` decimal(10,2) DEFAULT '0.00',
