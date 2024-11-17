@@ -1,3 +1,5 @@
+package Entity;
+
 public class TheatreAdmin {
     public void addShowtime(Theatre theatre, Movie movie, Showtime showTime){
         theatre.addShowtime(movie, showTime);

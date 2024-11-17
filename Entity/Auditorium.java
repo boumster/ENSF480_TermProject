@@ -1,12 +1,17 @@
+package Entity;
+
 import java.util.*;
 
 public class Auditorium {
+    private static int audCount = 0;
+    private int audId;
     private int audNum;
     protected int numSeats;
     protected int numSeatsRemaining;    //bookSeat/cancelSeat should update this values
     private ArrayList<Seat> seats;
 
     public Auditorium(int audNum, int numSeats) {
+        this.audId = audCount++ + 200;
         this.audNum = audNum;
         this.numSeats = numSeats;
         this.numSeatsRemaining = numSeats;
@@ -19,6 +24,10 @@ public class Auditorium {
         for (int i = 0; i < numSeats; i++) {
             seats.add(new Seat(i + 1));
         }
+    }
+
+    public int getAudId() {
+        return audId;
     }
 
     public int getAudNum() {

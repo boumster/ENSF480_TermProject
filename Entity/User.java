@@ -1,3 +1,5 @@
+package Entity;
+
 public class User {
     protected String name;
     protected String email;

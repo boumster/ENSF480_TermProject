@@ -1,20 +1,29 @@
+package Entity;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
 public class Theatre {
+    private static int counter = 0;
     private final String name;
     private ArrayList<Auditorium> auditoriums;
     private ArrayList<Movie> movies;
     private Map<Movie, ArrayList<Showtime>> showtimes;
+    private int id;
 
-    public Theatre(String name) {
+    public Theatre(String name, ArrayList<Auditorium> auditoriums) {
         this.name = name;
-        this.auditoriums = new ArrayList<Auditorium>();
+        this.auditoriums = auditoriums;
         this.movies = new ArrayList<Movie>();
+        this.id = counter++ + 1000;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public ArrayList<Auditorium> getAuditoriums() {

@@ -1,3 +1,5 @@
+package Entity;
+
 public class RegUser extends User {
     private String address;
     private int paymentCard;
