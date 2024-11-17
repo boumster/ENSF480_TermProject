@@ -1,15 +1,15 @@
+package Entity;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
 public class Acmeplex {
     private ArrayList<Theatre> theatres;
-    private BillingSystem paymenSystem;
+    private BillingSystem paymentSystem;
     private MailingSystem mailingSystem;
 
     public Acmeplex(List<Theatre> theatres) {
         this.theatres = new ArrayList<>(theatres);
-        this.paymenSystem = new BillingSystem();
-        this.mailingSystem = new MailingSystem();
     }
 
     public void addTheatre(Theatre theatre) {
@@ -33,8 +33,8 @@ public class Acmeplex {
         return null;
     }
 
-    public void setPaymenSystem(BillingSystem paymenSystem) {
-        this.paymenSystem = paymenSystem;
+    public void setPaymenSystem(BillingSystem paymentSystem) {
+        this.paymentSystem = paymentSystem;
     }
 
     public void setMailingSystem(MailingSystem mailingSystem) {
