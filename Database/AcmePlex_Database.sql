@@ -18,16 +18,18 @@
 --
 -- Table structure for table `movies`
 --
-
+DROP DATABASE IF EXISTS acmeplex;
+CREATE DATABASE acmeplex;
+use acmeplex;
 DROP TABLE IF EXISTS `movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movies` (
-  `Movie_id` int auto_increment NOT NULL,
+  `movieID` int auto_increment NOT NULL,
   `Movie_name` varchar(60) DEFAULT NULL,
   `Movie_description` varchar(150) DEFAULT NULL,
   `Movie_Genre` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`Movie_id`)
+  PRIMARY KEY (`movieID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,9 +42,10 @@ DROP TABLE IF EXISTS `showtimes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `showtimes` (
   `times` varchar(50) DEFAULT NULL,
-  `movie_id` int DEFAULT NULL,
-   CONSTRAINT `movie_id` FOREIGN KEY (`MovieID`) REFERENCES `movies` (`Movie_id`) ON DELETE CASCADE
+  `movieID` int DEFAULT NULL,
+   CONSTRAINT `movieID` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,16 +73,16 @@ CREATE TABLE `tickets` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `CustomerID` int DEFAULT NULL,
   `TheaterID` int DEFAULT NULL,
-  `MovieID` int DEFAULT NULL,
+  `movieID` int DEFAULT NULL,
   `SeatRow` char(1) DEFAULT NULL,
   `SeatColumn` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `CustomerID` (`CustomerID`),
   KEY `TheaterID` (`TheaterID`),
-  KEY `MovieID` (`MovieID`),
+  KEY `movieID` (`movieID`),
   CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`UserId`) ON DELETE CASCADE,
   CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`TheaterID`) REFERENCES `theatre` (`theatre_id`) ON DELETE CASCADE,
-  CONSTRAINT `tickets_ibfk_3` FOREIGN KEY (`MovieID`) REFERENCES `movies` (`Movie_id`) ON DELETE CASCADE
+  CONSTRAINT `tickets_ibfk_3` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
