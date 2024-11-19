@@ -15,12 +15,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `movies`
---
 DROP DATABASE IF EXISTS acmeplex;
 CREATE DATABASE acmeplex;
-use acmeplex;
+USE acmeplex;
+
 DROP TABLE IF EXISTS `movies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -33,9 +31,11 @@ CREATE TABLE `movies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `showtimes`
---
+-- Sample data for movies
+INSERT INTO `movies` (`Movie_name`, `Movie_description`, `Movie_Genre`) VALUES
+('Inception', 'A thief who steals corporate secrets through the use of dream-sharing technology.', 'Sci-Fi'),
+('The Godfather', 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.', 'Crime'),
+('The Dark Knight', 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.', 'Action');
 
 DROP TABLE IF EXISTS `showtimes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -43,14 +43,15 @@ DROP TABLE IF EXISTS `showtimes`;
 CREATE TABLE `showtimes` (
   `times` varchar(50) DEFAULT NULL,
   `movieID` int DEFAULT NULL,
-   CONSTRAINT `movieID` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE
+  CONSTRAINT `movieID` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `theatre`
---
+-- Sample data for showtimes
+INSERT INTO `showtimes` (`times`, `movieID`) VALUES
+('2024-11-12 19:00:00', 1),
+('2024-11-12 21:00:00', 2),
+('2024-11-13 18:00:00', 3);
 
 DROP TABLE IF EXISTS `theatre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -62,9 +63,10 @@ CREATE TABLE `theatre` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `tickets`
---
+-- Sample data for theatre
+INSERT INTO `theatre` (`theatre_name`) VALUES
+('Main Theatre'),
+('VIP Theatre');
 
 DROP TABLE IF EXISTS `tickets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -86,15 +88,12 @@ CREATE TABLE `tickets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `user`
---
-
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `UserId` int auto_increment NOT NULL,
+  `Username` varchar(50) NOT NULL,
   `Email` varchar(50) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `credits` decimal(10,2) DEFAULT '0.00',
@@ -106,8 +105,13 @@ CREATE TABLE `user` (
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+-- Sample data for user
+INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Address`, `PaymentInfo`, `IsRegisteredUser`) VALUES
+('john_doe', 'john@example.com', 'password123', 100.00, 2, '123 Main St', 'Visa 1234', 1),
+('jane_smith', 'jane@example.com', 'password456', 50.00, 1, '456 Elm St', 'Mastercard 5678', 1);
+
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
