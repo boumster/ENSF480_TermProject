@@ -1,9 +1,11 @@
+package Entity;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
 public class Acmeplex implements MailingSystem, BillingSystem{
     private ArrayList<Theatre> theatres;
-    private BillingSystem paymenSystem;
+    private BillingSystem paymentSystem;
     private MailingSystem mailingSystem;
     
     // These override func likely also need to update the db, if payment is recieved, the seat
@@ -62,8 +64,8 @@ public class Acmeplex implements MailingSystem, BillingSystem{
         return null;
     }
 
-    public void setPaymenSystem(BillingSystem paymenSystem) {
-        this.paymenSystem = paymenSystem;
+    public void setPaymenSystem(BillingSystem paymentSystem) {
+        this.paymentSystem = paymentSystem;
     }
 
     public void setMailingSystem(MailingSystem mailingSystem) {

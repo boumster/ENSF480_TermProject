@@ -1,6 +1,10 @@
+package Entity;
+
 import java.util.*;
 
 public class Movie {
+    private static int movieCounter = 0;
+    private final int id;
     private final String title;
     private ArrayList<Showtime> showtimes;
     private String rating;
@@ -14,9 +18,15 @@ public class Movie {
         this.desc = desc;
         this.genre = genre;
         this.duration = duration;
+        this.id = movieCounter++ + 100;
         this.showtimes = new ArrayList<Showtime>();
     }
 
+
+    public int getId() {
+        return id;
+    }
+    
     public String getTitle() {
         return title;
     }

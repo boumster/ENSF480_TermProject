@@ -1,3 +1,5 @@
+package Entity;
+
 public class TheatreAdmin {
     
     private Database db;

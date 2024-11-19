@@ -1,3 +1,5 @@
+package Entity;
+
 public class Seat {
     private int seatNumber;
     private boolean isBooked;
