@@ -11,7 +11,8 @@
             "driver": "MySQL",
             "name": "480_DB",
             "database": "acmeplex",
-            "username": "root"
+            "username": "root",
+            "askForPassword": true
         }
     ]
 }

@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 public class Seat {
     private int seatNumber;

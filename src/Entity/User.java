@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 public class User {
     protected String name;

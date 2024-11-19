@@ -1,4 +1,4 @@
-package Boundary;
+package src.Boundary;
 
 import javax.swing.*;
 import java.awt.*;

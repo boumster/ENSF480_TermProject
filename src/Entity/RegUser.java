@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 public class RegUser extends User {
     private String address;
