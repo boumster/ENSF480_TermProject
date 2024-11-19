@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 public interface BillingSystem {
     public boolean makePayment(User user, double amount);
