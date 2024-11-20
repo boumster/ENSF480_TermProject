@@ -1,4 +1,6 @@
 package src.DB;
+
+import src.Entity.*;
 import java.sql.*;
 
 public class Database {
@@ -85,9 +87,21 @@ public class Database {
             String selectQuery = "SELECT * FROM user WHERE UserId = ?";
             try (ResultSet rs = db.read(selectQuery, generatedId)) {
                 while (rs.next()) {
-                    System.out.println("Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
+                    System.out.println("Name: " + rs.getString("Username") + ", Email: " + rs.getString("Email"));
                 }
             }
+
+            // Create an object off the database
+            selectQuery = "SELECT * FROM user";
+            System.out.println("Printing all users:");
+            try (ResultSet rs = db.read(selectQuery)) {
+                while (rs.next()) {
+                    System.out.println("Name: " + rs.getString("Username") + ", Email: " + rs.getString("Email"));
+                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
+                    user.toString();
+                }
+            }
+            
 
             db.close();
         } catch (SQLException e) {
