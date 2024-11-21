@@ -28,6 +28,14 @@ public class Movie {
         this.showtimesByTheatre = new HashMap<>();
     }
 
+    public Movie(int id, String title, String desc, int duration) {
+        this.title = title;
+        this.desc = desc;
+        this.duration = duration;
+        this.id = id;
+        this.showtimes = new ArrayList<Showtime>();
+    }
+
 
     public int getId() {
         return id;

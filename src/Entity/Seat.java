@@ -13,6 +13,10 @@ public class Seat {
         return isBooked;
     }
 
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+
     public void bookSeat() {
         isBooked = true;
     }
