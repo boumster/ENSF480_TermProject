@@ -3,9 +3,10 @@ package src.Entity;
 import java.util.*;
 
 public class Movie {
-    private static int movieCounter = 0;
-    private final int id;
-    private final String title;
+    // for database reasons this movie counter doesn't really work
+    // private static int movieCounter = 0;
+    private int id;
+    private String title;
     private ArrayList<Showtime> showtimes;
     private String rating;
     private String desc;
@@ -18,13 +19,18 @@ public class Movie {
         this.desc = desc;
         this.genre = genre;
         this.duration = duration;
-        this.id = movieCounter++ + 100;
+        // See comment about counter
+        //this.id = movieCounter++ + 100;
         this.showtimes = new ArrayList<Showtime>();
     }
 
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int movieId){
+        id = movieId;
     }
     
     public String getTitle() {
