@@ -8,6 +8,7 @@ public class Theatre {
     private final String name;
     private ArrayList<Auditorium> auditoriums;
     private ArrayList<Movie> movies;
+    private HashMap<Movie, ArrayList<Showtime>> showtimes;
     private int id;
 
     public Theatre(String name, ArrayList<Auditorium> auditoriums) {
@@ -15,6 +16,14 @@ public class Theatre {
         this.auditoriums = auditoriums;
         this.movies = new ArrayList<Movie>();
         this.id = counter++ + 1000;
+    }
+
+    public Theatre(String name, int id) {
+        this.name = name;
+        this.auditoriums = new ArrayList<Auditorium>();
+        this.movies = new ArrayList<Movie>();
+        this.showtimes = new HashMap<Movie, ArrayList<Showtime>>();
+        this.id = id;
     }
 
     public String getName() {

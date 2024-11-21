@@ -1,19 +1,20 @@
 package src.Entity;
 
 import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Showtime {
-    private DateTime showtime;
+    private LocalDateTime showtime;
     private Auditorium auditorium;
     private Movie movie;
 
-    public Showtime(DateTime showtime, Auditorium auditorium, Movie movie) {
+    public Showtime(LocalDateTime showtime, Auditorium auditorium, Movie movie) {
         this.showtime = showtime;
         this.auditorium = auditorium;
         this.movie = movie;
     }
 
-    public DateTime getShowtime() {
+    public LocalDateTime getShowtime() {
         return showtime;
     }
 
@@ -33,7 +34,7 @@ public class Showtime {
         this.movie = movie;
     }
 
-    public void setShowtime(DateTime showtime) {
+    public void setShowtime(LocalDateTime showtime) {
         this.showtime = showtime;
     }
 
