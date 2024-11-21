@@ -1,9 +1,15 @@
 package src.Entity;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import src.DB.Database;
+
 public class User {
+    protected int userID;
     protected String name;
     protected String email;
     protected Number credit;
+    private Database db;
 
     public User(String name, String email) {
         this.name = name;
@@ -14,8 +20,11 @@ public class User {
         this.credit = credit;
     }
 
-    public void deductCredit(Number credit) {
+    public void deductCredit(Number credit) throws SQLException{
         this.credit = this.credit.doubleValue() - credit.doubleValue();
+        String query = "UPDATE user SET credits = ? WHERE userID = ?";
+        db.update(query,this.credit,this.id());
+        System.out.println("Credits updated: " + this.getCredit());
     }
 
     public String getName() {
