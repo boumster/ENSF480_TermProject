@@ -2,16 +2,27 @@ package src.DB;
 
 import src.Entity.*;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/acmeplex";
     private static final String USER = "ENSF480";
     private static final String PASSWORD = "1234";
 
+    private static Database instance;
     private Connection connection;
 
+    private static boolean isInitialized = false;
+    private static ArrayList<Movie> listMovies = new ArrayList<Movie>();
+    private static ArrayList<Theatre> listTheatres = new ArrayList<Theatre>();
+    private static ArrayList<Showtime> listShowtimes = new ArrayList<Showtime>();
+    private static ArrayList<RegUser> listRegUsers = new ArrayList<RegUser>();
+    private static ArrayList<User> listUsers = new ArrayList<User>();
+    private static ArrayList<Booking> listBookings = new ArrayList<Booking>();
+
     // Constructor to establish the database connection
-    public Database() throws SQLException {
+    private Database() throws SQLException {
         try {
             // Load the MySQL JDBC driver explicitly
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,6 +32,118 @@ public class Database {
             throw new SQLException("MySQL JDBC Driver not found. Please include it in your library path.", e);
         } catch (SQLException e) {
             throw new SQLException("Failed to connect to the database: " + e.getMessage(), e);
+        }
+    }
+
+    // Singleton pattern to ensure only one instance of the database connection
+    public static synchronized Database getInstance() throws SQLException {
+        if (instance == null) {
+            instance = new Database();
+            if (!isInitialized) {
+                instance.initData();
+                isInitialized = true;
+            }
+        }
+        return instance;
+    }
+
+    // Get Data from the database
+    private void initData() {
+        try {
+            String selectQuery = "SELECT * FROM theatre";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Theatre theatre = new Theatre(rs.getString("theatre_name"), rs.getInt("theatre_id"));
+                    listTheatres.add(theatre);
+                }
+            }
+
+            selectQuery = "SELECT * from movies";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Movie movie = new Movie(rs.getInt("movieID"), rs.getString("movie_name"),
+                            rs.getString("movie_genre"), rs.getInt("duration"));
+                    listMovies.add(movie);
+                }
+            }
+
+            selectQuery = "SELECT * FROM user";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
+                    listRegUsers.add(user);
+                }
+            }
+
+            selectQuery = "SELECT * FROM tickets";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Booking booking = new Booking(rs.getInt("ID"), rs.getInt("ShowtimeID"), rs.getInt("UserID"),
+                            rs.getInt("NumTickets"), rs.getDouble("TotalPrice"));
+                    listBookings.add(booking);
+                }
+            }
+
+            selectQuery = "SELECT * FROM auditorium";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"),
+                            rs.getInt("theatre_id"));
+                    for (Theatre theatre : listTheatres) {
+                        if (theatre.getId() == rs.getInt("theatre_id")) {
+                            theatre.addAuditorium(auditorium);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            selectQuery = "SELECT * FROM containsMovie";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    int theatreID = rs.getInt("theatre_id");
+                    int movieID = rs.getInt("movieID");
+                    for (Theatre theatre : listTheatres) {
+                        if (theatre.getId() == theatreID) {
+                            for (Movie movie : listMovies) {
+                                if (movie.getId() == movieID) {
+                                    theatre.addMovie(movie);
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            selectQuery = "SELECT * FROM showtimes";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Movie movie = null;
+                    for (Movie m : listMovies) {
+                        if (m.getId() == rs.getInt("movieID")) {
+                            movie = m;
+                            break;
+                        }
+                    }
+                    Auditorium aud = null;
+                    for (Theatre theatre : listTheatres) {
+                        for (Auditorium a : theatre.getAuditoriums()) {
+                            if (a.getAudId() == rs.getInt("auditoriumID")) {
+                                aud = a;
+                                break;
+                            }
+                        }
+                    }
+                    Showtime showtime = new Showtime(rs.getTimestamp("time").toLocalDateTime(), aud, movie);
+                    listShowtimes.add(showtime);
+                }
+            }
+
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -73,35 +196,51 @@ public class Database {
         }
     }
 
+    // Getter methods for the lists
+    public static ArrayList<Movie> getListMovies() {
+        return listMovies;
+    }
+
+    public static ArrayList<Theatre> getListTheatres() {
+        return listTheatres;
+    }
+
+    public static ArrayList<Showtime> getListShowtimes() {
+        return listShowtimes;
+    }
+
+    public static ArrayList<RegUser> getListRegUsers() {
+        return listRegUsers;
+    }
+
+    public static ArrayList<User> getListUsers() {
+        return listUsers;
+    }
+
+    public static ArrayList<Booking> getListBookings() {
+        return listBookings;
+    }
+
     // Example usage
     public static void main(String[] args) {
         try {
-            Database db = new Database();
+            Database db = getInstance();
 
-            // Example: Create
-            String insertQuery = "INSERT INTO theatre (theatre_id, theatre_name) VALUES (?, ?)";
-            int generatedId = db.create(insertQuery, "78", "cool_theatre");
-            System.out.println("Inserted record with ID: " + generatedId);
-
-            // Example: Read
-            String selectQuery = "SELECT * FROM user WHERE UserId = ?";
-            try (ResultSet rs = db.read(selectQuery, generatedId)) {
-                while (rs.next()) {
-                    System.out.println("Name: " + rs.getString("Username") + ", Email: " + rs.getString("Email"));
-                }
+            for (Theatre theatre : listTheatres) {
+                System.out.println(theatre.toString());
             }
 
-            // Create an object off the database
-            selectQuery = "SELECT * FROM user";
-            System.out.println("Printing all users:");
-            try (ResultSet rs = db.read(selectQuery)) {
-                while (rs.next()) {
-                    System.out.println("Name: " + rs.getString("Username") + ", Email: " + rs.getString("Email"));
-                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
-                    user.toString();
-                }
+            for (Movie movie : listMovies) {
+                System.out.println(movie.toString());
             }
-            
+
+            for (Showtime showtime : listShowtimes) {
+                System.out.println(showtime.toString());
+            }
+
+            for (RegUser regUser : listRegUsers) {
+                System.out.println(regUser.toString());
+            }
 
             db.close();
         } catch (SQLException e) {

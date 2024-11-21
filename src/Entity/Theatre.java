@@ -18,6 +18,14 @@ public class Theatre {
         this.id = counter++ + 1000;
     }
 
+    public Theatre(String name, int id) {
+        this.name = name;
+        this.auditoriums = new ArrayList<Auditorium>();
+        this.movies = new ArrayList<Movie>();
+        this.showtimes = new HashMap<Movie, ArrayList<Showtime>>();
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
