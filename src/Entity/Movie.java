@@ -9,8 +9,6 @@ public class Movie {
     private String title;
     private ArrayList<Showtime> showtimes;
     private static int movieCounter = 0;
-    private final int id;
-    private final String title;
     private Map<Theatre, ArrayList<Showtime>> showtimesByTheatre;
     private String rating;
     private String desc;
