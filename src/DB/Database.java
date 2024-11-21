@@ -70,28 +70,4 @@ public class Database {
             System.out.println("Connection closed successfully.");
         }
     }
-
-    // Example usage
-    public static void main(String[] args) {
-        try {
-            Database db = new Database();
-
-            // Example: Create
-            String insertQuery = "INSERT INTO theatre (theatre_id, theatre_name) VALUES (?, ?)";
-            int generatedId = db.create(insertQuery, "78", "cool_theatre");
-            System.out.println("Inserted record with ID: " + generatedId);
-
-            // Example: Read
-            String selectQuery = "SELECT * FROM user WHERE UserId = ?";
-            try (ResultSet rs = db.read(selectQuery, generatedId)) {
-                while (rs.next()) {
-                    System.out.println("Name: " + rs.getString("name") + ", Email: " + rs.getString("email"));
-                }
-            }
-
-            db.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
