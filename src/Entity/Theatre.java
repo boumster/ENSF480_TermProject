@@ -8,7 +8,7 @@ public class Theatre {
     private final String name;
     private ArrayList<Auditorium> auditoriums;
     private ArrayList<Movie> movies;
-    private Map<Movie, ArrayList<Showtime>> showtimes;
+    private HashMap<Movie, ArrayList<Showtime>> showtimes;
     private int id;
 
     public Theatre(String name, ArrayList<Auditorium> auditoriums) {
@@ -52,14 +52,17 @@ public class Theatre {
 
     public void addMovie(Movie movie) {
         movies.add(movie);
+        movie.addShowtime(this, new ArrayList<Showtime>()); //* */
     }
 
     public void removeMovie(Movie movie) {
         movies.remove(movie);
+        movie.removeShowtime(this, movie.getShowtimesForTheatre(this));
     }
 
+/*
     public void addShowtime(Movie movie, Showtime showtime) {
-        if (!showtimes.containsKey(movie)) {
+        if (!movie.showtimesByTheatre.containsKey(this)) {
             showtimes.put(movie, new ArrayList<Showtime>());
         }
         showtimes.get(movie).add(showtime);
@@ -81,4 +84,5 @@ public class Theatre {
         this.removeShowtime(movie, oldshowtime);
         this.addShowtime(movie, newShowtime);
     }
+*/
 }

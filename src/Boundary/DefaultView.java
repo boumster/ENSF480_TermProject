@@ -66,3 +66,29 @@ public class DefaultView extends JFrame {
     //    });
     //}
 }
+
+/*
+IDEAS on GUI layout: just going off what Ik is doable from the video I watch, down to workshop
+
+
+ * Opens to movie browse menu, grid layout of all movies in movie table of DB, each associated with image
+        *not entirely sure abt the association bit, would it instead be a bunch of JLabel objects that are somehow associated with DB key? 
+
+ * movie panel/frame acts as button, opens new window with list of theatres playing said movie
+ * click on desired theatre
+ * open new window of list of showtimes
+ * click on desired showtime
+ * opens new window of seat map (blue seats are available, grey are not)
+ * clicking on available seat changes colour to green and prints seat ID to screen
+ * click some confirm button, opens window
+        * login/enter info
+            * if select login, open login window
+            * if select enter info, enter info
+
+ *  after either of these are entered, selected seats are updated to be marked as unavaialble in database
+ *  can restart to browse?
+
+    - might rework what we currently have entirely so that is uses CardLayout to create the sense of multiple pages
+    - if so can ignore all the messy "open window"s above
+ * 
+ */
