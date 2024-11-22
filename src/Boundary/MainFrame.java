@@ -16,5 +16,11 @@ public class MainFrame {
         cardLayout = new Card Layout();
         cardPanel = new JPanel(cardLayout);
         
+        //Add different pages
+        cardPanel.add(new HomePage(this), "Home");
+        cardPanel.add(new TheatreSelectionPage(this), "TheatreSelection");
+        cardPanel.add(new ShowtimesPage(this), "Showtimes");
+        cardPanel.add(new BookingPage(this), "Booking");
+        cardPanel.add(new ConfirmationPage(this), "Confirmation")
     }
 }
