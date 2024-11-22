@@ -5,14 +5,26 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import src.DB.Database;
 
 public class SeatMap extends JFrame implements ActionListener {
     JButton confirmButton;
-
+    Database db;
+//to do: 
+/*
+ * show auditorium number somehow, 
+ * make unavailable seats gray and disable the button for them
+ * 
+ * when you click/remove a seat put it into database for corresponding customer, figure out logic for multiple seats being selected
+ * when you click continue button put a pop up confirming seat was selected.
+ * 
+ * 
+ */
     public SeatMap() {
         // Set up the JFrame
         setTitle("Seat Map");
@@ -80,7 +92,15 @@ public class SeatMap extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        // Create an instance of SeatMap to display the frame
-        new SeatMap();
+         try {
+            // Initialize the database
+            Database db = new Database();
+            new SeatMap();
+            
+            db.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+    
 }
