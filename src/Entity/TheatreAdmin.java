@@ -1,8 +1,7 @@
 package src.Entity;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.time.LocalDateTime;
 import src.DB.Database;
 
 public class TheatreAdmin {
@@ -79,7 +78,7 @@ public class TheatreAdmin {
     public static void main(String[] args) {
         try {
             // Initialize the database
-            Database db = new Database();
+            Database db =  Database.getInstance();
             
             // Create a movie
             Movie movie = new Movie("Interstellar","R", "A team of explorers travel through a wormhole in space.", "Sci-Fi", 123);
@@ -90,9 +89,9 @@ public class TheatreAdmin {
             // Add the movie
             admin.addMovie(movie);
 
-            Auditorium one = new Auditorium(1,20);
+            Auditorium one = new Auditorium(1,20,0);
             // Create a showtime
-            DateTime now = new DateTime(20,11,2024, 5, 34);
+            LocalDateTime now = LocalDateTime.of(20,11,2024, 5, 34);
             Showtime showtime = new Showtime(now, one, movie);
             
             // Add the showtime for the movie

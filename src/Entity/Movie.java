@@ -28,6 +28,15 @@ public class Movie {
         this.showtimesByTheatre = new HashMap<>();
     }
 
+    public Movie(int id, String title, String desc, int duration) {
+        this.title = title;
+        this.desc = desc;
+        this.duration = duration;
+        this.id = id;
+        this.showtimes = new ArrayList<Showtime>();
+        this.showtimesByTheatre = new HashMap<>();
+    }
+
 
     public int getId() {
         return id;
@@ -63,10 +72,21 @@ public class Movie {
 
     public ArrayList<Showtime> getShowtimesForTheatre(Theatre theatre) {
         Map<Theatre, ArrayList<Showtime>> showtimesMap = getShowtimesByTheatre();
-        return showtimesMap.get(theatre); // Returns the ArrayList of Showtimes for the specified Theatre
+        ArrayList<Showtime> showtimes = showtimesMap.get(theatre);
+        if (showtimes == null) {
+            // Optionally handle missing showtimes for the given theatre
+            System.out.println("No showtimes found for theatre: " + theatre.getName());
+        }
+        return showtimes;
     }
+    
 
     public void addShowtime(Theatre theatre, ArrayList<Showtime> showtime) {
+        if (showtime == null) {
+            // Optionally handle null showtimes if needed
+            System.out.println("Cannot add null showtime for theatre: " + theatre.getName());
+            return;
+        }
         showtimesByTheatre.put(theatre, showtime);
     }
 
