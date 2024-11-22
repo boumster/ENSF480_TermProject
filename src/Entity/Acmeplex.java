@@ -1,6 +1,5 @@
 package src.Entity;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Acmeplex implements MailingSystem, BillingSystem{
@@ -28,7 +27,7 @@ public class Acmeplex implements MailingSystem, BillingSystem{
     }
     @Override
     public boolean makePayment(User user, double amount) {
-        System.out.println("Processing payment of $" + amount + " for " + user.getName());
+        System.out.println("Processing payment of $" + amount + " for " + user.getusername());
         return true; // Need to add some way to see if payment goes through
     }
 
