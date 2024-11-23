@@ -198,7 +198,6 @@ public class Database {
     public int update(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
-            initData();
             return stmt.executeUpdate(); // Return number of affected rows
         }
     }

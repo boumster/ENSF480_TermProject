@@ -14,7 +14,7 @@ public class LoginPage extends JPanel {
     private JButton showPasswordButton;
     private boolean isPasswordVisible = false;
 
-    public LoginPage(MovieTheatreApp app, String type) {
+    public LoginPage(MovieTheatreApp app, String type, RegUser currentUser) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel headerLabel = new JLabel("Login", SwingConstants.CENTER);
@@ -76,7 +76,6 @@ public class LoginPage extends JPanel {
             String password = new String(passwordField.getPassword());
             RegUser user = LoginControl.login(email, password);
             if (user != null) {
-                app.setCurrentUser(user); // Update the currentUser in MovieTheatreApp
                 JOptionPane.showMessageDialog(this, "Login successful!");
                 app.switchToPage("Home");
             } else {
@@ -90,7 +89,7 @@ public class LoginPage extends JPanel {
         // Back button
         JButton backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
-        backButton.addActionListener(e -> app.switchToPage("Home"));
+        backButton.addActionListener(e -> app.switchToPage("HomePage"));
         add(backButton);
     }
 }
