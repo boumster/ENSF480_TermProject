@@ -61,7 +61,7 @@ public class Booking {
     }
 
     public String toString() {
-        return "Booking ID: " + bookingID + "\nUser ID: " + user.getusername() + "\nNumber of Tickets: " + numTickets + "\nTotal Price: " + totalPrice;
+        return "Booking ID: " + bookingID + "\nUser ID: " + user.getUsername() + "\nNumber of Tickets: " + numTickets + "\nTotal Price: " + totalPrice;
     }
 
     public void updateBooking() {
