@@ -4,22 +4,17 @@ import java.util.*;
 
 public class Acmeplex implements MailingSystem, BillingSystem{
     private ArrayList<Theatre> theatres;
-    private BillingSystem paymentSystem;
-    private MailingSystem mailingSystem;
-    
     // These override func likely also need to update the db, if payment is recieved, the seat
     // needs to be marked as booked, if canceled it should be freed up again and so on.
     @Override
     public void sendBookingEmail(boolean type, User user, Booking booking) {
-        String subject = type ? "Booking Confirmation" : "Cancellation Confirmation";
-       // String message = type 
-        //        ? "Your booking for " + booking.getMovieTitle() + " at " + booking.getShowtime() + " is confirmed."
-        //        : "Your booking for " + booking.getMovieTitle() + " at " + booking.getShowtime() + " has been canceled.";
-        //System.out.println("Email sent to " + user.getEmail() + ": " + subject + "\n" + message);
-    }
-    @Override
-    public void sendSMS(User user, String message) {
-        //System.out.println("SMS sent to " + user.getPhoneNumber() + ": " + message);
+       String subject = type ? "Booking Confirmation" : "Cancellation Confirmation";
+
+       String message = type 
+               ? "Your booking for " + (booking.getmovie()).getTitle() + " at " + (booking.getShowtime()).getShowtime() + " is confirmed."
+               : "Your booking for " + (booking.getmovie()).getTitle() + " at " + (booking.getShowtime()).getShowtime()  + " has been canceled.";
+        System.out.println("Email sent to " + user.getEmail() + ": " + subject + "\n" + message); 
+       
     }
     @Override
     public void sendNewsletter(User user) {
@@ -61,14 +56,6 @@ public class Acmeplex implements MailingSystem, BillingSystem{
             }
         }
         return null;
-    }
-
-    public void setPaymenSystem(BillingSystem paymentSystem) {
-        this.paymentSystem = paymentSystem;
-    }
-
-    public void setMailingSystem(MailingSystem mailingSystem) {
-        this.mailingSystem = mailingSystem;
     }
 
 }
