@@ -61,8 +61,9 @@ public class Database {
             selectQuery = "SELECT * from movies";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    Movie movie = new Movie(rs.getInt("movieID"), rs.getString("movie_name"),
-                            rs.getString("movie_genre"), rs.getInt("duration"));
+                    Movie movie = new Movie(rs.getInt("movieID"), rs.getString("Movie_name"),
+                            rs.getString("Movie_description"), rs.getString("Movie_genre"), 
+                            rs.getString("Movie_rating"), rs.getInt("duration"));
                     listMovies.add(movie);
                 }
             }

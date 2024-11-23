@@ -23,7 +23,7 @@ public class HomePage extends JPanel{
 
         JButton guestButton = new JButton("Continue as Guest");
         guestButton.setAlignmentX(CENTER_ALIGNMENT);
-        guestButton.addActionListener(e-> app.switchToPage("Guest"));
+        guestButton.addActionListener(e-> app.switchToPage("BrowseMovies"));
 
         JButton adminLoginButton = new JButton("Admin Login");
         adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);

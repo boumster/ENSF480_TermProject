@@ -15,10 +15,10 @@ public class Movie {
     private String genre;
     private int duration;
 
-    public Movie(String title, String rating, String desc, String genre, int duration) {
+    public Movie(int id, String title, String description, String genre, String rating, int duration) {
         this.title = title;
         this.rating = rating;
-        this.desc = desc;
+        this.desc = description;
         this.genre = genre;
         this.duration = duration;
         // See comment about counter
