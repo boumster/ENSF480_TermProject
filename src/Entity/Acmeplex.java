@@ -20,9 +20,10 @@ public class Acmeplex implements MailingSystem, BillingSystem{
     public void sendNewsletter(User user) {
         System.out.println("Newsletter sent to " + user.getEmail());
     }
+
     @Override
     public boolean makePayment(User user, double amount) {
-        System.out.println("Processing payment of $" + amount + " for " + user.getusername());
+        System.out.println("Processing payment of $" + amount + " for " + user.getUsername());
         return true; // Need to add some way to see if payment goes through
     }
 
