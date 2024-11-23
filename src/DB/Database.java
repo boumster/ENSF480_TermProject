@@ -75,22 +75,12 @@ public class Database {
                 }
             }
 
-            selectQuery = "SELECT * FROM tickets";
-            try (ResultSet rs = read(selectQuery)) {
-                while (rs.next()) {
-                    Booking booking = new Booking(rs.getInt("ID"), rs.getInt("ShowtimeID"), rs.getInt("UserID"),
-                            rs.getInt("NumTickets"), rs.getDouble("TotalPrice"));
-                    listBookings.add(booking);
-                }
-            }
-
             selectQuery = "SELECT * FROM auditorium";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"),
-                            rs.("theatre_id"));
                     for (Theatre theatre : listTheatres) {
                         if (theatre.getId() == rs.getInt("theatre_id")) {
+                        Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"), theatre);
                             theatre.addAuditorium(auditorium);
                             break;
                         }
@@ -140,6 +130,36 @@ public class Database {
                     listShowtimes.add(showtime);
                 }
             }
+
+            selectQuery = "SELECT * FROM tickets";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Showtime showtime = null;
+                    for (Showtime s : listShowtimes) {
+                        if (s.getShowtime().equals(rs.getTimestamp("time").toLocalDateTime())) {
+                            showtime = s;
+                            break;
+                        }
+                    }
+                    RegUser user = null;
+                    for (RegUser u : listRegUsers) {
+                        if (u.getEmail().equals(rs.getString("email"))) {
+                            user = u;
+                            break;
+                        }
+                    }
+                    Movie movie = null;
+                    for (Movie m : listMovies) {
+                        if (m.getId() == rs.getInt("movieID")) {
+                            movie = m;
+                            break;
+                        }
+                    }
+                    Booking booking = new Booking(rs.getInt("ID"), showtime, user, movie, rs.getInt("NumTickets"), rs.getDouble("TotalPrice"));
+                    listBookings.add(booking);
+                }
+            }
+
 
             close();
         } catch (SQLException e) {

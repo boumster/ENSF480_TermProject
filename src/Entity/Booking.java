@@ -5,10 +5,10 @@ public class Booking {
     private int numTickets;
     private double totalPrice;
     private Showtime showtime;
-    private User user;
+    private RegUser user;
     private Movie movie;
 
-    public Booking(int bookingID, Showtime showtime, User user, Movie movie, int numTickets, double totalPrice) {
+    public Booking(int bookingID, Showtime showtime, RegUser user, Movie movie, int numTickets, double totalPrice) {
         this.bookingID = bookingID;
         this.showtime = showtime;
         this.user = user;
@@ -48,7 +48,7 @@ public class Booking {
         this.showtime = showtime;
     }
 
-    public void setUser(User user) {
+    public void setUser(RegUser user) {
         this.user = user;
     }
 
