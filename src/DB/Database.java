@@ -155,6 +155,7 @@ public class Database {
                             break;
                         }
                     }
+
                     Booking booking = new Booking(rs.getInt("ID"), showtime, user, movie, rs.getInt("NumTickets"), rs.getDouble("TotalPrice"));
                     listBookings.add(booking);
                 }
