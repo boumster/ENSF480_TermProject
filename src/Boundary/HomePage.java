@@ -12,14 +12,32 @@ public class HomePage extends JPanel{
         JLabel welcomeLabel = new JLabel("Welcome to AcmePlex!");
         welcomeLabel.setAlignmentX(CENTER_ALIGNMENT);
 
-        JButton startButton = new JButton("Browse Movies");
-        startButton.setAlignmentX(CENTER_ALIGNMENT);
-        startButton.addActionListener(e-> app.switchToPage("BrowseMovies"));
+        /* 
+        JButton browseButton = new JButton("Browse Movies");
+        browseButton.setAlignmentX(CENTER_ALIGNMENT);
+        browseButton.addActionListener(e-> app.switchToPage("BrowseMovies"));
+        */
+        JButton loginButton = new JButton("Login");
+        loginButton.setAlignmentX(CENTER_ALIGNMENT);
+        loginButton.addActionListener(e-> app.switchToPage("Login"));
+
+        JButton guestButton = new JButton("Continue as Guest");
+        guestButton.setAlignmentX(CENTER_ALIGNMENT);
+        guestButton.addActionListener(e-> app.switchToPage("Guest"));
+
+        JButton adminLoginButton = new JButton("Admin Login");
+        adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);
+        adminLoginButton.addActionListener(e-> app.switchToPage("AdminLogin"));
+
 
         add(Box.createVerticalStrut(100)); // Add space
         add(welcomeLabel);
         add(Box.createVerticalStrut(20)); // Add space
-        add(startButton);
+        add(loginButton);
+        add(Box.createVerticalStrut(20)); // Add space
+        add(guestButton);
+        add(Box.createVerticalStrut(20)); // Add space
+        add(adminLoginButton);
     }
 
 }
