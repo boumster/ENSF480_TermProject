@@ -24,6 +24,9 @@ public class MovieTheatreApp {
         cardPanel.add(new BookingPage(this), "Booking");
         //cardPanel.add(new SeatMap(this), "SeatMap");
         cardPanel.add(new ConfirmationPage(this), "Confirmation");
+        cardPanel.add(new ConfirmationPage(this), "Login");
+        cardPanel.add(new ConfirmationPage(this), "Guest");
+        cardPanel.add(new ConfirmationPage(this), "AdminLogin");
 
         frame.add(cardPanel);
         frame.setVisible(true);
