@@ -89,13 +89,13 @@ public class TheatreAdmin {
             // Add the movie
             admin.addMovie(movie);
 
-            Auditorium one = new Auditorium(1,20,0);
+            //Auditorium one = new Auditorium(1,20,0);
             // Create a showtime
             LocalDateTime now = LocalDateTime.of(20,11,2024, 5, 34);
-            Showtime showtime = new Showtime(now, one, movie);
+            //Showtime showtime = new Showtime(now, one, movie);
             
             // Add the showtime for the movie
-            admin.addShowtime(movie, showtime);
+            //admin.addShowtime(movie, showtime);
     
             // Close the database
             db.close();

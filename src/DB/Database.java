@@ -88,7 +88,7 @@ public class Database {
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
                     Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"),
-                            rs.getInt("theatre_id"));
+                            rs.("theatre_id"));
                     for (Theatre theatre : listTheatres) {
                         if (theatre.getId() == rs.getInt("theatre_id")) {
                             theatre.addAuditorium(auditorium);
