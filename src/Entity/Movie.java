@@ -3,9 +3,12 @@ package src.Entity;
 import java.util.*;
 
 public class Movie {
+    // for database reasons this movie counter doesn't really work
+    // private static int movieCounter = 0;
     private int id;
     private String title;
     private ArrayList<Showtime> showtimes;
+    private static int movieCounter = 0;
     private Map<Theatre, ArrayList<Showtime>> showtimesByTheatre;
     private String rating;
     private String desc;
@@ -18,7 +21,10 @@ public class Movie {
         this.desc = description;
         this.genre = genre;
         this.duration = duration;
+        // See comment about counter
+        //this.id = movieCounter++ + 100;
         this.showtimes = new ArrayList<Showtime>();
+        this.id = movieCounter++ + 100;
         this.showtimesByTheatre = new HashMap<>();
     }
 

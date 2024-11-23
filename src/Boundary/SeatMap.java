@@ -123,9 +123,8 @@ public class SeatMap extends JFrame implements ActionListener {
     public static void main(String[] args) {
          try {
             Database db = Database.getInstance();
-            Theatre theatre = new Theatre("Test", 44);
 
-            Auditorium auditorium = new Auditorium(1,50,theatre);
+            Auditorium auditorium = new Auditorium(1,50,1);
             Movie movie = new Movie("Interstellar","R", "A team of explorers travel through a wormhole in space.", "Sci-Fi", 123);
             Showtime showtime = new Showtime(LocalDateTime.now(), auditorium, movie);
 
