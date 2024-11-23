@@ -76,7 +76,8 @@ public class Database {
             selectQuery = "SELECT * FROM user";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
+                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                            rs.getInt("PaymentInfo"));
                     listRegUsers.add(user);
                 }
             }
@@ -230,11 +231,11 @@ public class Database {
     public static RegUser getRegUser(String query) {
         try {
             try (ResultSet rs = getInstance().read(query)) {
-                String username = rs.getString("Username");
-                for (RegUser user : listRegUsers) {
-                    if (user.getUsername().equals(username)) {
-                        return user;
-                    }
+                if (rs.next()) {
+                    return new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                            rs.getInt("PaymentInfo"));
+                } else {
+                    System.out.println("No user found with the provided email and password.");
                 }
             }
         } catch (SQLException e) {

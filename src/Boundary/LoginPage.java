@@ -14,8 +14,6 @@ public class LoginPage extends JPanel {
     private JButton showPasswordButton;
     private boolean isPasswordVisible = false;
 
-    private static LoginControl loginControl = new LoginControl();
-
     public LoginPage(MovieTheatreApp app, String type, RegUser currentUser) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -79,7 +77,7 @@ public class LoginPage extends JPanel {
             RegUser user = LoginControl.login(email, password);
             if (user != null) {
                 JOptionPane.showMessageDialog(this, "Login successful!");
-                app.switchToPage("HomePage");
+                app.switchToPage("Home");
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
             }

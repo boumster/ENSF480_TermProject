@@ -22,7 +22,7 @@ public class MovieTheatreApp {
         cardPanel = new JPanel(cardLayout);
         
         //Add different pages
-        cardPanel.add(new HomePage(this), "Home");
+        cardPanel.add(new HomePage(this, currentUser), "Home");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
         cardPanel.add(new TheatreSelectionPage(this), "TheatreSelection");
         cardPanel.add(new ShowtimesPage(this), "Showtimes");
