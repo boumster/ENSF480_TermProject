@@ -49,6 +49,11 @@ public class Database {
 
     // Get Data from the database
     private void initData() {
+        listBookings.clear();
+        listMovies.clear();
+        listTheatres.clear();
+        listShowtimes.clear();
+        listRegUsers.clear(); // Clear the lists before initializing
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
@@ -152,6 +157,7 @@ public class Database {
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(stmt, parameters);
             stmt.executeUpdate();
+            initData(); // Update the lists
             try (ResultSet keys = stmt.getGeneratedKeys()) {
                 return keys.next() ? keys.getInt(1) : -1; // Return generated key if available
             }
@@ -169,6 +175,7 @@ public class Database {
     public int update(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
+            initData(); // Update the lists
             return stmt.executeUpdate(); // Return number of affected rows
         }
     }
@@ -177,6 +184,7 @@ public class Database {
     public int delete(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
+            initData(); // Update the lists
             return stmt.executeUpdate(); // Return number of affected rows
         }
     }
@@ -219,6 +227,19 @@ public class Database {
 
     public static ArrayList<Booking> getListBookings() {
         return listBookings;
+    }
+
+    public static RegUser getRegUser(String query) {
+        try {
+            try (ResultSet rs = getInstance().read(query)) {
+                if (rs.next()) {
+                    return new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     // Example usage

@@ -6,7 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import src.Control.LoginControl;
+
 public class LoginPage extends JPanel {
+
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+
+    private static LoginControl loginControl = new LoginControl();
     
     public LoginPage(MovieTheatreApp app) {
         JLabel headerLabel = new JLabel("Login", SwingConstants.CENTER);
