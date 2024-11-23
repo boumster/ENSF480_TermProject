@@ -25,7 +25,7 @@ public class SeatMap extends JFrame implements ActionListener {
  * 
  * 
  */
-    public SeatMap() {
+    public SeatMap(/*MovieTheatreApp app*/) {
         // Set up the JFrame
         setTitle("Seat Map");
         setSize(800, 800);
