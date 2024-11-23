@@ -1,5 +1,4 @@
 package src.Boundary;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -7,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +37,7 @@ public class SeatMap extends JFrame implements ActionListener {
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.BLACK);
-        setLayout(null); // We'll use absolute positioning sparingly here
+        setLayout(null); 
 
         // Create the JLabels
         JLabel movieLabel = new JLabel("Movie: " + showtime.getMovie().getTitle());
@@ -76,6 +76,13 @@ public class SeatMap extends JFrame implements ActionListener {
             seatButton.setFocusable(false);
             seatButton.setBackground(Color.BLUE);
             seatButton.setForeground(Color.WHITE);
+            ArrayList<Seat> seatarray = showtime.getAuditorium().getSeatArray();
+            for (Seat seat : seatarray){
+                if (seat.getStatus() && String.valueOf(seat.getSeatNumber()).equals(seatNumber)){
+                    seatButton.setBackground(Color.GRAY);
+                    seatButton.setEnabled(false);
+                }
+            }
             seatButton.setFont(new Font("Arial",Font.BOLD, 10));
             seatButton.addActionListener(this); // Attach the action listener
             panel.add(seatButton);
@@ -117,9 +124,20 @@ public class SeatMap extends JFrame implements ActionListener {
          try {
             Database db = Database.getInstance();
 
-            Auditorium auditorium = new Auditorium(1,60,1);
+            Auditorium auditorium = new Auditorium(1,50,1);
             Movie movie = new Movie("Interstellar","R", "A team of explorers travel through a wormhole in space.", "Sci-Fi", 123);
             Showtime showtime = new Showtime(LocalDateTime.now(), auditorium, movie);
+
+            auditorium.bookSeat(10);
+            auditorium.bookSeat(11);
+            auditorium.bookSeat(12);
+            auditorium.bookSeat(13);
+            auditorium.bookSeat(14);
+            auditorium.bookSeat(15);
+            ArrayList<Seat> seats = auditorium.getSeatArray();
+            for (Seat seat : seats) {
+                System.out.println("Seat " + seat.getSeatNumber() + " status: " + (seat.getStatus() ? "Booked" : "Available"));
+            }
 
             new SeatMap(showtime,db);
             db.close();

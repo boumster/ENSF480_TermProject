@@ -16,6 +16,7 @@ public class Auditorium {
         this.numSeatsRemaining = numSeats;
         this.theatreId = theatreId;
         this.seats = new ArrayList<Seat>();
+        initSeats();
     }
 
     public void initSeats() {
@@ -35,6 +36,10 @@ public class Auditorium {
 
     public int getNumSeats() {
         return numSeats;
+    }
+
+    public ArrayList<Seat> getSeatArray(){
+        return seats;
     }
 
     public double getPercentOccupied() {
