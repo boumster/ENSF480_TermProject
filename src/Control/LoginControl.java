@@ -6,8 +6,7 @@ import src.Entity.RegUser;
 public class LoginControl {
     
     public static RegUser login(String email, String password) {
-        String query = "SELECT * FROM reguser WHERE email = '" + email + "' AND password = '" + password + "'";
-
+        String query = "SELECT * FROM user WHERE email = '" + email + "' AND password = '" + password + "'";
         try {
             RegUser user = Database.getRegUser(query);
             return user;

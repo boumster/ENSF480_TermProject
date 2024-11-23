@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/acmeplex";
-    private static final String USER = "ENSF480";
+    private final String USER = "ENSF480";
     private static final String PASSWORD = "1234";
 
     private static Database instance;
@@ -49,11 +49,12 @@ public class Database {
 
     // Get Data from the database
     private void initData() {
-        listBookings.clear();
         listMovies.clear();
         listTheatres.clear();
         listShowtimes.clear();
-        listRegUsers.clear(); // Clear the lists before initializing
+        listRegUsers.clear();
+        listUsers.clear();
+        listBookings.clear();
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
@@ -146,7 +147,6 @@ public class Database {
                 }
             }
 
-            close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,7 +157,7 @@ public class Database {
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(stmt, parameters);
             stmt.executeUpdate();
-            initData(); // Update the lists
+            initData();
             try (ResultSet keys = stmt.getGeneratedKeys()) {
                 return keys.next() ? keys.getInt(1) : -1; // Return generated key if available
             }
@@ -175,7 +175,6 @@ public class Database {
     public int update(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
-            initData(); // Update the lists
             return stmt.executeUpdate(); // Return number of affected rows
         }
     }
@@ -184,7 +183,6 @@ public class Database {
     public int delete(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
-            initData(); // Update the lists
             return stmt.executeUpdate(); // Return number of affected rows
         }
     }
@@ -232,40 +230,16 @@ public class Database {
     public static RegUser getRegUser(String query) {
         try {
             try (ResultSet rs = getInstance().read(query)) {
-                if (rs.next()) {
-                    return new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"), rs.getInt("PaymentInfo"));
+                String username = rs.getString("Username");
+                for (RegUser user : listRegUsers) {
+                    if (user.getUsername().equals(username)) {
+                        return user;
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        try {
-            Database db = getInstance();
-
-            for (Theatre theatre : listTheatres) {
-                System.out.println(theatre.toString());
-            }
-
-            for (Movie movie : listMovies) {
-                System.out.println(movie.toString());
-            }
-
-            for (Showtime showtime : listShowtimes) {
-                System.out.println(showtime.toString());
-            }
-
-            for (RegUser regUser : listRegUsers) {
-                System.out.println(regUser.toString());
-            }
-
-            db.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
