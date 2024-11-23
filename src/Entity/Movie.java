@@ -74,13 +74,16 @@ public class Movie {
         Map<Theatre, ArrayList<Showtime>> showtimesMap = getShowtimesByTheatre();
         ArrayList<Showtime> showtimes = showtimesMap.get(theatre);
         if (showtimes == null) {
+            // Optionally handle missing showtimes for the given theatre
             System.out.println("No showtimes found for theatre: " + theatre.getName());
         }
         return showtimes;
     }
+    
 
     public void addShowtime(Theatre theatre, ArrayList<Showtime> showtime) {
         if (showtime == null) {
+            // Optionally handle null showtimes if needed
             System.out.println("Cannot add null showtime for theatre: " + theatre.getName());
             return;
         }

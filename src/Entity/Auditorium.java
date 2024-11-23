@@ -5,16 +5,16 @@ import java.util.*;
 public class Auditorium {
     private static int audCount = 0;
     private int audId;
-    private Theatre theatre;
+    private int theatreId;
     protected int numSeats;
     protected int numSeatsRemaining; // bookSeat/cancelSeat should update this values
     private ArrayList<Seat> seats;
 
-    public Auditorium(int audId, int numSeats, Theatre theatre) {
+    public Auditorium(int audId, int numSeats, int theatreId) {
         this.audId = audId;
         this.numSeats = numSeats;
         this.numSeatsRemaining = numSeats;
-        this.theatre = theatre;
+        this.theatreId = theatreId;
         this.seats = new ArrayList<Seat>();
         initSeats();
     }
@@ -30,8 +30,8 @@ public class Auditorium {
         return audId;
     }
 
-    public Theatre getTheatre() {
-        return theatre;
+    public int getTheatreId() {
+        return theatreId;
     }
 
     public int getNumSeats() {

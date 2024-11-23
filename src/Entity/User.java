@@ -43,7 +43,7 @@ public class User {
         }
     }
 
-    public String getUsername() {
+    public String getusername() {
         return username;
     }
 
@@ -55,7 +55,7 @@ public class User {
         return credits;
     }
 
-    public void setUsername(String username) {
+    public void setusername(String username) {
         this.username = username;
     }
 
@@ -84,7 +84,7 @@ public class User {
 
             // Test adding a new user to the database
             String addUserQuery = "INSERT INTO user (Username, Email, Password, credits) VALUES (?, ?, ?, ?)";
-            db.update(addUserQuery, john.getUsername(), john.getEmail(), "securepassword", john.getCredit());
+            db.update(addUserQuery, john.getusername(), john.getEmail(), "securepassword", john.getCredit());
             System.out.println("User added to the database.");
 
             // Deduct some credits

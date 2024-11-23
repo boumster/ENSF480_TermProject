@@ -62,7 +62,7 @@ public class SeatMap extends JFrame implements ActionListener {
 
         // Create the JPanel for seat buttons
         JPanel panel = new JPanel();
-        panel.setBounds(50, 90, 600, 500); // Set position and size
+        panel.setBounds(50, 90, 500, 400); // Set position and size
         panel.setBackground(Color.LIGHT_GRAY);
         
 
