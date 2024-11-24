@@ -1,10 +1,9 @@
 package src.Boundary;
-import javax.swing.*;
-
-import src.Entity.RegUser;
-import src.Entity.Movie;
-
 import java.awt.*;
+import javax.swing.*;
+import src.Entity.Movie;
+import src.Entity.RegUser;
+import src.Entity.Showtime;
 
 public class MovieTheatreApp {
     private JFrame frame;
@@ -14,6 +13,7 @@ public class MovieTheatreApp {
     private HomePage homePage;
     private Movie selectedMovie;
     private ViewTicketsPage viewTicketsPage;
+    private Showtime selectedShowtime;
 
     public MovieTheatreApp(){
         frame = new JFrame("Movie Theatre Application");
@@ -56,6 +56,9 @@ public class MovieTheatreApp {
         } if (pageName.equals("ViewTickets")){
             viewTicketsPage.refreshTickets();
         }
+        if (pageName.equals("SeatMap")){
+            cardPanel.add(new SeatMap(this, selectedShowtime));
+        }
         cardLayout.show(cardPanel, pageName);
     }
 
@@ -75,6 +78,14 @@ public class MovieTheatreApp {
     public Movie getSelectedMovie() {
             return selectedMovie;
         }
+
+    public void setSelectedShowtime(Showtime showtime) {
+        this.selectedShowtime = showtime;
+    }
+    
+    public Showtime getSelectedShowtime() {
+        return selectedShowtime;
+    }
     public static void main(String[] args) {
         new MovieTheatreApp();
     }
