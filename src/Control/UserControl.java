@@ -1,11 +1,9 @@
 package src.Control;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import src.DB.Database;
 import src.Entity.User;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class UserControl {
     private Database db;
@@ -82,26 +80,28 @@ public class UserControl {
         return false;
     }
 
-   public User getUserById(int userId) {
-    try {
-        String query = "SELECT * FROM user WHERE userID = ?";
-        try (ResultSet rs = db.read(query, userId)) { 
-            if (rs.next()) {
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                double credits = rs.getDouble("credits");
-
-                User user = new User(username, email);
-                user.setCredit(credits);
-                user.userID = userId;
-                return user;
+    public User getUserById(int userId) {
+        try {
+            // Get all users from the database
+            ArrayList<User> users = Database.getListUsers();
+            
+            // Iterate through the list to find the user with the specified ID
+            for (User user : users) {
+                if (user.getUserID() == userId) {
+                    System.out.println("User found: " + user.getUsername());
+                    return user; // Return the matching user
+                }
             }
+    
+            // If no user is found, print a message
+            System.out.println("No user found with ID: " + userId);
+    
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+    
+        return null; // Return null if no user is found or an exception occurs
     }
-    return null;
-}
 
     /*
      *  movies = Database.getListMovies();
@@ -177,7 +177,7 @@ public class UserControl {
     
             double newCredit = currentCredit - amount;
     
-            // Update the credit in the database
+    
             String query = "UPDATE user SET credits = ? WHERE userID = ?";
             int rowsAffected = db.update(query, newCredit, userId);
     
@@ -192,27 +192,20 @@ public class UserControl {
         return false;
     }
     
-
-    /**
-     * Retrieve all users from the database
+      /*
+     *  movies = Database.getListMovies();
+            for (Movie movie : movies) {
+                // For each movie, get the showtimes
+                System.out.println("Movie: " + movie.getTitle());
+            }
      */
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
-    
         try {
-            String query = "SELECT * FROM user";
-            try (ResultSet rs = db.read(query)) {
-                while (rs.next()) {
-                    int userId = rs.getInt("userID");
-                    String username = rs.getString("username");
-                    String email = rs.getString("email");
-                    double credits = rs.getDouble("credits");
-                    User user = new User(username, email);
-                    user.setCredit(credits);
-                    user.userID = userId;
-                    users.add(user);
-                }
-            }
+             users = Database.getListUsers();
+            for (User user : users) {
+                System.out.println("User: " + user.getUsername());
+             }
         } catch (Exception e) {
             e.printStackTrace();
         }
