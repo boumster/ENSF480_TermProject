@@ -19,7 +19,7 @@ public class Database {
     private static ArrayList<Showtime> listShowtimes = new ArrayList<Showtime>();
     private static ArrayList<RegUser> listRegUsers = new ArrayList<RegUser>();
     private static ArrayList<User> listUsers = new ArrayList<User>();
-    private static ArrayList<Booking> listBookings = new ArrayList<Booking>();
+    private static ArrayList<Ticket> listTickets = new ArrayList<Ticket>();
 
     // Constructor to establish the database connection
     private Database() throws SQLException {
@@ -54,7 +54,7 @@ public class Database {
         listShowtimes.clear();
         listRegUsers.clear();
         listUsers.clear();
-        listBookings.clear();
+        listTickets.clear();
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
@@ -164,17 +164,14 @@ public class Database {
                             break;
                         }
                     }
-                    Movie movie = null;
-                    for (Movie m : listMovies) {
-                        if (m.getId() == rs.getInt("movieID")) {
-                            movie = m;
-                            break;
-                        }
+                    if (showtime == null || user == null) {
+                        System.out.println("Showtime or user not found for ticket ID: " + rs.getInt("ticketID"));
+                        continue; // Skip this ticket entry
                     }
-
-                    Booking booking = new Booking(rs.getInt("ID"), showtime, user, movie, 2, 2);
-                    System.out.println("Booking: " + booking.toString());
-                    listBookings.add(booking);
+                    showtime.bookSeat(rs.getInt("seatNumber"));
+                    Ticket ticket = new Ticket(rs.getInt("ticketID"), showtime, rs.getDouble("price"),
+                            rs.getInt("seatNumber"), user);
+                    listTickets.add(ticket);
                 }
             }
 
@@ -255,10 +252,9 @@ public class Database {
         return listUsers;
     }
 
-    public static ArrayList<Booking> getListBookings() {
-        return listBookings;
+    public static ArrayList<Ticket> getListTickets() {
+        return listTickets;
     }
-
     public static RegUser getRegUser(String query) {
         try {
             try (ResultSet rs = getInstance().read(query)) {
