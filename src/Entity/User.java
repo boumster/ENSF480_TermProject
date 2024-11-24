@@ -8,11 +8,21 @@ public class User {
     protected String username;
     protected String email;
     protected Number credits;
+    protected boolean IsRegisteredUser;
 
     public User(String username, String email) {
         this.username = username;
         this.email = email;
         this.credits = 0.0;
+        this.IsRegisteredUser = false;
+    }
+
+    public User(int userID, String username, String email, Number credits, boolean IsRegisteredUser) {
+        this.userID = userID;
+        this.username = username;
+        this.email = email;
+        this.credits = credits;
+        this.IsRegisteredUser = IsRegisteredUser;
     }
 
     public User(int userID, String username, String email, Number credits) {
@@ -62,7 +72,7 @@ public class User {
         return email;
     }
 
-    public Number getCredit() {
+    public Number getCredits() {
         return credits;
     }
 
@@ -95,22 +105,22 @@ public class User {
 
             // Test adding a new user to the database
             String addUserQuery = "INSERT INTO user (Username, Email, Password, credits) VALUES (?, ?, ?, ?)";
-            db.update(addUserQuery, john.getUsername(), john.getEmail(), "securepassword", john.getCredit());
+            db.update(addUserQuery, john.getUsername(), john.getEmail(), "securepassword", john.getCredits());
             System.out.println("User added to the database.");
 
             // Deduct some credits
-            System.out.println("Initial credit: " + john.getCredit());
+            System.out.println("Initial credit: " + john.getCredits());
             john.deductCredit(20.50); // Deduct 20.50 credits
-            System.out.println("After deduction: " + john.getCredit());
+            System.out.println("After deduction: " + john.getCredits());
 
             // Add some credits
             john.addCredit(50.00);
-            System.out.println("After addition: " + john.getCredit());
+            System.out.println("After addition: " + john.getCredits());
 
             // Update the database with the new credit value
             String updateUserQuery = "UPDATE user SET credits = ? WHERE Email = ?";
-            db.update(updateUserQuery, john.getCredit(), john.getEmail());
-            System.out.println("Database updated with new credit value: " + john.getCredit());
+            db.update(updateUserQuery, john.getCredits(), john.getEmail());
+            System.out.println("Database updated with new credit value: " + john.getCredits());
             db.close();
 
         } catch (SQLException e) {

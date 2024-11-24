@@ -78,9 +78,8 @@ public class Database {
             selectQuery = "SELECT * FROM user";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    RegUser user = new RegUser(rs.getInt("userID"), rs.getString("Username"), rs.getString("Email"),
-                            rs.getInt("credits"), rs.getString("Address"),
-                            rs.getInt("PaymentInfo"));
+                    RegUser user = new RegUser(rs.getInt("UserId"),rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                            rs.getInt("PaymentInfo"), rs.getDouble("credits"), rs.getBoolean("IsRegisteredUser"));
                     listRegUsers.add(user);
                 }
             }
@@ -264,8 +263,10 @@ public class Database {
         try {
             try (ResultSet rs = getInstance().read(query)) {
                 if (rs.next()) {
-                    return new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
-                            rs.getInt("PaymentInfo"));
+                    RegUser user = new RegUser(rs.getInt("UserId"), rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                            rs.getInt("PaymentInfo"), rs.getDouble("credits"), rs.getBoolean("IsRegisteredUser"));
+                    listRegUsers.add(user);
+                    return user;
                 } else {
                     System.out.println("No user found with the provided email and password.");
                 }

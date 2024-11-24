@@ -131,7 +131,7 @@ CREATE TABLE `user` (
   `Tickets` int DEFAULT '0',
   `Address` text,
   `PaymentInfo` int DEFAULT NULL,
-  `IsRegisteredUser` tinyint(1) DEFAULT '0',
+  `IsRegisteredUser` bit DEFAULT 0,
   PRIMARY KEY (`UserId`),
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
