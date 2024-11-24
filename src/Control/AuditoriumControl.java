@@ -9,6 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AuditoriumControl {
+    private Database db;
+
+    public AuditoriumControl() {
+        try {
+            db = Database.getInstance();
+        } catch (SQLException e) {
+            System.err.println("Error connecting to database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
     
 
     public boolean addAuditorium(Theatre theatre, int capacity){
@@ -18,7 +29,7 @@ public class AuditoriumControl {
         }
         try {
                 String query = "INSERT INTO auditorium (theare_id, capacity) VALUES (?,?)";
-                int newAudID = Database.getInstance().create(query, theatre.getId(), capacity);
+                int newAudID = db.create(query, theatre.getId(), capacity);
                 if (newAudID > 0){
                     Auditorium auditorium = new Auditorium(newAudID,capacity,theatre);
                     theatre.addAuditorium(auditorium);
@@ -38,7 +49,7 @@ public class AuditoriumControl {
         }
         try{
             String query = "UPDATE auditorium SET capacity = ? Where auditorium_id = ?";
-            int rowsAffected = Database.getInstace().update(query,newCapacity,auditorium.getAudId());
+            int rowsAffected = db.update(query,newCapacity,auditorium.getAudId());
             if(rowsAffected >0){
                 auditorium.numSeats = newCapacity;
                 auditorium.numSeatsRemaining = newCapacity;
