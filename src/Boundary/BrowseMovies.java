@@ -79,6 +79,7 @@ public class BrowseMovies extends JPanel {
 
                 movieButton.addActionListener(e-> {
                     System.out.println("Selected Movie: " + movie.getTitle());
+                    app.setSelectedMovie(movie);
                     app.switchToPage("TheatreSelection");
                 });
 
