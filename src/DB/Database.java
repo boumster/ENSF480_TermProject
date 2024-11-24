@@ -126,6 +126,10 @@ public class Database {
                             break;
                         }
                     }
+                    if (movie == null) {
+                        System.out.println("Movie not found for ID: " + rs.getInt("movieID"));
+                        continue; // Skip this showtime entry
+                    }
                     Auditorium aud = null;
                     for (Theatre theatre : listTheatres) {
                         for (Auditorium a : theatre.getAuditoriums()) {
@@ -135,6 +139,7 @@ public class Database {
                             }
                         }
                     }
+                    
                     Showtime showtime = new Showtime(rs.getTimestamp("time").toLocalDateTime(), aud, movie);
                     listShowtimes.add(showtime);
                 }

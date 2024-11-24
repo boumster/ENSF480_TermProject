@@ -5,18 +5,34 @@ import java.util.ArrayList;
 
 import src.DB.Database;
 import src.Entity.Auditorium;
+import src.Entity.Movie;
 import src.Entity.Theatre;
 
 public class TheatreControl {
 
+    private Database db;
+
+    public TheatreControl() {
+        try {
+            db = Database.getInstance();
+        } catch (SQLException e) {
+            System.err.println("Error connecting to database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public static ArrayList<Theatre> getAllTheatres() {
         ArrayList<Theatre> theatres = new ArrayList<>();
-
         try {
-            Database db = Database.getInstance();
-            theatres = db.getListTheatres();
-        } catch (SQLException e) {
-            e.printStackTrace(); 
+            // Use the Database's getListMovies method
+            theatres = Database.getListTheatres();
+            for (Theatre theatre : theatres) {
+                // For each movie, get the showtimes
+                System.out.println("Movie: " + theatre.getName());
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching theatres from database: " + e.getMessage());
+            e.printStackTrace();
         }
         return theatres;
     }

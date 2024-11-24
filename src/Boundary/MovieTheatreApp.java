@@ -2,6 +2,7 @@ package src.Boundary;
 import javax.swing.*;
 
 import src.Entity.RegUser;
+import src.Entity.Movie;
 
 import java.awt.*;
 
@@ -11,6 +12,7 @@ public class MovieTheatreApp {
     private CardLayout cardLayout;
     private RegUser currentUser = null;
     private HomePage homePage;
+    private Movie selectedMovie;
 
     public MovieTheatreApp(){
         frame = new JFrame("Movie Theatre Application");
@@ -27,7 +29,7 @@ public class MovieTheatreApp {
         homePage = new HomePage(this);
         cardPanel.add(homePage, "Home");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
-        cardPanel.add(new TheatreSelectionPage(this), "TheatreSelection");
+        //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
         cardPanel.add(new ShowtimesPage(this), "Showtimes");
         cardPanel.add(new BookingPage(this), "Booking");
         //cardPanel.add(new SeatMap(this), "SeatMap");
@@ -41,6 +43,9 @@ public class MovieTheatreApp {
     }
 
     public void switchToPage(String pageName){
+        if (pageName.equals("TheatreSelection")) {
+            cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
+        }
         cardLayout.show(cardPanel, pageName);
     }
 
@@ -53,6 +58,13 @@ public class MovieTheatreApp {
         return currentUser;
     }
 
+    public void setSelectedMovie(Movie movie){
+        this.selectedMovie = movie;
+    }
+
+    public Movie getSelectedMovie() {
+            return selectedMovie;
+        }
     public static void main(String[] args) {
         new MovieTheatreApp();
     }
