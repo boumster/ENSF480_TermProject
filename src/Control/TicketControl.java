@@ -1,10 +1,10 @@
 package src.Control;
 
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import src.Entity.Ticket;
 import src.DB.Database;
+import src.Entity.Ticket;
 import src.Entity.User;
 
 public class TicketControl {
