@@ -118,9 +118,8 @@ public class RegisterPage extends JPanel {
                 return;
             }
 
-            RegUser newUser = new RegUser(username, email, address, paymentCard);
-            boolean success = RegisterControl.register(newUser, password);
-            if (success) {
+            RegUser newUser = RegisterControl.register(username, password, email, address, paymentCard);
+            if (newUser != null) {
                 JOptionPane.showMessageDialog(this, "Registration successful!");
                 app.setCurrentUser(newUser);
                 app.switchToPage("Home");

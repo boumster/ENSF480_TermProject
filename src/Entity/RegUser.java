@@ -4,11 +4,12 @@ public class RegUser extends User {
     private String address;
     private int paymentCard;
 
-    public RegUser(String name, String email, String address, int paymentCard) {
-        super(name, email);
+    public RegUser(int userID, String name, String email, String address, int paymentCard, Number numCredits, boolean IsRegisteredUser) {
+        super(userID, name, email, numCredits, IsRegisteredUser);
         this.address = address;
         this.paymentCard = paymentCard;
     }
+
 
     public String getAddress() {
         return address;
