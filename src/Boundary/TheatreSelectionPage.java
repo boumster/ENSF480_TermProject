@@ -11,7 +11,7 @@ import src.Entity.Showtime;
 import src.Entity.Theatre;
 
 public class TheatreSelectionPage extends JPanel {
-    private Movie selectedMovie; // Movie selected in browse page
+    private Movie selectedMovie; 
 
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
@@ -88,6 +88,7 @@ public class TheatreSelectionPage extends JPanel {
 
                 for (Showtime showtime : showtimes) {
                     JButton showtimeButton = new JButton(showtime.getShowtime().toString());
+                    showtimeButton.setMargin(new Insets(5, 10, 5, 10)); // Top, Left, Bottom, Right margins
                     showtimeButton.addActionListener(e -> app.switchToPage("Home"));
                     showtimesPanel.add(showtimeButton);
                 }
