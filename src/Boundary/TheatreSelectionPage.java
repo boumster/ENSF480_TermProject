@@ -16,55 +16,98 @@ public class TheatreSelectionPage extends JPanel {
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
 
-        // Set vertical BoxLayout for vertical alignment of components
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Set BorderLayout for main panel
+        setLayout(new BorderLayout());
 
-        if (this.selectedMovie == null) {
-            JLabel errorLabel = new JLabel("No movie selected. Please go back and select a movie.");
-            errorLabel.setAlignmentX(CENTER_ALIGNMENT);
-            add(errorLabel);
-            return;
+        // Header Panel (North)
+        JLabel headerLabel = new JLabel("Showtimes for " + selectedMovie.getTitle(), SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        add(headerLabel, BorderLayout.NORTH);
+
+        // Main Content Panel (Center)
+        JPanel contentPanel = new JPanel(new BorderLayout());
+
+        // Left Panel: Theatre names and showtimes
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(leftPanel); // Add scroll for long lists
+        contentPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Right Panel: Movie details
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPanel.add(rightPanel, BorderLayout.EAST);
+
+        // Add content panel to main panel
+        add(contentPanel, BorderLayout.CENTER);
+
+        // Populate right panel with movie details
+        if (this.selectedMovie != null) {
+            JLabel descriptionLabel = new JLabel("<html><b>Description:</b> " + selectedMovie.getDesc() + "</html>");
+            JLabel genreLabel = new JLabel("<html><b>Genre:</b> " + selectedMovie.getGenre() + "</html>");
+            JLabel ratingLabel = new JLabel("<html><b>Rating:</b> " + selectedMovie.getRating() + "</html>");
+            JLabel durationLabel = new JLabel("<html><b>Duration:</b> " + selectedMovie.getDuration() + " mins</html>");
+
+            descriptionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            genreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            ratingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            durationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            rightPanel.add(descriptionLabel);
+            rightPanel.add(Box.createVerticalStrut(10));
+            rightPanel.add(genreLabel);
+            rightPanel.add(Box.createVerticalStrut(10));
+            rightPanel.add(ratingLabel);
+            rightPanel.add(Box.createVerticalStrut(10));
+            rightPanel.add(durationLabel);
         }
 
-        JLabel label = new JLabel("Showtimes for " + selectedMovie.getTitle());
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(10)); // Add spacing
-        add(label);
-
+        // Fetch all theatres and their showtimes
         ShowtimeControl showtimeControl = new ShowtimeControl();
-
-        // Fetch all theatres
         ArrayList<Theatre> theatres = TheatreControl.getAllTheatres();
 
         for (Theatre theatre : theatres) {
-            ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatre(selectedMovie, theatre);
-
-            // Add theatre name
+            // Theatre name
             JLabel theatreLabel = new JLabel(theatre.getName());
             theatreLabel.setFont(new Font("Arial", Font.BOLD, 18));
-            theatreLabel.setAlignmentX(CENTER_ALIGNMENT);
-            add(Box.createVerticalStrut(10)); // Add spacing
-            add(theatreLabel);
+            theatreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            leftPanel.add(Box.createVerticalStrut(10));
+            leftPanel.add(theatreLabel);
+
+            ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatre(selectedMovie, theatre);
 
             if (showtimes.isEmpty()) {
                 JLabel noShowtimesLabel = new JLabel("No showtimes available.");
-                noShowtimesLabel.setAlignmentX(CENTER_ALIGNMENT);
-                add(noShowtimesLabel);
+                noShowtimesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                leftPanel.add(noShowtimesLabel);
             } else {
+                JPanel showtimesPanel = new JPanel();
+                showtimesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                showtimesPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
                 for (Showtime showtime : showtimes) {
-                    JLabel showtimeLabel = new JLabel(showtime.getShowtime().toString());
-                    showtimeLabel.setAlignmentX(CENTER_ALIGNMENT);
-                    add(showtimeLabel);
+                    JButton showtimeButton = new JButton(showtime.getShowtime().toString());
+                    showtimeButton.addActionListener(e -> app.switchToPage("Home"));
+                    showtimesPanel.add(showtimeButton);
                 }
+
+                // Do not constrain size; let layout managers handle it
+                leftPanel.add(showtimesPanel);
             }
-            add(Box.createVerticalStrut(20)); // Add space after each theatre section
+
+            leftPanel.add(Box.createVerticalStrut(20)); // Add space after each theatre section
         }
 
-        // Add the "Back" button to return to the movie selection screen
+        // Force layout updates
+        leftPanel.revalidate();
+        leftPanel.repaint();
+
+        // Back Button (South)
         JButton backButton = new JButton("Back");
-        backButton.setAlignmentX(CENTER_ALIGNMENT);
         backButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
-        add(Box.createVerticalStrut(20)); // Add spacing above the button
-        add(backButton);
+        JPanel backPanel = new JPanel();
+        backPanel.add(backButton);
+        add(backPanel, BorderLayout.SOUTH);
     }
 }

@@ -46,16 +46,24 @@ INSERT INTO `movies` (`Movie_name`, `Movie_description`, `Movie_Genre`, `Movie_r
 ('Inception', 'A thief who steals corporate secrets through the use of dream-sharing technology.', 'Sci-Fi', 'E', 120 ),
 ('The Godfather', 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.', 'Crime', 'R', 120),
 ('The Dark Knight', 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.', 'Action', 'T', 120),
-('Oppenheimer', 'a bomb goes off', 'Bio-pic', 'R', 180),
-('The Imitation Game', 'they hack the nazis', 'Bio-pic', 'T', 120),
-('How To Train Your Dragon', 'he trains a dragon', 'Animated', 'E', 120),
-('Harry Potter and The Deathly Hallows', 'voldemort dies', 'Fantasy', 'T', 120),
-('Trial of The Chicago 7', 'theres a trial', 'Bio-pic', 'T', 120),
-('Attack on Titan: The Last Attack', 'eren dies', 'Anime', 'T', 120),
-('Avengers: Infinity War', 'thanos snaps', 'Superhero', 'T', 180),
-('Avengers: Endgame', 'thanos dies', 'Superhero', 'T', 180),
-('Spider-Man: No Way Home', 'spiderman', 'Superhero', 'E', 120),
-('Interstellar', 'I fell asleep', 'Sci-fi', 'T', 120);
+('Oppenheimer', 'The story of J. Robert Oppenheimer, the father of the atomic bomb, and his role in the Manhattan Project during World War II.', 'Biography/Drama', 'R', 180),
+('The Imitation Game', 'During World War II, mathematician Alan Turing and his team of cryptanalysts work to crack the German Enigma code.', 'Biography/Drama', 'T', 120),
+('How To Train Your Dragon', 'A young Viking befriends a dragon, defying his village’s tradition of dragon hunting.', 'Animated/Adventure', 'E', 120),
+('Harry Potter and The Deathly Hallows', 'Harry, Ron, and Hermione embark on a quest to destroy Horcruxes and defeat Voldemort once and for all.', 'Fantasy/Adventure', 'T', 120),
+('Trial of The Chicago 7', 'The story of a group of anti-Vietnam War protesters who were charged with conspiracy and inciting riots in 1969.', 'Biography/Drama', 'T', 120),
+('Attack on Titan: The Last Attack', 'In the final battle, Eren faces his ultimate fate as humanity fights for survival.', 'Anime/Action', 'T', 120),
+('Avengers: Infinity War', 'The Avengers assemble to stop Thanos from collecting all six Infinity Stones and decimating half of the universe.', 'Superhero/Action', 'T', 180),
+('Avengers: Endgame', 'After the devastating events of Infinity War, the Avengers regroup to undo Thanos’s snap and restore balance to the universe.', 'Superhero/Action', 'T', 180),
+('Spider-Man: No Way Home', 'Spider-Man faces multiverse chaos when past villains and alternate Spider-Men enter his world.', 'Superhero/Action', 'T', 120),
+('Star Wars: Revenge of The Sith', 'Anakin Skywalker succumbs to the dark side, becoming Darth Vader, as the Jedi Order collapses.', 'Sci-Fi/Fantasy', 'T', 140),
+('The Wolf of Wall Street', 'The rise and fall of Jordan Belfort, a stockbroker who amasses wealth through corruption and fraud.', 'Biography/Drama', 'R', 180),
+('Gladiator', 'A betrayed Roman general seeks vengeance against the corrupt emperor who murdered his family and sent him into slavery.', 'Historical/Drama', 'R', 155),
+('The Social Network', 'The story of Mark Zuckerberg and the creation of Facebook, alongside the legal battles that followed.', 'Biography/Drama', 'T', 120),
+('Kung Fu Panda', 'A clumsy panda discovers he is the prophesied Dragon Warrior destined to protect the Valley of Peace.', 'Animated/Comedy', 'E', 92),
+('The Pursuit of Happyness', 'A struggling salesman and single father faces countless hardships as he strives to build a better future for his young son.', 'Biography/Drama', 'T', 117),
+('The Guilty', 'A demoted police officer working at a 911 dispatch center becomes entangled in a tense and life-changing emergency call.', 'Thriller/Drama', 'T', 90),
+('Interstellar', 'A group of explorers travel through a wormhole in search of a new habitable planet for humanity.', 'Sci-Fi/Adventure', 'T', 169);
+
 
 DROP TABLE IF EXISTS `theatre`;
 CREATE TABLE `theatre` (
@@ -66,8 +74,13 @@ CREATE TABLE `theatre` (
 
 -- Sample data for theatre
 INSERT INTO `theatre` (`theatre_name`) VALUES
-('Main Theatre'),
-('VIP Theatre');
+('Acmeplex Odeon Crowfoot Crossing Cinemas'),
+('Acmeplex VIP Cinemas University District'),
+('Acmeplex Odeon Westhills Cinemas'),
+('Scotiabank Theatre Chinook'),
+('Acmeplex Odeon Sunridge Spectrum Cinemas'),
+('Acmeplex CrossIron MIlls Cinemas and Entertainment'),
+('Acmeplex Cinemas East Hills');
 
 DROP TABLE IF EXISTS `auditorium`;
 CREATE TABLE `auditorium` (
