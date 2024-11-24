@@ -34,7 +34,9 @@ public class TicketControl {
                 // Update user credits
                 double refund = user.getIsRegisteredUser() ? ticket.getPrice().doubleValue()
                         : ticket.getPrice().doubleValue() * 0.85;
+                double newCredits = user.getCredits().doubleValue() + refund;
                 Database.getInstance().update(updateQuery, refund, user.getUserID());
+                user.setCredit(newCredits);
                 return true;
             }
         } catch (Exception e) {
