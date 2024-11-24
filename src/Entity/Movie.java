@@ -13,6 +13,7 @@ public class Movie {
     private int duration;
 
     public Movie(int id, String title, String description, String genre, String rating, int duration) {
+        this.id = id;
         this.title = title;
         this.rating = rating;
         this.desc = description;
