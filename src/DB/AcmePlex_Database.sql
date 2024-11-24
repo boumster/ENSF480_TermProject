@@ -45,7 +45,17 @@ CREATE TABLE `movies` (
 INSERT INTO `movies` (`Movie_name`, `Movie_description`, `Movie_Genre`, `Movie_rating`, `Movie_duration`) VALUES
 ('Inception', 'A thief who steals corporate secrets through the use of dream-sharing technology.', 'Sci-Fi', 'E', 120 ),
 ('The Godfather', 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.', 'Crime', 'R', 120),
-('The Dark Knight', 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.', 'Action', 'T', 120);
+('The Dark Knight', 'When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.', 'Action', 'T', 120),
+('Oppenheimer', 'a bomb goes off', 'Bio-pic', 'R', 180),
+('The Imitation Game', 'they hack the nazis', 'Bio-pic', 'T', 120),
+('How To Train Your Dragon', 'he trains a dragon', 'Animated', 'E', 120),
+('Harry Potter and The Deathly Hallows', 'voldemort dies', 'Fantasy', 'T', 120),
+('Trial of The Chicago 7', 'theres a trial', 'Bio-pic', 'T', 120),
+('Attack on Titan: The Last Attack', 'eren dies', 'Anime', 'T', 120),
+('Avengers: Infinity War', 'thanos snaps', 'Superhero', 'T', 180),
+('Avengers: Endgame', 'thanos dies', 'Superhero', 'T', 180),
+('Spider-Man: No Way Home', 'spiderman', 'Superhero', 'E', 120),
+('Interstellar', 'I fell asleep', 'Sci-fi', 'T', 120);
 
 DROP TABLE IF EXISTS `theatre`;
 CREATE TABLE `theatre` (

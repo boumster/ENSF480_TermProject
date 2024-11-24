@@ -15,7 +15,9 @@ public class MovieTheatreApp {
     public MovieTheatreApp(){
         frame = new JFrame("Movie Theatre Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1800, 1200);
+        // Make the window full screen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //frame.setUndecorated(true); // removes border and title and controls, but cause you cant easily close window
 
         //CardLayout and Panel
         cardLayout = new CardLayout();

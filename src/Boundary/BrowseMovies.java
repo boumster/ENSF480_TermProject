@@ -13,7 +13,7 @@ import src.Entity.Movie;
 
 public class BrowseMovies extends JPanel {
     private movieController controller;
-    JButton movie1Button, movie2Button, movie3Button, movie4Button, movie5Button, movie6Button, movie7Button, movie8Button, movie9Button, movie10Button, movie11Button;
+    //JButton movie1Button, movie2Button, movie3Button, movie4Button, movie5Button, movie6Button, movie7Button, movie8Button, movie9Button, movie10Button, movie11Button;
     
 
 
@@ -22,13 +22,29 @@ public class BrowseMovies extends JPanel {
 
         setLayout(new BorderLayout());
 
+        JPanel headerPanel = new JPanel(new BorderLayout());
         JLabel headerLabel = new JLabel("Browse Movies", SwingConstants.CENTER);
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
         headerLabel.setPreferredSize(new Dimension(getWidth(), 50)); // Adjust header height
-        add(headerLabel, BorderLayout.NORTH); // Add header at the top
+
+        // back button
+        JButton backButton = new JButton("Back");
+        backButton.setPreferredSize(new Dimension(80, 40)); // Optional: Set size for the button
+        backButton.addActionListener(e -> app.switchToPage("Home"));
+
+        // panel to hold the back button and add it to the top-right
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Right alignment for the button
+        backButtonPanel.add(backButton);
+
+        // Add the header LABEL  and back button to the header PANEL
+        headerPanel.add(headerLabel, BorderLayout.CENTER);
+        headerPanel.add(backButtonPanel, BorderLayout.EAST);
+
+        // Add the header panel to the top of the main panel
+        add(headerPanel, BorderLayout.NORTH);
 
         // Movie grid
-        JPanel moviePanel = new JPanel(new GridLayout(0, 5, 10, 10)); // Dynamic grid with 5 columns
+        JPanel moviePanel = new JPanel(new GridLayout(4, 5, 10, 10)); // Dynamic grid with 5 columns
         add(moviePanel, BorderLayout.CENTER);
 
         //Fetch movies from database
@@ -44,11 +60,20 @@ public class BrowseMovies extends JPanel {
                 movieButton.setVerticalTextPosition(SwingConstants.BOTTOM);  // Text below the image
                 movieButton.setPreferredSize(new Dimension(120, 250));
 
-                String imagePath = "src/Boundary/Images/" + movie.getTitle().replaceAll("\\s+", "") + ".jpg";
-                File imageFile = new File(imagePath);
+                String imageName = movie.getTitle().replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+                String imagePathJpg = "src/Boundary/Images/" + imageName + ".jpg";
+                String imagePathJpeg = "src/Boundary/Images/" + imageName + ".jpeg";
+
+                // Check if the .jpg file exists first, else fallback to .jpeg
+                File imageFile = new File(imagePathJpg);
+                if (!imageFile.exists()) {
+                    imageFile = new File(imagePathJpeg);
+                }
+
+                // Proceed if the image file is found
                 if (imageFile.exists()) {
-                    ImageIcon icon = new ImageIcon(imagePath);
-                    Image scaledImage = icon.getImage().getScaledInstance(120, 200, Image.SCALE_SMOOTH);
+                    ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
+                    Image scaledImage = icon.getImage().getScaledInstance(90, 150, Image.SCALE_SMOOTH);
                     movieButton.setIcon(new ImageIcon(scaledImage));
                 }
 
