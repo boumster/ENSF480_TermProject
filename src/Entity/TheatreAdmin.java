@@ -75,7 +75,7 @@ public class TheatreAdmin {
     
 
     // Example usage
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         try {
             // Initialize the database
             Database db =  Database.getInstance();
@@ -102,6 +102,6 @@ public class TheatreAdmin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    } */
     
 }
