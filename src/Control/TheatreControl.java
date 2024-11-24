@@ -11,23 +11,14 @@ public class TheatreControl {
 
     public static ArrayList<Theatre> getAllTheatres() {
         ArrayList<Theatre> theatres = new ArrayList<>();
-        String query = "SELECT * FROM theatre";
 
         try {
             Database db = Database.getInstance();
-            try (ResultSet rs = db.read(query)) {
-                while (rs.next()) {
-                    String theatreName = rs.getString("theatre_name");
-                    int theatreId = rs.getInt("theatre_id");
-                    Theatre theatre = new Theatre(theatreName, theatreId);
-                    theatres.add(theatre);
-                }
-            }
+            theatres = db.getListTheatres();
         } catch (SQLException e) {
             e.printStackTrace(); 
         }
-
-        return theatres; 
+        return theatres;
     }
 
     public static ArrayList<Auditorium> getAudAtTheatre(int theatre_id) {

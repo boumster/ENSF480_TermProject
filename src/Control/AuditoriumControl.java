@@ -31,8 +31,6 @@ public class AuditoriumControl {
                 String query = "INSERT INTO auditorium (theare_id, capacity) VALUES (?,?)";
                 int newAudID = db.create(query, theatre.getId(), capacity);
                 if (newAudID > 0){
-                    Auditorium auditorium = new Auditorium(newAudID,capacity,theatre);
-                    theatre.addAuditorium(auditorium);
                     System.out.println("Auditorium added successfully  with ID: " + newAudID);
                     return true;
                 }
@@ -51,9 +49,6 @@ public class AuditoriumControl {
             String query = "UPDATE auditorium SET capacity = ? Where auditorium_id = ?";
             int rowsAffected = db.update(query,newCapacity,auditorium.getAudId());
             if(rowsAffected >0){
-                auditorium.numSeats = newCapacity;
-                auditorium.numSeatsRemaining = newCapacity;
-                auditorium.initSeats();
                 System.out.println("Auditorium Capacity Updated Succesfully");
                 return true;
             }
@@ -72,8 +67,6 @@ public class AuditoriumControl {
             String query = "DELETE FROM auditorium WHERE auditorium_id = ?";
             int rowsAffected = Database.getInstance().delete(query,auditorium.getAudId());
             if(rowsAffected >0){
-                Theatre theatre = auditorium.getTheatre();
-                theatre.getAuditoriums().remove(auditorium);
                 System.out.println("Auditorium Deleted Successfully");
                 return true;
             }
