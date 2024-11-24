@@ -11,6 +11,12 @@ public class RegUser extends User {
         this.paymentCard = paymentCard;
     }
 
+    public RegUser(int userID, String name, String email, Number credits, String address, int paymentCard) {
+        super(userID, name, email, credits);
+        this.address = address;
+        this.paymentCard = paymentCard;
+    }
+
     public String getAddress() {
         return address;
     }

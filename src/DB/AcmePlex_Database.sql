@@ -121,24 +121,6 @@ INSERT INTO `containsMovie` (`theatre_id`, `movieID`) VALUES
 (2, 2),
 (2, 3);
 
-DROP TABLE IF EXISTS `tickets`;
-CREATE TABLE `tickets` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `CustomerID` int DEFAULT NULL,
-  `TheaterID` int DEFAULT NULL,
-  `movieID` int DEFAULT NULL,
-  `SeatRow` char(1) DEFAULT NULL,
-  `SeatColumn` int DEFAULT NULL,
-  `SeatNumber` int DEFAULT NULL, -- Corrected column definition
-  PRIMARY KEY (`ID`),
-  KEY `CustomerID` (`CustomerID`),
-  KEY `TheaterID` (`TheaterID`),
-  KEY `movieID` (`movieID`),
-  CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`UserId`) ON DELETE CASCADE,
-  CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`TheaterID`) REFERENCES `theatre` (`theatre_id`) ON DELETE CASCADE,
-  CONSTRAINT `tickets_ibfk_3` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `UserId` int auto_increment NOT NULL,
@@ -158,6 +140,28 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Address`, `PaymentInfo`, `IsRegisteredUser`) VALUES
 ('john_doe', 'john@example.com', 'password123', 100.00, 2, '123 Main St', 1234, 1),
 ('jane_smith', 'jane@example.com', 'password456', 50.00, 1, '456 Elm St', 5678, 1);
+
+DROP TABLE IF EXISTS `tickets`;
+CREATE TABLE `tickets` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `userID` int DEFAULT NULL,
+  `movieID` int DEFAULT NULL,
+  `showtimeID` int DEFAULT NULL,
+  `SeatNumber` int DEFAULT NULL, -- Corrected column definition
+  PRIMARY KEY (`ID`),
+  KEY `userID` (`userID`),
+  KEY `movieID` (`movieID`),
+  KEY `showtimeID` (`showtimeID`),
+  CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`UserId`) ON DELETE CASCADE,
+  CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE,
+  CONSTRAINT `tickets_ibfk_3` FOREIGN KEY (`showtimeID`) REFERENCES `showtimes` (`showtimeID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- Sample data for tickets
+INSERT INTO `tickets` (`userID`, `movieID`, `showtimeID`, `SeatNumber`) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 2);
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
