@@ -3,11 +3,13 @@ package src.Boundary;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.*;
 import src.DB.Database;
 import src.Entity.*;
+import src.Boundary.CartPage;
 
 public class SeatMap extends JFrame implements ActionListener {
     private JButton confirmButton;
@@ -143,8 +145,12 @@ public class SeatMap extends JFrame implements ActionListener {
                 System.out.println(x + "Selected");
                 showtime.getAuditorium().bookSeat(Integer.parseInt(x));
             }
-            SelectedSeats.clear();
             updateSeatPanel();
+
+            CartPage cartpage = new CartPage(showtime, SelectedSeats);
+            SelectedSeats.clear();
+            cartpage.setVisible(true);
+            this.dispose();
         } else if (e.getSource() instanceof JButton) {
             // Load the chair images
             ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
@@ -180,6 +186,7 @@ public class SeatMap extends JFrame implements ActionListener {
             Auditorium auditorium = new Auditorium(1, 50, theatre);
             Movie movie = new Movie(1, "Interstellar", "R", "A team of explorers travel through a wormhole in space.",
                     "Sci-Fi", 123);
+            
             Showtime showtime = new Showtime(LocalDateTime.now(), auditorium, movie);
 
             auditorium.bookSeat(10);
