@@ -123,8 +123,9 @@ public class SeatMap extends JFrame implements ActionListener {
         add(panel);
 
         // Create the confirm button
+        int height = (int) Math.ceil(seatCount / 10.0) * 100 + 100;
         confirmButton = new JButton("Confirm Seat Selection");
-        confirmButton.setBounds(250, 500, 200, 50); // Set position and size
+        confirmButton.setBounds(250, height, 200, 50); // Set position and size
         confirmButton.addActionListener(this);
         confirmButton.setFocusable(false);
         add(confirmButton);
