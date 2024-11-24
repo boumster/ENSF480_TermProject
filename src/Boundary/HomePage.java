@@ -6,15 +6,29 @@ import src.Entity.RegUser;
 
 public class HomePage extends JPanel {
     private JLabel welcomeLabel;
+    private JLabel creditLabel;
     private JButton browseMoviesButton;
     private JButton loginButton;
     private JButton guestButton;
     private JButton adminLoginButton;
     private JButton registerUser;
+    private JButton logoutButton;
+    private JButton viewTicketsButton;
     private MovieTheatreApp app;
 
     public HomePage(MovieTheatreApp app) {
         this.app = app;
+        generateLayout();
+    }
+
+    public void refresh() {
+        removeAll();
+        generateLayout();
+        revalidate();
+        repaint();
+    }
+
+    public void generateLayout() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         welcomeLabel = new JLabel("Welcome to AcmePlex!");
         welcomeLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -29,7 +43,7 @@ public class HomePage extends JPanel {
 
         guestButton = new JButton("Continue as Guest");
         guestButton.setAlignmentX(CENTER_ALIGNMENT);
-        guestButton.addActionListener(e-> app.switchToPage("BrowseMovies"));
+        guestButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
 
         adminLoginButton = new JButton("Admin Login");
         adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -39,37 +53,46 @@ public class HomePage extends JPanel {
         registerUser.setAlignmentX(CENTER_ALIGNMENT);
         registerUser.addActionListener(e -> app.switchToPage("Register"));
 
-        add(Box.createVerticalStrut(100)); // Add space
-        add(welcomeLabel);
-        add(Box.createVerticalStrut(20)); // Add space
-        add(loginButton);
-        add(Box.createVerticalStrut(20)); // Add space
-        add(guestButton);
-        add(Box.createVerticalStrut(20)); // Add space
-        add(adminLoginButton);
-        add(Box.createVerticalStrut(20)); // Add space
-        add(registerUser);
-    }
+        creditLabel = new JLabel("");
+        creditLabel.setAlignmentX(CENTER_ALIGNMENT);
 
-    public void refresh() {
-        RegUser currentUser = app.getCurrentUser();
-        if (currentUser != null) {
-            welcomeLabel.setText("Welcome, " + currentUser.getUsername() + "!");
+        if (app.getCurrentUser() != null) {
+            welcomeLabel.setText("Welcome, " + app.getCurrentUser().getUsername() + "!");
+            creditLabel.setText("Credits: " + app.getCurrentUser().getCredits());
+            viewTicketsButton = new JButton("View Tickets");
+            viewTicketsButton.setAlignmentX(CENTER_ALIGNMENT);
+            viewTicketsButton.addActionListener(e -> app.switchToPage("ViewTickets"));
 
-            remove(loginButton);
-            remove(guestButton);
-            remove(adminLoginButton);
-            remove(registerUser);
+            logoutButton = new JButton("Logout");
+            logoutButton.setAlignmentX(CENTER_ALIGNMENT);
+            logoutButton.addActionListener(e -> {
+                app.setCurrentUser(null);
+                app.switchToPage("Home");
+            });
+
+            add(Box.createVerticalStrut(20));
+            add(welcomeLabel);
+            add(Box.createVerticalStrut(20));
+            add(creditLabel);
+            add(Box.createVerticalStrut(20));
+            add(viewTicketsButton);
+            add(Box.createVerticalStrut(20));
             add(browseMoviesButton);
+            add(Box.createVerticalStrut(20));
+            add(logoutButton);
         } else {
-            welcomeLabel.setText("Welcome to AcmePlex!");
+            add(Box.createVerticalStrut(20));
+            add(welcomeLabel);
+            add(Box.createVerticalStrut(20));
+            add(creditLabel);
+            add(Box.createVerticalStrut(20));
             add(loginButton);
+            add(Box.createVerticalStrut(20));
             add(guestButton);
+            add(Box.createVerticalStrut(20));
             add(adminLoginButton);
+            add(Box.createVerticalStrut(20));
             add(registerUser);
-            remove(browseMoviesButton);
         }
-        revalidate();
-        repaint();
     }
 }
