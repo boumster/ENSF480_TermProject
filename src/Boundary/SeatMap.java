@@ -113,7 +113,7 @@ public class SeatMap extends JFrame implements ActionListener {
             seatButton.setHorizontalTextPosition(SwingConstants.CENTER);
             seatButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-            ArrayList<Seat> seatArray = showtime.getAuditorium().getSeatArray();
+            ArrayList<Seat> seatArray = showtime.getSeats();
             boolean isBooked = false;
             for (Seat seat : seatArray) {
                 if (seat.getStatus() && String.valueOf(seat.getSeatNumber()).equals(seatNumber)) {
@@ -143,7 +143,7 @@ public class SeatMap extends JFrame implements ActionListener {
             System.out.println("Confirm Button Pressed");
             for (String x : SelectedSeats) {
                 System.out.println(x + "Selected");
-                showtime.getAuditorium().bookSeat(Integer.parseInt(x));
+                showtime.bookSeat(Integer.parseInt(x));
             }
             updateSeatPanel();
 
@@ -187,15 +187,15 @@ public class SeatMap extends JFrame implements ActionListener {
             Movie movie = new Movie(1, "Interstellar", "R", "A team of explorers travel through a wormhole in space.",
                     "Sci-Fi", 123);
             
-            Showtime showtime = new Showtime(LocalDateTime.now(), auditorium, movie);
+            Showtime showtime = new Showtime(1, LocalDateTime.now(), auditorium, movie);
 
-            auditorium.bookSeat(10);
-            auditorium.bookSeat(11);
-            auditorium.bookSeat(12);
-            auditorium.bookSeat(13);
-            auditorium.bookSeat(14);
-            auditorium.bookSeat(15);
-            ArrayList<Seat> seats = auditorium.getSeatArray();
+            showtime.bookSeat(10);
+            showtime.bookSeat(11);
+            showtime.bookSeat(12);
+            showtime.bookSeat(13);
+            showtime.bookSeat(14);
+            showtime.bookSeat(15);
+            ArrayList<Seat> seats = showtime.getSeats();
             for (Seat seat : seats) {
                 System.out.println(
                         "Seat " + seat.getSeatNumber() + " status: " + (seat.getStatus() ? "Booked" : "Available"));

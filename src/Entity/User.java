@@ -15,6 +15,13 @@ public class User {
         this.credits = 0.0;
     }
 
+    public User(int userID, String username, String email, Number credits) {
+        this.userID = userID;
+        this.username = username;
+        this.email = email;
+        this.credits = credits;
+    }
+
     public void addCredit(Number credits) {
         try{
             this.credits = this.credits.doubleValue() + credits.doubleValue();

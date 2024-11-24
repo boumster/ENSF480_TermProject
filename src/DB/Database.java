@@ -69,7 +69,7 @@ public class Database {
                 while (rs.next()) {
                     System.out.println(rs.getString("Movie_name"));
                     Movie movie = new Movie(rs.getInt("movieID"), rs.getString("Movie_name"),
-                            rs.getString("Movie_description"), rs.getString("Movie_genre"), 
+                            rs.getString("Movie_description"), rs.getString("Movie_genre"),
                             rs.getString("Movie_rating"), rs.getInt("Movie_duration"));
                     listMovies.add(movie);
                 }
@@ -78,7 +78,8 @@ public class Database {
             selectQuery = "SELECT * FROM user";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    RegUser user = new RegUser(rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                    RegUser user = new RegUser(rs.getInt("userID"), rs.getString("Username"), rs.getString("Email"),
+                            rs.getInt("credits"), rs.getString("Address"),
                             rs.getInt("PaymentInfo"));
                     listRegUsers.add(user);
                 }
@@ -89,7 +90,8 @@ public class Database {
                 while (rs.next()) {
                     for (Theatre theatre : listTheatres) {
                         if (theatre.getId() == rs.getInt("theatre_id")) {
-                        Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"), theatre);
+                            Auditorium auditorium = new Auditorium(rs.getInt("auditorium_id"), rs.getInt("capacity"),
+                                    theatre);
                             theatre.addAuditorium(auditorium);
                             break;
                         }
@@ -139,8 +141,9 @@ public class Database {
                             }
                         }
                     }
-                    
-                    Showtime showtime = new Showtime(rs.getTimestamp("time").toLocalDateTime(), aud, movie);
+
+                    Showtime showtime = new Showtime(rs.getInt("showtimeID"), rs.getTimestamp("time").toLocalDateTime(),
+                            aud, movie);
                     listShowtimes.add(showtime);
                 }
             }
@@ -150,14 +153,14 @@ public class Database {
                 while (rs.next()) {
                     Showtime showtime = null;
                     for (Showtime s : listShowtimes) {
-                        if (s.getShowtime().equals(rs.getTimestamp("time").toLocalDateTime())) {
+                        if (s.getShowtimeId() == rs.getInt("showtimeID")) {
                             showtime = s;
                             break;
                         }
                     }
                     RegUser user = null;
                     for (RegUser u : listRegUsers) {
-                        if (u.getEmail().equals(rs.getString("email"))) {
+                        if (u.getUserID() == rs.getInt("userID")) {
                             user = u;
                             break;
                         }
@@ -170,11 +173,11 @@ public class Database {
                         }
                     }
 
-                    Booking booking = new Booking(rs.getInt("ID"), showtime, user, movie, rs.getInt("NumTickets"), rs.getDouble("TotalPrice"));
+                    Booking booking = new Booking(rs.getInt("ID"), showtime, user, movie, 2, 2);
+                    System.out.println("Booking: " + booking.toString());
                     listBookings.add(booking);
                 }
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
