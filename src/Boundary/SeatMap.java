@@ -2,14 +2,10 @@ package src.Boundary;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.*;
 import src.DB.Database;
 import src.Entity.*;
-import src.Boundary.CartPage;
 
 public class SeatMap extends JFrame implements ActionListener {
     private JButton confirmButton;
@@ -17,7 +13,6 @@ public class SeatMap extends JFrame implements ActionListener {
     private Showtime showtime;
     private ArrayList<String> SelectedSeats;
     private JPanel seatPanel;
-
     // to do:
     /*
      * 
@@ -27,10 +22,9 @@ public class SeatMap extends JFrame implements ActionListener {
      * 
      * 
      */
-    public SeatMap(Showtime showtime, Database db) {
+    public SeatMap(MovieTheatreApp app,Showtime showtime) {
         // Set up the JFrame
         this.showtime = showtime;
-        this.db = db;
         this.SelectedSeats = new ArrayList<String>();
 
         setTitle("Seat Map");
@@ -177,8 +171,9 @@ public class SeatMap extends JFrame implements ActionListener {
                 clickedButton.setIcon(selectedIcon);
             }
         }
-    }
+    }}
 
+/* 
     public static void main(String[] args) {
         try {
             Database db = Database.getInstance();
@@ -209,3 +204,4 @@ public class SeatMap extends JFrame implements ActionListener {
     }
 
 }
+*/

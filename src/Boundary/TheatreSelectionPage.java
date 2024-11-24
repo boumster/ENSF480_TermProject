@@ -1,9 +1,8 @@
 package src.Boundary;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
+import javax.swing.*;
 import src.Control.ShowtimeControl;
 import src.Control.TheatreControl;
 import src.Entity.Movie;
@@ -88,7 +87,10 @@ public class TheatreSelectionPage extends JPanel {
 
                 for (Showtime showtime : showtimes) {
                     JButton showtimeButton = new JButton(showtime.getShowtime().toString());
-                    showtimeButton.addActionListener(e -> app.switchToPage("Home"));
+                    showtimeButton.addActionListener(e ->{
+                        app.setSelectedShowtime(showtime);
+                        app.switchToPage("SeatMap");
+                    });
                     showtimesPanel.add(showtimeButton);
                 }
 
