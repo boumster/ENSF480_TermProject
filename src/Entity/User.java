@@ -39,6 +39,7 @@ public class User {
 
             String query = "UPDATE user SET credits = ? WHERE userID = ?";
             db.update(query, this.credits,this.userID);
+            setCredit(credits);
             db.close();
             System.out.println("Database updated for userID: " + this.userID + " with new credit: " + this.credits);
         }catch (SQLException e) {
@@ -53,6 +54,7 @@ public class User {
             Database db = Database.getInstance();
             String query = "UPDATE user SET credits = ? WHERE userID = ?";
             db.update(query, this.credits,this.userID);
+            setCredit(credits);
             System.out.println("Database updated for userID: " + this.userID + " with new credit: " + this.credits);
     }catch (SQLException e) {
         System.err.println("Error updating database for userID: " + this.userID);
@@ -74,6 +76,14 @@ public class User {
 
     public Number getCredits() {
         return credits;
+    }
+
+    public boolean getIsRegisteredUser() {
+        return IsRegisteredUser;
+    }
+
+    public void registerUser() {
+        IsRegisteredUser = true;
     }
 
     public void setUsername(String username) {

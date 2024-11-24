@@ -26,7 +26,7 @@ public class TheatreAdmin {
     public void removeShowtime(Movie movie, Showtime showTime) throws SQLException {
         String query = "DELETE FROM showtimes WHERE movieID = ? AND times = ?";
         
-        db.update(query, movie.getId(), showTime.getShowtime().toString());
+        db.delete(query, movie.getId(), showTime.getShowtime().toString());
         
         System.out.println("Showtime removed for movie ID: " + movie.getId());
     }
@@ -57,7 +57,7 @@ public class TheatreAdmin {
     public void removeMovie(Movie movie) throws SQLException {
         String query = "DELETE FROM movies WHERE movieID = ?";
         
-        db.update(query, movie.getId());
+        db.delete(query, movie.getId());
         
         System.out.println("Movie removed with ID: " + movie.getId());
     }

@@ -13,6 +13,7 @@ public class HomePage extends JPanel {
     private JButton adminLoginButton;
     private JButton registerUser;
     private JButton logoutButton;
+    private JButton payFeeButton;
     private JButton viewTicketsButton;
     private MovieTheatreApp app;
 
@@ -70,6 +71,12 @@ public class HomePage extends JPanel {
                 app.switchToPage("Home");
             });
 
+            payFeeButton = new JButton("Pay Fee");
+            payFeeButton.setAlignmentX(CENTER_ALIGNMENT);
+            payFeeButton.addActionListener(e -> {
+                app.switchToPage("FeePayment");
+            });
+
             add(Box.createVerticalStrut(20));
             add(welcomeLabel);
             add(Box.createVerticalStrut(20));
@@ -78,6 +85,10 @@ public class HomePage extends JPanel {
             add(viewTicketsButton);
             add(Box.createVerticalStrut(20));
             add(browseMoviesButton);
+            if (!app.getCurrentUser().getIsRegisteredUser()) {
+                add(Box.createVerticalStrut(20));
+                add(payFeeButton);
+            }
             add(Box.createVerticalStrut(20));
             add(logoutButton);
         } else {

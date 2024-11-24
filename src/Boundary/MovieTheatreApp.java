@@ -13,6 +13,7 @@ public class MovieTheatreApp {
     private RegUser currentUser = null;
     private HomePage homePage;
     private Movie selectedMovie;
+    private ViewTicketsPage viewTicketsPage;
 
     public MovieTheatreApp(){
         frame = new JFrame("Movie Theatre Application");
@@ -27,6 +28,7 @@ public class MovieTheatreApp {
         
         //Add different pages
         homePage = new HomePage(this);
+        viewTicketsPage = new ViewTicketsPage(this);
         cardPanel.add(homePage, "Home");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
         //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
@@ -37,6 +39,9 @@ public class MovieTheatreApp {
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
         cardPanel.add(new RegisterPage(this), "Register");
+        cardPanel.add(new PaymentPage(this, "FEE"), "FeePayment");
+        cardPanel.add(new PaymentPage(this, "TICKET"), "TicketPayment");
+        cardPanel.add(viewTicketsPage, "ViewTickets");
 
         frame.add(cardPanel);
         frame.setVisible(true);
@@ -45,6 +50,11 @@ public class MovieTheatreApp {
     public void switchToPage(String pageName){
         if (pageName.equals("TheatreSelection")) {
             cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
+        } 
+        if (pageName.equals("Home")){
+            homePage.refresh();
+        } if (pageName.equals("ViewTickets")){
+            viewTicketsPage.refreshTickets();
         }
         cardLayout.show(cardPanel, pageName);
     }

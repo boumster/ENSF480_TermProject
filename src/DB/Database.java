@@ -78,7 +78,8 @@ public class Database {
             selectQuery = "SELECT * FROM user";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    RegUser user = new RegUser(rs.getInt("UserId"),rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
+                    RegUser user = new RegUser(rs.getInt("UserId"), rs.getString("Username"), rs.getString("Email"),
+                            rs.getString("Address"),
                             rs.getInt("PaymentInfo"), rs.getDouble("credits"), rs.getBoolean("IsRegisteredUser"));
                     listRegUsers.add(user);
                 }
@@ -165,11 +166,12 @@ public class Database {
                         }
                     }
                     if (showtime == null || user == null) {
-                        System.out.println("Showtime or user not found for ticket ID: " + rs.getInt("ticketID"));
+                        System.out.println("Showtime or user not found for ticket ID: " + rs.getInt("ID"));
                         continue; // Skip this ticket entry
                     }
                     showtime.bookSeat(rs.getInt("seatNumber"));
-                    Ticket ticket = new Ticket(rs.getInt("ticketID"), showtime, rs.getDouble("price"),
+                    System.out.println("Ticket found for user: " + user.getUsername());
+                    Ticket ticket = new Ticket(rs.getInt("ID"), showtime, rs.getDouble("price"),
                             rs.getInt("seatNumber"), user);
                     listTickets.add(ticket);
                 }
@@ -203,8 +205,9 @@ public class Database {
     public int update(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
+            int result = stmt.executeUpdate();
             initData();
-            return stmt.executeUpdate(); // Return number of affected rows
+            return result; // Return number of affected rows
         }
     }
 
@@ -212,7 +215,9 @@ public class Database {
     public int delete(String query, Object... parameters) throws SQLException {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, parameters);
-            return stmt.executeUpdate(); // Return number of affected rows
+            int result = stmt.executeUpdate();
+            initData();
+            return result; // Return number of affected rows
         }
     }
 
@@ -255,21 +260,23 @@ public class Database {
     public static ArrayList<Ticket> getListTickets() {
         return listTickets;
     }
-    public static RegUser getRegUser(String query) {
-        try {
-            try (ResultSet rs = getInstance().read(query)) {
-                if (rs.next()) {
-                    RegUser user = new RegUser(rs.getInt("UserId"), rs.getString("Username"), rs.getString("Email"), rs.getString("Address"),
-                            rs.getInt("PaymentInfo"), rs.getDouble("credits"), rs.getBoolean("IsRegisteredUser"));
-                    listRegUsers.add(user);
-                    return user;
-                } else {
-                    System.out.println("No user found with the provided email and password.");
-                }
+
+    public static RegUser getRegUser(int userId) {
+        for (RegUser user : listRegUsers) {
+            if (user.getUserID() == userId) {
+                return user;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return null;
+    }
+
+    public static ArrayList<Ticket> getUserTickets(int userId) {
+        ArrayList<Ticket> userTickets = new ArrayList<Ticket>();
+        for (Ticket ticket : listTickets) {
+            if (ticket.getUser().getUserID() == userId) {
+                userTickets.add(ticket);
+            }
+        }
+        return userTickets;
     }
 }

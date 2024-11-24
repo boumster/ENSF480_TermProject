@@ -50,6 +50,7 @@ public class AuditoriumControl {
             int rowsAffected = db.update(query,newCapacity,auditorium.getAudId());
             if(rowsAffected >0){
                 System.out.println("Auditorium Capacity Updated Succesfully");
+                auditorium.setNumSeats(newCapacity);
                 return true;
             }
         }catch(SQLException e){
