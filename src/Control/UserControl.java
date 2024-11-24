@@ -21,7 +21,7 @@ public class UserControl {
      * Add a new user to the database
      */
     public boolean addUser(String username, String email) {
-        if (username == null || username.isEmpty() || email == null || email.isEmpty()) {
+        if (username == null || username.isEmpty() || email == null || email.isEmpty() || checkUsername(username)) {
             System.out.println("Invalid username or email");
             return false;
         }
@@ -212,5 +212,14 @@ public class UserControl {
     
         return users;
     }
-    
+
+    private static boolean checkUsername(String username) {
+        String query = "SELECT * FROM user WHERE Username = ?";
+        try {
+            return Database.getInstance().read(query, username).next();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }    
 }
