@@ -7,12 +7,12 @@ public class Acmeplex implements MailingSystem, BillingSystem{
     // These override func likely also need to update the db, if payment is recieved, the seat
     // needs to be marked as booked, if canceled it should be freed up again and so on.
     @Override
-    public void sendBookingEmail(boolean type, User user, Booking booking) {
+    public void sendReceiptEmail(boolean type, User user, Ticket ticket) {
        String subject = type ? "Booking Confirmation" : "Cancellation Confirmation";
 
        String message = type 
-               ? "Your booking for " + (booking.getmovie()).getTitle() + " at " + (booking.getShowtime()).getShowtime() + " is confirmed."
-               : "Your booking for " + (booking.getmovie()).getTitle() + " at " + (booking.getShowtime()).getShowtime()  + " has been canceled.";
+       ? "Thank you for booking with Acmeplex! Your ticket for " + ticket.getShowtime().getMovie().getTitle() + " at " + ticket.getShowtime().getAuditorium().getTheatre().getName() + " on " + ticket.getShowtime().getShowtime() + " has been confirmed. Your seat is " + ticket.getSeatNumber() + "." 
+       : "Your ticket for " + ticket.getShowtime().getMovie().getTitle() + " at " + ticket.getShowtime().getAuditorium().getTheatre().getName() + " on " + ticket.getShowtime() + " has been cancelled. Your seat has been freed up.";
         System.out.println("Email sent to " + user.getEmail() + ": " + subject + "\n" + message); 
        
     }

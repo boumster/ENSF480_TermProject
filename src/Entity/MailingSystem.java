@@ -1,6 +1,6 @@
 package src.Entity;
 
 public interface MailingSystem {
-    public void sendBookingEmail(boolean type, User user, Booking booking);
+    public void sendReceiptEmail(boolean type, User user, Ticket ticket);
     public void sendNewsletter(User user);
 }

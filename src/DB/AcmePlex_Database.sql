@@ -102,7 +102,8 @@ INSERT INTO `showtimes` (`time`, `movieID`, `auditoriumID`) VALUES
 ('2024-11-12 19:00:00', 1, 1),
 ('2024-11-12 21:00:00', 2, 1),
 ('2024-11-13 18:00:00', 3, 2),
-('2024-11-13 17:00:00', 1, 1);
+('2024-11-13 17:00:00', 1, 1),
+('2024-11-30 17:00:00', 1, 1);
 
 DROP TABLE IF EXISTS `containsMovie`;
 CREATE TABLE `containsMovie` (
@@ -148,6 +149,7 @@ CREATE TABLE `tickets` (
   `movieID` int DEFAULT NULL,
   `showtimeID` int DEFAULT NULL,
   `SeatNumber` int DEFAULT NULL, -- Corrected column definition
+  `price` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`ID`),
   KEY `userID` (`userID`),
   KEY `movieID` (`movieID`),
@@ -159,9 +161,11 @@ CREATE TABLE `tickets` (
 
 
 -- Sample data for tickets
-INSERT INTO `tickets` (`userID`, `movieID`, `showtimeID`, `SeatNumber`) VALUES
-(1, 1, 1, 1),
-(2, 2, 2, 2);
+INSERT INTO `tickets` (`userID`, `movieID`, `showtimeID`, `SeatNumber`, `price`) VALUES
+(1, 1, 1, 1, 10.00),
+(2, 2, 2, 2, 10.00),
+(1, 1, 5, 1, 10.00);
+
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

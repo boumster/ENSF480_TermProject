@@ -86,21 +86,7 @@ public class RegisterPage extends JPanel {
         addressField.setMaximumSize(addressField.getPreferredSize());
         addressField.setAlignmentX(CENTER_ALIGNMENT);
         add(addressField);
-
-        add(Box.createVerticalStrut(10)); // Add space
-
-        // Payment Card label
-        JLabel paymentCardLabel = new JLabel("Payment Card:");
-        paymentCardLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(paymentCardLabel);
-
-        // Payment Card field
-        paymentCardField = new JTextField(20);
-        paymentCardField.setMaximumSize(paymentCardField.getPreferredSize());
-        paymentCardField.setAlignmentX(CENTER_ALIGNMENT);
-        add(paymentCardField);
-
-        add(Box.createVerticalStrut(20)); // Add space
+        add(Box.createVerticalStrut(30)); // Add space
 
         // Register button
         JButton registerButton = new JButton("Register");
@@ -111,14 +97,13 @@ public class RegisterPage extends JPanel {
             String password = new String(passwordField.getPassword());
             String confirmPassword = new String(confirmPasswordField.getPassword());
             String address = addressField.getText();
-            int paymentCard = Integer.parseInt(paymentCardField.getText());
 
             if (!password.equals(confirmPassword)) {
                 JOptionPane.showMessageDialog(this, "Passwords do not match. Please try again.");
                 return;
             }
 
-            RegUser newUser = RegisterControl.register(username, password, email, address, paymentCard);
+            RegUser newUser = RegisterControl.register(username, password, email, address);
             if (newUser != null) {
                 JOptionPane.showMessageDialog(this, "Registration successful!");
                 app.setCurrentUser(newUser);

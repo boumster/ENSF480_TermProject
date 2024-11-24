@@ -85,4 +85,8 @@ public class Auditorium {
         return showtimeSeats.get(showtime);
     }
 
+    public void setNumSeats(int numSeats) {
+        this.numSeats = numSeats;
+    }
+
 }
