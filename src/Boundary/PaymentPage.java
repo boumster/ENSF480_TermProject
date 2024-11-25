@@ -118,7 +118,7 @@ public class PaymentPage extends JPanel {
         payCreditsButton = new JButton("Pay with Tickets");
         payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
         
-        Integer isUser = app.getCurrentUser().getUserID();
+        Integer isUser = app.getCurrentUser() != null ? app.getCurrentUser().getUserID() : null;
         if (isUser != null) {
 
             payCreditsButton.addActionListener(new ActionListener() {
