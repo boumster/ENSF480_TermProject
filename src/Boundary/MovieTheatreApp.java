@@ -1,9 +1,12 @@
 package src.Boundary;
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import src.Entity.Movie;
 import src.Entity.RegUser;
 import src.Entity.Showtime;
+import src.Entity.Ticket;
 
 public class MovieTheatreApp {
     private JFrame frame;
@@ -14,6 +17,7 @@ public class MovieTheatreApp {
     private Movie selectedMovie;
     private ViewTicketsPage viewTicketsPage;
     private Showtime selectedShowtime;
+    private ArrayList<String> selectedSeats;
 
     public MovieTheatreApp(){
         frame = new JFrame("Movie Theatre Application");
@@ -39,8 +43,7 @@ public class MovieTheatreApp {
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
         cardPanel.add(new RegisterPage(this), "Register");
-        cardPanel.add(new PaymentPage(this, "FEE"), "FeePayment");
-        cardPanel.add(new PaymentPage(this, "TICKET"), "TicketPayment");
+        cardPanel.add(new PaymentPage(this), "FeePayment");
         cardPanel.add(viewTicketsPage, "ViewTickets");
 
 
@@ -59,6 +62,9 @@ public class MovieTheatreApp {
         }
         if (pageName.equals("SeatMap")){
             cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");
+        }
+        if (pageName.equals("TicketPayment")){
+            cardPanel.add(new PaymentPage(this, selectedSeats), "TicketPayment");
         }
         cardLayout.show(cardPanel, pageName);
     }
@@ -87,6 +93,15 @@ public class MovieTheatreApp {
     public Showtime getSelectedShowtime() {
         return selectedShowtime;
     }
+
+    public void setSelectedSeats(ArrayList<String> selectedSeats) {
+        this.selectedSeats = selectedSeats;
+    }
+
+    public ArrayList<String> getSelectedSeats() {
+        return selectedSeats;
+    }
+
     public static void main(String[] args) {
         new MovieTheatreApp();
     }
