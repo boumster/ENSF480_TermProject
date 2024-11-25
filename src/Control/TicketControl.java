@@ -3,6 +3,8 @@ package src.Control;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import src.Boundary.MovieTheatreApp;
 import src.DB.Database;
 import src.Entity.Ticket;
 import src.Entity.User;
@@ -13,7 +15,7 @@ public class TicketControl {
         return Database.getUserTickets(userId);
     }
 
-    public static boolean cancelTicket(Ticket ticket) {
+    public static boolean cancelTicket(Ticket ticket, MovieTheatreApp app) {
         String query = "DELETE FROM tickets WHERE ID = ?";
         User user = ticket.getUser();
         String updateQuery = "UPDATE user SET credits = credits + ? WHERE userID = ?";
@@ -29,14 +31,14 @@ public class TicketControl {
 
         try {
             int result = Database.getInstance().delete(query, ticket.getTicketId());
+            System.out.println("result: " + result);
             if (result > 0) {
                 System.out.println("Ticket cancelled successfully");
                 // Update user credits
                 double refund = user.getIsRegisteredUser() ? ticket.getPrice().doubleValue()
                         : ticket.getPrice().doubleValue() * 0.85;
-                double newCredits = user.getCredits().doubleValue() + refund;
                 Database.getInstance().update(updateQuery, refund, user.getUserID());
-                user.setCredit(newCredits);
+                app.setCurrentUser(Database.getRegUser(user.getUserID()));
                 return true;
             }
         } catch (Exception e) {

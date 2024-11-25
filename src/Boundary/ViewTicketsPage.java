@@ -72,7 +72,7 @@ public class ViewTicketsPage extends JPanel {
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        boolean success = TicketControl.cancelTicket(ticket);
+                        boolean success = TicketControl.cancelTicket(ticket, app);
                         if (success) {
                             double refundAmount = ticket.getPrice().doubleValue();
                             if (!currentUser.getIsRegisteredUser()) {

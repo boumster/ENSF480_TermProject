@@ -170,7 +170,6 @@ public class Database {
                         continue; // Skip this ticket entry
                     }
                     showtime.bookSeat(rs.getInt("seatNumber"));
-                    System.out.println("Ticket found for user: " + user.getUsername());
                     Ticket ticket = new Ticket(rs.getInt("ID"), showtime, rs.getDouble("price"),
                             rs.getInt("seatNumber"), user);
                     listTickets.add(ticket);
