@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import src.Control.ShowtimeControl;
 import src.Control.TheatreControl;
+import src.Entity.DateTime;
 import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
@@ -18,9 +19,12 @@ public class TheatreSelectionPage extends JPanel {
     private LocalDate selectedDate;
     private JPanel leftPanel;
 
-    public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie, boolean isRegistered) {
+    public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
-        this.isRegistered = isRegistered;
+        
+        if (app.getCurrentUser() != null) {
+            this.isRegistered = app.getCurrentUser().getIsRegisteredUser();
+        } else this.isRegistered = false;
 
         // Set BorderLayout for main panel
         setLayout(new BorderLayout());
@@ -80,8 +84,9 @@ public class TheatreSelectionPage extends JPanel {
             theatreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             leftPanel.add(Box.createVerticalStrut(10));
             leftPanel.add(theatreLabel);
+            LocalDate dt = LocalDate.now();
 
-            ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatre(selectedMovie, theatre);
+            ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, theatre, dt);
 
             if (showtimes.isEmpty()) {
                 JLabel noShowtimesLabel = new JLabel("No showtimes available.");

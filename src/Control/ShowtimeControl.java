@@ -70,7 +70,7 @@ public class ShowtimeControl {
                 // Check that the movie, theatre, and date match
                 if (showtime.getMovie() == movie &&
                     showtime.getAuditorium().getTheatre() == theatre &&
-                    showtime.getShowtime().toLocalDate().equals(date)) {
+                    showtime.getShowtime().toLocalDate().getDayOfMonth() == date.getDayOfMonth()) {
                     filteredShowtimes.add(showtime);
                 }
             }
