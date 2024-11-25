@@ -53,7 +53,14 @@ public class MovieTheatreApp {
     public void switchToPage(String pageName){
         if (pageName.equals("TheatreSelection")) {
             //Set to registered for testing this needs to be fixed 
-            cardPanel.add(new TheatreSelectionPage(this, selectedMovie, true), "TheatreSelection");
+            RegUser user = app.getCurrentUser();
+            if (user != null) {
+                cardPanel.add(new TheatreSelectionPage(this, selectedMovie, user.isRegisteredUser()), "TheatreSelection");
+            }
+            else{
+                cardPanel.add(new TheatreSelectionPage(this, selectedMovie, user.isRegisteredUser()), "TheatreSelection");
+            }
+                
         } 
         if (pageName.equals("Home")){
             homePage.refresh();
