@@ -142,9 +142,8 @@ public class TheatreSelectionPage extends JPanel {
         dateDropdown.addActionListener(e -> {
             selectedDate = today.plusDays(dateDropdown.getSelectedIndex());
             leftPanel.removeAll();
-            for (Theatre theatre : theatres){
-                updateShowtimes(app, selectedMovie, theatre, selectedDate);
-            }
+            updateShowtimes(app, selectedMovie, selectedDate);
+            
             
         });
 
@@ -162,34 +161,71 @@ public class TheatreSelectionPage extends JPanel {
         
     }
 
-    private void updateShowtimes(MovieTheatreApp app, Movie selectedMovie, Theatre selectedTheatre, LocalDate selectedDate) {
+    private void updateShowtimes(MovieTheatreApp app, Movie selectedMovie, LocalDate selectedDate) {
+        System.out.println("Updating showtimes...");
+        System.out.println("Selected Movie: " + selectedMovie.getTitle());
+        System.out.println("Selected Date: " + selectedDate);
+    
+        // Clear previous content
+        System.out.println("Cleared leftPanel.");
     
         ShowtimeControl showtimeControl = new ShowtimeControl();
-        ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, selectedTheatre, selectedDate);
+        ArrayList<Theatre> theatres = TheatreControl.getAllTheatres();
     
-        if (showtimes.isEmpty()) {
-            leftPanel.add(new JLabel("No showtimes available for " + selectedMovie.getTitle() + " on " + selectedDate));
-        } else {
-            // Populate the left panel with showtimes
-            for (Showtime showtime : showtimes) {
-                // Format the showtime (e.g., "Mar 5, 7:30 PM")
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
-                String formattedDateTime = showtime.getShowtime().format(formatter);
-                JButton showtimeButton = new JButton(formattedDateTime);
-                
-                // Add listener to handle showtime selection
-                showtimeButton.addActionListener(e -> {
-                    app.setSelectedShowtime(showtime);
-                    app.switchToPage("SeatMap");
-                });
+        for (Theatre theatre : theatres) {
+            System.out.println("Processing theatre: " + theatre.getName());
     
-                leftPanel.add(showtimeButton);
+            // Add the theatre name
+            JLabel theatreLabel = new JLabel(theatre.getName());
+            theatreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+            theatreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            //leftPanel.add(Box.createVerticalStrut(10)); // Add spacing before theatre name
+            leftPanel.add(theatreLabel);
+    
+            // Get showtimes for the current theatre
+            ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, theatre, selectedDate);
+    
+            if (showtimes.isEmpty()) {
+                JLabel noShowtimesLabel = new JLabel("No showtimes available.");
+                noShowtimesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                leftPanel.add(noShowtimesLabel);
+                System.out.println("No showtimes found for theatre: " + theatre.getName());
+            } else {
+                // Panel to hold showtime buttons
+                JPanel showtimesPanel = new JPanel();
+                showtimesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                showtimesPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    
+                for (Showtime showtime : showtimes) {
+                    // Format the showtime
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
+                    String formattedDateTime = showtime.getShowtime().format(formatter);
+                    System.out.println("Adding button for showtime: " + formattedDateTime);
+    
+                    // Create button for each showtime
+                    JButton showtimeButton = new JButton(formattedDateTime);
+                    showtimeButton.addActionListener(e -> {
+                        System.out.println("Selected Showtime: " + formattedDateTime);
+                        app.setSelectedShowtime(showtime);
+                        app.switchToPage("SeatMap");
+                    });
+    
+                    // Add button to the panel
+                    showtimesPanel.add(showtimeButton);
+                }
+    
+                leftPanel.add(showtimesPanel); // Add the panel to the left panel
             }
+    
+            // Add spacing after each theatre section
+            leftPanel.add(Box.createVerticalStrut(20));
         }
     
-        // Force layout updates
+        // Update the UI
+        System.out.println("Revalidating and repainting leftPanel...");
         leftPanel.revalidate();
         leftPanel.repaint();
     }
+
     
 }
