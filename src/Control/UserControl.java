@@ -156,7 +156,7 @@ public class UserControl {
         return false;
     }
     
-    public boolean deductCredit(int userId, double amount) {
+    public boolean deductCredit(int userId, Double amount) {
         if (amount <= 0) {
             System.out.println("Amount to deduct must be greater than 0.");
             return false;

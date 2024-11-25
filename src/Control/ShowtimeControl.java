@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class ShowtimeControl {
     private Database db;
-    public ShowtimeControl(){
+
+    public ShowtimeControl() {
         try {
             db = Database.getInstance();
         } catch (SQLException e) {
@@ -37,26 +38,20 @@ public class ShowtimeControl {
 
     public ArrayList<Showtime> getShowtimesForMovieForTheatre(Movie movie, Theatre theatre) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
-
         ArrayList<Showtime> showtimesForMovieForTheatre = new ArrayList<>();
-
         try {
             // Use the Database's getListShowtimes method
             showtimes = Database.getListShowtimes();
             for (Showtime showtime : showtimes) {
-                if(showtime.getMovie() == movie && showtime.getAuditorium().getTheatre() == theatre){
+                if (showtime.getMovie().getTitle().equals(movie.getTitle())
+                        && showtime.getAuditorium().getTheatre().getName().equals(theatre.getName())) {
                     showtimesForMovieForTheatre.add(showtime);
-
-                // For each movie, get the showtimes
-                System.out.println("Showtime: " + showtime.getShowtime());
                 }
             }
         } catch (Exception e) {
             System.err.println("Error fetching showtimes for movie for theatre from database: " + e.getMessage());
             e.printStackTrace();
         }
-        return showtimesForMovieForTheatre ;
+        return showtimesForMovieForTheatre;
     }
-
-
 }

@@ -15,7 +15,6 @@ public class TheatreSelectionPage extends JPanel {
 
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
-
         // Set BorderLayout for main panel
         setLayout(new BorderLayout());
 
