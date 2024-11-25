@@ -130,8 +130,21 @@ public class SeatMap extends JPanel implements ActionListener {
             updateSeatPanel();
             app.switchToPage("CartPage");
         } else if (e.getSource() instanceof JButton) {
-            JButton clickedButton = (JButton) e.getSource();
-            if (SelectedSeats.contains(clickedButton.getText())) {
+            // Load the chair images
+            ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
+            Image img = availableIcon.getImage();
+            Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+            availableIcon = new ImageIcon(scaledImg);
+
+            ImageIcon selectedIcon = new ImageIcon("src/Boundary/Images/chair-selected.png");
+            img = selectedIcon.getImage();
+            scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+            selectedIcon = new ImageIcon(scaledImg);
+
+            JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
+            if (clickedButton.getBackground() == Color.GREEN) {
+                System.out.println("Seat " + clickedButton.getText() + " unpressed");
+                clickedButton.setBackground(new Color(100, 149, 237)); // Change its color
                 SelectedSeats.remove(clickedButton.getText());
                 clickedButton.setBackground(new Color(100, 149, 237));
             } else {

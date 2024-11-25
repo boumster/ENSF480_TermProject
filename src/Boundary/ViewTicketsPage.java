@@ -63,10 +63,6 @@ public class ViewTicketsPage extends JPanel {
                         "Ticket ID: " + ticket.getTicketId() + ", Movie: " + ticket.getShowtime().getMovie().getTitle()
                                 + ", Showtime: " + formattedDateTime + ", Seat: " + ticket.getSeatNumber()
                                 + ", Price: $" + ticket.getPrice());
-                ticketPanel.add(ticketLabel);
-
-                // Add horizontal spacing
-                ticketPanel.add(Box.createHorizontalStrut(20)); // Adjust the size as needed
 
                 JButton cancelButton = new JButton("Cancel");
                 cancelButton.addActionListener(new ActionListener() {
@@ -89,10 +85,17 @@ public class ViewTicketsPage extends JPanel {
                         refreshTickets();
                     }
                 });
-                ticketPanel.add(cancelButton);
+
+                // Create a horizontal box to hold the label and button
+                Box horizontalBox = Box.createHorizontalBox();
+                horizontalBox.add(ticketLabel);
+                horizontalBox.add(Box.createHorizontalStrut(5));
+                horizontalBox.add(cancelButton);
+
+                ticketPanel.add(horizontalBox);
 
                 ticketsPanel.add(ticketPanel);
-                ticketsPanel.add(Box.createVerticalStrut(5)); // Adjust the size as needed
+                ticketsPanel.add(Box.createVerticalStrut(5));
             }
         } else {
             JLabel noTicketsLabel = new JLabel("No tickets found.");

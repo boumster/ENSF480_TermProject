@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class LoginControl {
 
     public static RegUser login(String email, String password) {
-        String query = "SELECT UserID FROM user WHERE email = ? AND password = ?";
+        String query = "SELECT UserID FROM user WHERE username = ? AND password = ?";
         try {
             ResultSet rs = Database.getInstance().read(query, email, password);
             if (rs.next()) {
