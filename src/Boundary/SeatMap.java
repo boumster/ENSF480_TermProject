@@ -158,9 +158,9 @@ public class SeatMap extends JFrame implements ActionListener {
             selectedIcon = new ImageIcon(scaledImg);
 
             JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
-            if (clickedButton.getBackground() == Color.GRAY) {
+            if (clickedButton.getBackground() == Color.GREEN) {
                 System.out.println("Seat " + clickedButton.getText() + " unpressed");
-                clickedButton.setBackground(Color.BLUE); // Change its color
+                clickedButton.setBackground(new Color(100, 149, 237)); // Change its color
                 SelectedSeats.remove(clickedButton.getText());
                 clickedButton.setIcon(availableIcon);
 
