@@ -1,6 +1,7 @@
 package src.Boundary;
 
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 import src.Control.ShowtimeControl;
@@ -10,7 +11,7 @@ import src.Entity.Showtime;
 import src.Entity.Theatre;
 
 public class TheatreSelectionPage extends JPanel {
-    private Movie selectedMovie; // Movie selected in browse page
+    private Movie selectedMovie; 
 
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
@@ -86,7 +87,15 @@ public class TheatreSelectionPage extends JPanel {
                 showtimesPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
                 for (Showtime showtime : showtimes) {
-                    JButton showtimeButton = new JButton(showtime.getShowtime().toString());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
+
+                    // Format the LocalDateTime
+                    String formattedDateTime = showtime.getShowtime().format(formatter);
+
+                    // Create the button with the formatted date and time
+                    JButton showtimeButton = new JButton(formattedDateTime);
+
+
                     showtimeButton.addActionListener(e ->{
                         app.setSelectedShowtime(showtime);
                         app.switchToPage("SeatMap");
