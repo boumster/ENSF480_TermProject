@@ -384,7 +384,7 @@ INSERT INTO `containsMovie` (`theatre_id`, `movieID`) VALUES
 (4, 17),
 (4, 18),
 (4, 19),
-(4, 20);
+(4, 20),
 (2, 3),
 (2, 4),
 (2, 5),
@@ -472,16 +472,6 @@ INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Addr
 ('george_harris', 'george@example.com', 'password606', 110.00, 3, '606 Willow St', 1221, 1),
 ('hannah_ivan', 'hannah@example.com', 'password707', 80.00, 2, '707 Fir St', 3241, 0);
 
-('jane_smith', 'jane@example.com', 'password456', 50.00, 1, '456 Elm St', 5678, 1),
-('alice_jones', 'alice@example.com', 'password789', 75.00, 3, '789 Oak St', 9101, 1),
-('bob_brown', 'bob@example.com', 'password101', 20.00, 0, '101 Pine St', 1121, 0),
-('charlie_davis', 'charlie@example.com', 'password202', 150.00, 4, '202 Maple St', 3141, 1),
-('diana_evans', 'diana@example.com', 'password303', 60.00, 2, '303 Cedar St', 5161, 1),
-('edward_frank', 'edward@example.com', 'password404', 90.00, 1, '404 Birch St', 7181, 0),
-('fiona_green', 'fiona@example.com', 'password505', 30.00, 0, '505 Spruce St', 9201, 1),
-('george_harris', 'george@example.com', 'password606', 110.00, 3, '606 Willow St', 1221, 1),
-('hannah_ivan', 'hannah@example.com', 'password707', 80.00, 2, '707 Fir St', 3241, 0);
-
 
 DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE `tickets` (
@@ -516,7 +506,7 @@ INSERT INTO `tickets` (`userID`, `movieID`, `showtimeID`, `SeatNumber`, `price`)
 (1, 2, 11, 11, 10.00),
 (2, 3, 12, 12, 10.00),
 (3, 4, 13, 13, 12.00),
-(4, 5, 14, 14, 15.00);
+(4, 5, 14, 14, 15.00),
 (1, 1, 5, 1, 10.00),
 (3, 3, 3, 3, 12.00),
 (4, 4, 4, 4, 15.00),
