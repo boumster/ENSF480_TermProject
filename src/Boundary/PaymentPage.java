@@ -7,8 +7,12 @@ import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import src.Entity.Ticket;
+import src.Control.TicketControl;
+import src.Control.UserControl;
+
 
 import src.Control.PaymentControl;
+import src.Entity.User;
 
 public class PaymentPage extends JPanel {
     private JTextField cardNumberField;
@@ -16,12 +20,13 @@ public class PaymentPage extends JPanel {
     private JTextField expiryDateField;
     private JTextField cvvField;
     private JButton payButton;
+    private JButton payCreditsButton;
     private JLabel statusLabel;
     private PaymentControl paymentControl;
     private JPanel ticketsPanel;
     private ArrayList<String> seatsSelected;
     private JButton backButton;
-
+    private JLabel totalPriceLabel;
     private MovieTheatreApp app;
 
     public PaymentPage(MovieTheatreApp app) {
@@ -85,6 +90,7 @@ public class PaymentPage extends JPanel {
 
     public PaymentPage(MovieTheatreApp app, ArrayList<String> seatsSelected) {
         this.seatsSelected = seatsSelected;
+        this.app = app;
         paymentControl = new PaymentControl();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -103,6 +109,61 @@ public class PaymentPage extends JPanel {
         refreshTickets();
 
         add(Box.createVerticalStrut(20)); // Add space
+        totalPriceLabel = new JLabel("Total Price: $" + calculateTotalPrice());
+        totalPriceLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        totalPriceLabel.setAlignmentX(CENTER_ALIGNMENT);
+        add(totalPriceLabel);
+
+        add(Box.createVerticalStrut(20));
+        payCreditsButton = new JButton("Pay with Tickets");
+        payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
+        
+        Integer isUser = app.getCurrentUser().getUserID();
+        if (isUser != null) {
+
+            payCreditsButton.addActionListener(new ActionListener() {
+                @Override
+        public void actionPerformed(ActionEvent e) {
+            // Check if user has enough credits to pay for the tickets
+            if (app.getCurrentUser().getCredits().doubleValue() < calculateTotalPrice()) {
+                System.err.println("Insufficient Credits, please enter card details.");
+                statusLabel.setText("Insufficient credits. Please enter card details.");
+            } else {
+                UserControl controller = new UserControl();
+                boolean creditsDeducted = controller.deductCredit(app.getCurrentUser().getUserID(), calculateTotalPrice());
+                
+                if (creditsDeducted) {
+                    boolean allTicketsCreated = true;
+                    for (String seat : seatsSelected) {
+                        int movieID = app.getSelectedMovie().getId();
+                        int showtimeID = app.getSelectedShowtime().getShowtimeId();
+                        int seatNum = Integer.parseInt(seat);
+                        double price = 10.0;  // Assuming the price for a ticket is 10.0
+                        Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID() : null;
+
+                        // Attempt to create each ticket
+                        boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum, price, userID);
+                        if (!ticketCreated) {
+                            allTicketsCreated = false;
+                            break;
+                        }
+                    }
+
+                    // Final response after attempting to create tickets
+                    if (allTicketsCreated) {
+                        statusLabel.setText("Payment successful! Thank you.");
+                        app.switchToPage("Home");
+                    } else {
+                        statusLabel.setText("Payment failed. Please try again.");
+                    }
+                } else {
+                    statusLabel.setText("Payment failed. Please try again.");
+                }
+            }
+        }
+    });
+    add(payCreditsButton);
+}
 
         // Card Number label and field
         JLabel cardNumberLabel = new JLabel("Card Number:");
@@ -170,8 +231,24 @@ public class PaymentPage extends JPanel {
                     // Simulate payment processing
                     boolean paymentSuccess = processPayment(cardNumber, cardHolder, expiryDate, cvv);
                     if (paymentSuccess) {
+                        boolean allTicketsCreated = true;
+                        for(String seat : seatsSelected){
+                        int movieID = app.getSelectedMovie().getId();
+                        int showtimeID = app.getSelectedShowtime().getShowtimeId();
+                        int seatNum = Integer.parseInt(seat);
+                        double price = 10.0;
+                        Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID() : null;
+                        
+                        boolean ticketCreated = TicketControl.createTicket(movieID,showtimeID,seatNum,price,userID);
+                        if(!ticketCreated){
+                            allTicketsCreated = false;
+                            break;
+                            }
+                        }
+                        if(allTicketsCreated){
                         statusLabel.setText("Payment successful! Thank you.");
                         app.switchToPage("Home");
+                        }
                     } else {
                         statusLabel.setText("Payment failed. Please try again.");
                     }
@@ -206,7 +283,6 @@ public class PaymentPage extends JPanel {
         for (String seat : seatsSelected) {
             JPanel ticketPanel = new JPanel();
             ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));
-
             JLabel ticketLabel = new JLabel("Seat: " + seat + ", Price: $10");
             ticketPanel.add(ticketLabel);
 
@@ -231,6 +307,7 @@ public class PaymentPage extends JPanel {
     private boolean processPayment(String cardNumber, String cardHolder, String expiryDate, String cvv) {
         // Simulate payment processing logic
         // In a real application, you would integrate with a payment gateway here
+
         return true; // Simulate a successful payment
     }
 
@@ -238,6 +315,11 @@ public class PaymentPage extends JPanel {
         // Simulate payment processing logic
         // In a real application, you would integrate with a payment gateway here
         return true; // Simulate a successful payment
+    }
+    
+
+    private Double calculateTotalPrice() {
+        return seatsSelected.size() * 10.0; // Assume each seat costs $10
     }
 
 }

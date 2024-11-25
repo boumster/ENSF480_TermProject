@@ -159,10 +159,13 @@ public class Database {
                         }
                     }
                     RegUser user = null;
-                    for (RegUser u : listRegUsers) {
-                        if (u.getUserID() == rs.getInt("userID")) {
-                            user = u;
-                            break;
+                    int userID = rs.getInt("userID");
+                    if(userID != 0){
+                        for (RegUser u : listRegUsers) {
+                            if (u.getUserID() == userID) {
+                                user = u;
+                                break;
+                            }
                         }
                     }
                     if (showtime == null || user == null) {
