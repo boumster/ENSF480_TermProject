@@ -83,17 +83,16 @@ public class LoginPage extends JPanel {
         loginButton.addActionListener(e -> {
             String email = usernameField.getText();
             String password = new String(passwordField.getPassword());
-
+        
             boolean isAdminLogin = type.equals("ADMIN");
-
+        
             RegUser user = LoginControl.login(email, password, isAdminLogin);  
             if (user != null) {
-                app.setCurrentUser(user); // Update currentUser in main
+                app.setCurrentUser(user);
                 JOptionPane.showMessageDialog(this, "Login successful!");
-
-                // redirect to corresponding page
+        
                 if (isAdminLogin) {
-                    app.switchToPage("AdminHome");
+                    app.switchToPage("AdminPage");
                 } else {
                     app.switchToPage("Home");
                 }

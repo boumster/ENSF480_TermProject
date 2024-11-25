@@ -39,6 +39,7 @@ public class MovieTheatreApp {
         cardPanel.add(new ConfirmationPage(this), "Confirmation");
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
+        cardPanel.add(new AdminPage(this), "AdminPage");
         cardPanel.add(new RegisterPage(this), "Register");
         cardPanel.add(new PaymentPage(this, "FEE"), "FeePayment");
         cardPanel.add(new PaymentPage(this, "TICKET"), "TicketPayment");
@@ -60,6 +61,9 @@ public class MovieTheatreApp {
         }
         if (pageName.equals("SeatMap")){
             cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");
+        }
+        if (pageName.equals("AdminPage")) {
+            
         }
         cardLayout.show(cardPanel, pageName);
     }
