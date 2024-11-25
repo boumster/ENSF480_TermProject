@@ -20,6 +20,7 @@ public class PaymentPage extends JPanel {
     private PaymentControl paymentControl;
     private JPanel ticketsPanel;
     private ArrayList<String> seatsSelected;
+    private JButton backButton;
 
     private MovieTheatreApp app;
 
@@ -178,6 +179,19 @@ public class PaymentPage extends JPanel {
             }
         });
         add(payButton);
+
+        add(Box.createVerticalStrut(20)); // Add space
+
+        // Back button
+        backButton = new JButton("Back");
+        backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.switchToPage("SeatMap");
+            }
+        });
+        add(backButton);
 
         add(Box.createVerticalStrut(20)); // Add space
 
