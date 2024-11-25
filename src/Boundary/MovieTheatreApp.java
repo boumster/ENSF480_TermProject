@@ -34,6 +34,7 @@ public class MovieTheatreApp {
         homePage = new HomePage(this);
         viewTicketsPage = new ViewTicketsPage(this);
         cardPanel.add(homePage, "Home");
+        cardPanel.add(new AdminHomePage(this), "AdminHome");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
         //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
         cardPanel.add(new ShowtimesPage(this), "Showtimes");
@@ -42,6 +43,7 @@ public class MovieTheatreApp {
         cardPanel.add(new ConfirmationPage(this), "Confirmation");
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
+        cardPanel.add(new AdminPage(this), "AdminPage");
         cardPanel.add(new RegisterPage(this), "Register");
         cardPanel.add(new PaymentPage(this), "FeePayment");
         cardPanel.add(viewTicketsPage, "ViewTickets");
@@ -65,6 +67,9 @@ public class MovieTheatreApp {
         }
         if (pageName.equals("TicketPayment")){
             cardPanel.add(new PaymentPage(this, selectedSeats), "TicketPayment");
+        }
+        if (pageName.equals("AdminPage")) {
+            
         }
         cardLayout.show(cardPanel, pageName);
     }
