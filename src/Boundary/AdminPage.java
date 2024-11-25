@@ -1,11 +1,8 @@
 package src.Boundary;
+import java.awt.*;
+import java.sql.SQLException;
 import javax.swing.*;
 import src.Control.AdminControl;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class AdminPage extends JPanel {
     private CardLayout cardLayout;
