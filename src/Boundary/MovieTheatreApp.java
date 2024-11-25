@@ -57,7 +57,7 @@ public class MovieTheatreApp {
             viewTicketsPage.refreshTickets();
         }
         if (pageName.equals("SeatMap")){
-            cardPanel.add(new SeatMap(this, selectedShowtime));
+            cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");
         }
         cardLayout.show(cardPanel, pageName);
     }

@@ -4,15 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import src.DB.Database;
 import src.Entity.*;
 
-public class SeatMap extends JFrame implements ActionListener {
+public class SeatMap extends JPanel implements ActionListener {
     private JButton confirmButton;
-    private Database db;
     private Showtime showtime;
     private ArrayList<String> SelectedSeats;
     private JPanel seatPanel;
+    private MovieTheatreApp app;
+
     // to do:
     /*
      * 
@@ -24,53 +24,48 @@ public class SeatMap extends JFrame implements ActionListener {
      */
     public SeatMap(MovieTheatreApp app,Showtime showtime) {
         // Set up the JFrame
+        this.app = app;
         this.showtime = showtime;
         this.SelectedSeats = new ArrayList<String>();
 
-        setTitle("Seat Map");
-        setSize(800, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.BLACK);
-        setLayout(null);
+        setLayout(new BorderLayout());
+        JPanel headerPanel = new JPanel(new GridLayout(2,1));
+        headerPanel.setBackground(Color.BLACK);
 
         // Create the JLabels
         JLabel movieLabel = new JLabel("Movie: " + showtime.getMovie().getTitle());
         movieLabel.setBounds(50, 30, 700, 30);
         movieLabel.setForeground(Color.WHITE);
         movieLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        add(movieLabel);
+        headerPanel.add(movieLabel);
 
         JLabel auditoriumLabel = new JLabel("Auditorium: " + showtime.getAuditorium().getAudId());
         auditoriumLabel.setBounds(50, 50, 700, 30);
         auditoriumLabel.setForeground(Color.WHITE);
         auditoriumLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(auditoriumLabel);
+        headerPanel.add(auditoriumLabel);
 
-        JLabel label = new JLabel("Acmeplex Cinemas");
-        label.setBounds(150, 10, 200, 30);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        add(label);
+        add(headerPanel, BorderLayout.NORTH);
 
         // Create the JPanel for seat buttons
         seatPanel = new JPanel();
-        seatPanel.setBounds(50, 90, 600, 500); // Set position and size
         seatPanel.setBackground(Color.LIGHT_GRAY);
+        add(seatPanel, BorderLayout.CENTER);
 
         updateSeatPanel();
 
-        add(seatPanel);
-
+        JPanel footerPanel = new JPanel();
         // Create the confirm button
         confirmButton = new JButton("Confirm Seat Selection");
-        confirmButton.setBounds(250, 600, 200, 50); // Set position and size
         confirmButton.addActionListener(this);
         confirmButton.setFocusable(false);
-        add(confirmButton);
+        footerPanel.add(confirmButton);
+        
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> app.switchToPage("TheatreSelectionPage"));
+        footerPanel.add(backButton);
 
-        // Make the frame visible
-        setVisible(true);
+        add(footerPanel,BorderLayout.SOUTH);
     }
 
     private void updateSeatPanel() {
@@ -79,33 +74,26 @@ public class SeatMap extends JFrame implements ActionListener {
         int seatCount = showtime.getAuditorium().getNumSeats();
         seatPanel.setLayout(new GridLayout((int) Math.ceil(seatCount / 10.0), 10, 5, 5));
 
-        // Load the chair images
         ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
         Image img = availableIcon.getImage();
-        Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         availableIcon = new ImageIcon(scaledImg);
 
         ImageIcon bookedIcon = new ImageIcon("src/Boundary/Images/chair-booked.png");
         img = bookedIcon.getImage();
-        scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+        scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         bookedIcon = new ImageIcon(scaledImg);
 
         ImageIcon selectedIcon = new ImageIcon("src/Boundary/Images/chair-selected.png");
         img = selectedIcon.getImage();
-        scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+        scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         selectedIcon = new ImageIcon(scaledImg);
 
         for (int i = 1; i <= seatCount; i++) {
             String seatNumber = String.valueOf(i);
-            JButton seatButton = new JButton(seatNumber); // Create a new button for each seat with text
+            JButton seatButton = new JButton(seatNumber);
             seatButton.setFocusable(false);
-            seatButton.setBackground(new Color(100, 149, 237));
-            seatButton.setToolTipText(seatNumber); // Set the seat number as a tooltip
             seatButton.setFont(new Font("Arial", Font.BOLD, 10));
-
-            // Adjust text position
-            seatButton.setHorizontalTextPosition(SwingConstants.CENTER);
-            seatButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 
             ArrayList<Seat> seatArray = showtime.getSeats();
             boolean isBooked = false;
@@ -122,11 +110,10 @@ public class SeatMap extends JFrame implements ActionListener {
                 seatButton.setIcon(availableIcon);
             }
 
-            seatButton.addActionListener(this); // Attach the action listener
+            seatButton.addActionListener(this);
             seatPanel.add(seatButton);
         }
 
-        // Refresh the panel to reflect changes
         seatPanel.revalidate();
         seatPanel.repaint();
     }
@@ -134,45 +121,23 @@ public class SeatMap extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirmButton) {
-            System.out.println("Confirm Button Pressed");
             for (String x : SelectedSeats) {
-                System.out.println(x + "Selected");
                 showtime.bookSeat(Integer.parseInt(x));
             }
             updateSeatPanel();
-
-            CartPage cartpage = new CartPage(showtime, SelectedSeats);
-            SelectedSeats.clear();
-            cartpage.setVisible(true);
-            this.dispose();
+            app.switchToPage("CartPage");
         } else if (e.getSource() instanceof JButton) {
-            // Load the chair images
-            ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
-            Image img = availableIcon.getImage();
-            Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
-            availableIcon = new ImageIcon(scaledImg);
-
-            ImageIcon selectedIcon = new ImageIcon("src/Boundary/Images/chair-selected.png");
-            img = selectedIcon.getImage();
-            scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
-            selectedIcon = new ImageIcon(scaledImg);
-
-            JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
-            if (clickedButton.getBackground() == Color.GRAY) {
-                System.out.println("Seat " + clickedButton.getText() + " unpressed");
-                clickedButton.setBackground(Color.BLUE); // Change its color
+            JButton clickedButton = (JButton) e.getSource();
+            if (SelectedSeats.contains(clickedButton.getText())) {
                 SelectedSeats.remove(clickedButton.getText());
-                clickedButton.setIcon(availableIcon);
-
+                clickedButton.setBackground(Color.BLUE);
             } else {
-                System.out.println("Seat " + clickedButton.getText() + " Pressed");
-                clickedButton.setBackground(Color.GREEN); // Change its color
                 SelectedSeats.add(clickedButton.getText());
-                clickedButton.setIcon(selectedIcon);
+                clickedButton.setBackground(Color.GREEN);
             }
         }
-    }}
-
+    }
+}
 /* 
     public static void main(String[] args) {
         try {
