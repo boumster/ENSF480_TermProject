@@ -207,7 +207,7 @@ public class PaymentPage extends JPanel {
             JPanel ticketPanel = new JPanel();
             ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));
 
-            JLabel ticketLabel = new JLabel("Seat: " + seat);
+            JLabel ticketLabel = new JLabel("Seat: " + seat + ", Price: $10");
             ticketPanel.add(ticketLabel);
 
             JButton removeButton = new JButton("Remove");
