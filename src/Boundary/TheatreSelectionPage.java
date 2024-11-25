@@ -1,6 +1,7 @@
 package src.Boundary;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -10,11 +11,16 @@ import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
 
+
 public class TheatreSelectionPage extends JPanel {
     private Movie selectedMovie; 
+    private boolean isRegistered;
+    private LocalDate selectedDate;
+    private JPanel leftPanel;
 
-    public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
+    public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie, boolean isRegistered) {
         this.selectedMovie = selectedMovie;
+        this.isRegistered = isRegistered;
 
         // Set BorderLayout for main panel
         setLayout(new BorderLayout());
@@ -114,11 +120,74 @@ public class TheatreSelectionPage extends JPanel {
         leftPanel.revalidate();
         leftPanel.repaint();
 
+        // Date Dropdown Menu
+        JPanel dropdownPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        dropdownPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JComboBox<String> dateDropdown = new JComboBox<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d");
+
+        LocalDate today = LocalDate.now();
+        int dayLimit = isRegistered ? 20 : 10;
+
+        for (int i = 0; i <= dayLimit; i++) {
+            LocalDate date = today.plusDays(i);
+            dateDropdown.addItem(date.format(dateFormatter));
+        }
+
+        dateDropdown.addActionListener(e -> {
+            selectedDate = today.plusDays(dateDropdown.getSelectedIndex());
+            for (Theatre theatre : theatres){
+                updateShowtimes(app, selectedMovie, theatre, selectedDate);
+            }
+            
+        });
+
+        dropdownPanel.add(new JLabel("Select Date:"));
+        dropdownPanel.add(dateDropdown);
+        contentPanel.add(dropdownPanel, BorderLayout.NORTH);
+
         // Back Button (South)
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
         JPanel backPanel = new JPanel();
         backPanel.add(backButton);
         add(backPanel, BorderLayout.SOUTH);
+
+        
     }
+
+    private void updateShowtimes(MovieTheatreApp app, Movie selectedMovie, Theatre selectedTheatre, LocalDate selectedDate) {
+        // Clear previous showtimes from the UI components
+        leftPanel.removeAll(); 
+    
+        ShowtimeControl showtimeControl = new ShowtimeControl();
+        // Use the updated method to get showtimes for the selected movie, theatre, and date
+        ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, selectedTheatre, selectedDate);
+    
+        // If no showtimes are available for the selected date
+        if (showtimes.isEmpty()) {
+            leftPanel.add(new JLabel("No showtimes available for " + selectedMovie.getTitle() + " on " + selectedDate));
+        } else {
+            // Populate the left panel with showtimes
+            for (Showtime showtime : showtimes) {
+                // Format the showtime (e.g., "Mar 5, 7:30 PM")
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
+                String formattedDateTime = showtime.getShowtime().format(formatter);
+                JButton showtimeButton = new JButton(formattedDateTime);
+                
+                // Add listener to handle showtime selection
+                showtimeButton.addActionListener(e -> {
+                    app.setSelectedShowtime(showtime);
+                    app.switchToPage("SeatMap");
+                });
+    
+                leftPanel.add(showtimeButton);
+            }
+        }
+    
+        // Force layout updates
+        leftPanel.revalidate();
+        leftPanel.repaint();
+    }
+    
 }

@@ -6,7 +6,9 @@ import src.Entity.Movie;
 import src.Entity.Theatre;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ShowtimeControl {
     private Database db;
@@ -57,6 +59,30 @@ public class ShowtimeControl {
         }
         return showtimesForMovieForTheatre ;
     }
+
+    public ArrayList<Showtime> getShowtimesForMovieForTheatreAndDate(Movie movie, Theatre theatre, LocalDate date) {
+        ArrayList<Showtime> allShowtimes = new ArrayList<>();
+        ArrayList<Showtime> filteredShowtimes = new ArrayList<>();
+    
+        try {
+            allShowtimes = Database.getListShowtimes();
+            for (Showtime showtime : allShowtimes) {
+                // Check that the movie, theatre, and date match
+                if (showtime.getMovie() == movie &&
+                    showtime.getAuditorium().getTheatre() == theatre &&
+                    showtime.getShowtime().toLocalDate().equals(date)) {
+                    filteredShowtimes.add(showtime);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching showtimes for movie, theatre, and date from database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return filteredShowtimes;
+    }
+    
+    
 
 
 }
