@@ -43,6 +43,7 @@ public class MovieTheatreApp {
         cardPanel.add(new PaymentPage(this, "TICKET"), "TicketPayment");
         cardPanel.add(viewTicketsPage, "ViewTickets");
 
+
         frame.add(cardPanel);
         frame.setVisible(true);
     }
@@ -57,7 +58,7 @@ public class MovieTheatreApp {
             viewTicketsPage.refreshTickets();
         }
         if (pageName.equals("SeatMap")){
-            cardPanel.add(new SeatMap(this, selectedShowtime));
+            cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");
         }
         cardLayout.show(cardPanel, pageName);
     }

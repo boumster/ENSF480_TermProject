@@ -1,8 +1,7 @@
 package src.Entity;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Showtime {
     private int showtimeId;
@@ -48,6 +47,10 @@ public class Showtime {
 
     public void bookSeat(int seatNumber) {
         auditorium.bookSeat(this, seatNumber);
+    }
+
+    public void cancelSeat(int seatNumber){
+        auditorium.cancelSeat(seatNumber, this);
     }
 
     public ArrayList<Seat> getSeats() {
