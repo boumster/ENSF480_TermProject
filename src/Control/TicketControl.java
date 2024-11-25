@@ -60,4 +60,15 @@ public class TicketControl {
         return false;
     }
 
+    public static void deductCredits(int userID, double price, MovieTheatreApp app) {
+        String updateQuery = "UPDATE user SET credits = credits - ? WHERE userID = ?";
+        try {
+            System.out.println("Deducting credits: " + price);
+            Database.getInstance().update(updateQuery, price, userID);
+            app.setCurrentUser(Database.getRegUser(userID));
+        } catch (Exception e) {
+            System.out.println("Error deducting credits: " + e.getMessage());
+        }
+    }
+
 }

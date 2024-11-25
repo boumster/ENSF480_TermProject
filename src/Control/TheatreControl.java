@@ -26,10 +26,6 @@ public class TheatreControl {
         try {
             // Use the Database's getListMovies method
             theatres = Database.getListTheatres();
-            for (Theatre theatre : theatres) {
-                // For each movie, get the showtimes
-                System.out.println("Movie: " + theatre.getName());
-            }
         } catch (Exception e) {
             System.err.println("Error fetching theatres from database: " + e.getMessage());
             e.printStackTrace();

@@ -48,7 +48,7 @@ public class Database {
     }
 
     // Get Data from the database
-    private void initData() {
+    public void initData() {
         listMovies.clear();
         listTheatres.clear();
         listShowtimes.clear();
@@ -67,7 +67,6 @@ public class Database {
             selectQuery = "SELECT * from movies";
             try (ResultSet rs = read(selectQuery)) {
                 while (rs.next()) {
-                    System.out.println(rs.getString("Movie_name"));
                     Movie movie = new Movie(rs.getInt("movieID"), rs.getString("Movie_name"),
                             rs.getString("Movie_description"), rs.getString("Movie_genre"),
                             rs.getString("Movie_rating"), rs.getInt("Movie_duration"));
@@ -141,7 +140,10 @@ public class Database {
                             }
                         }
                     }
-
+                    if (aud == null) {
+                        System.out.println("Auditorium not found for ID: " + rs.getInt("auditoriumID"));
+                        continue; // Skip this showtime entry
+                    }
                     Showtime showtime = new Showtime(rs.getInt("showtimeID"), rs.getTimestamp("time").toLocalDateTime(),
                             aud, movie);
                     listShowtimes.add(showtime);
@@ -160,7 +162,7 @@ public class Database {
                     }
                     RegUser user = null;
                     int userID = rs.getInt("userID");
-                    if(userID != 0){
+                    if (userID != 0) {
                         for (RegUser u : listRegUsers) {
                             if (u.getUserID() == userID) {
                                 user = u;

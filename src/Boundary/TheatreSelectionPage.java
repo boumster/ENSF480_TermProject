@@ -14,7 +14,6 @@ public class TheatreSelectionPage extends JPanel {
 
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
-
         // Set BorderLayout for main panel
         setLayout(new BorderLayout());
 
@@ -87,7 +86,7 @@ public class TheatreSelectionPage extends JPanel {
 
                 for (Showtime showtime : showtimes) {
                     JButton showtimeButton = new JButton(showtime.getShowtime().toString());
-                    showtimeButton.addActionListener(e ->{
+                    showtimeButton.addActionListener(e -> {
                         app.setSelectedShowtime(showtime);
                         app.switchToPage("SeatMap");
                     });

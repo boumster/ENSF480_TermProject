@@ -79,6 +79,7 @@ public class MovieTheatreApp {
     }
 
     public void setSelectedMovie(Movie movie){
+        System.out.println("Selected movie: in MovieApp " + movie.getTitle());
         this.selectedMovie = movie;
     }
 
