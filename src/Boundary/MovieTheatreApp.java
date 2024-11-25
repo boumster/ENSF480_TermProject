@@ -30,6 +30,7 @@ public class MovieTheatreApp {
         homePage = new HomePage(this);
         viewTicketsPage = new ViewTicketsPage(this);
         cardPanel.add(homePage, "Home");
+        cardPanel.add(new AdminHomePage(this), "AdminHome");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
         //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
         cardPanel.add(new ShowtimesPage(this), "Showtimes");

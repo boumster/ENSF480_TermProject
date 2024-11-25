@@ -461,17 +461,18 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Sample data for user
-INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Address`, `PaymentInfo`, `IsRegisteredUser`) VALUES
-('john_doe', 'john@example.com', 'password123', 100.00, 2, '123 Main St', 1234, 1),
-('jane_smith', 'jane@example.com', 'password456', 50.00, 1, '456 Elm St', 5678, 1),
-('alice_jones', 'alice@example.com', 'password789', 75.00, 3, '789 Oak St', 9101, 1),
-('bob_brown', 'bob@example.com', 'password101', 20.00, 0, '101 Pine St', 1121, 0),
-('charlie_davis', 'charlie@example.com', 'password202', 150.00, 4, '202 Maple St', 3141, 1),
-('diana_evans', 'diana@example.com', 'password303', 60.00, 2, '303 Cedar St', 5161, 1),
-('edward_frank', 'edward@example.com', 'password404', 90.00, 1, '404 Birch St', 7181, 0),
-('fiona_green', 'fiona@example.com', 'password505', 30.00, 0, '505 Spruce St', 9201, 1),
-('george_harris', 'george@example.com', 'password606', 110.00, 3, '606 Willow St', 1221, 1),
-('hannah_ivan', 'hannah@example.com', 'password707', 80.00, 2, '707 Fir St', 3241, 0);
+INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Address`, `PaymentInfo`, `IsRegisteredUser`, `IsAdmin`) VALUES
+('john_doe', 'john@example.com', 'password123', 100.00, 2, '123 Main St', 1234, 1, 0),
+('jane_smith', 'jane@example.com', 'password456', 50.00, 1, '456 Elm St', 5678, 1, 0),
+('alice_jones', 'alice@example.com', 'password789', 75.00, 3, '789 Oak St', 9101, 1, 0),
+('bob_brown', 'bob@example.com', 'password101', 20.00, 0, '101 Pine St', 1121, 0, 0),
+('charlie_davis', 'charlie@example.com', 'password202', 150.00, 4, '202 Maple St', 3141, 1, 0),
+('diana_evans', 'diana@example.com', 'password303', 60.00, 2, '303 Cedar St', 5161, 1, 0),
+('edward_frank', 'edward@example.com', 'password404', 90.00, 1, '404 Birch St', 7181, 0, 0),
+('fiona_green', 'fiona@example.com', 'password505', 30.00, 0, '505 Spruce St', 9201, 1, 0),
+('george_harris', 'george@example.com', 'password606', 110.00, 3, '606 Willow St', 1221, 1, 0),
+('hannah_ivan', 'hannah@example.com', 'password707', 80.00, 2, '707 Fir St', 3241, 0, 0),
+('sam_hawq', 'sam@example.com', 'admin', null, null, 'Acmeplex', null, null, 1);
 
 -- Create Admin user
 INSERT INTO `user` (`Username`, `Email`, `Password`, `IsAdmin`) VALUES

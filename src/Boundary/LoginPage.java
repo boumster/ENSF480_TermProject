@@ -17,10 +17,18 @@ public class LoginPage extends JPanel {
     public LoginPage(MovieTheatreApp app, String type) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel headerLabel = new JLabel("Login", SwingConstants.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
-        headerLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(headerLabel);
+        if(type == "ADMIN"){
+            JLabel headerLabel = new JLabel("Admin Login", SwingConstants.CENTER);
+            headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
+            headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+            add(headerLabel);
+        } else {
+            JLabel headerLabel = new JLabel("Login", SwingConstants.CENTER);
+            headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
+            headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+            add(headerLabel);
+        }
+        
 
         add(Box.createVerticalStrut(20)); // Add space
 
@@ -69,16 +77,26 @@ public class LoginPage extends JPanel {
         add(Box.createVerticalStrut(20)); // Add space
 
         // Login button
+
         JButton loginButton = new JButton("Login");
         loginButton.setAlignmentX(CENTER_ALIGNMENT);
         loginButton.addActionListener(e -> {
             String email = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            RegUser user = LoginControl.login(email, password);
+
+            boolean isAdminLogin = type.equals("ADMIN");
+
+            RegUser user = LoginControl.login(email, password, isAdminLogin);  
             if (user != null) {
-                app.setCurrentUser(user); // Update the currentUser in MovieTheatreApp
+                app.setCurrentUser(user); // Update currentUser in main
                 JOptionPane.showMessageDialog(this, "Login successful!");
-                app.switchToPage("Home");
+
+                // redirect to corresponding page
+                if (isAdminLogin) {
+                    app.switchToPage("AdminHome");
+                } else {
+                    app.switchToPage("Home");
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
             }
