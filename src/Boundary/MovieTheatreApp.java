@@ -43,6 +43,7 @@ public class MovieTheatreApp {
         cardPanel.add(new PaymentPage(this, "TICKET"), "TicketPayment");
         cardPanel.add(viewTicketsPage, "ViewTickets");
 
+
         frame.add(cardPanel);
         frame.setVisible(true);
     }

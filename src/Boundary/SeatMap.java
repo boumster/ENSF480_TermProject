@@ -62,7 +62,9 @@ public class SeatMap extends JPanel implements ActionListener {
         footerPanel.add(confirmButton);
         
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> app.switchToPage("TheatreSelectionPage"));
+        backButton.addActionListener(e ->{
+            app.switchToPage("BrowseMovies");
+        });
         footerPanel.add(backButton);
 
         add(footerPanel,BorderLayout.SOUTH);
@@ -92,6 +94,7 @@ public class SeatMap extends JPanel implements ActionListener {
         for (int i = 1; i <= seatCount; i++) {
             String seatNumber = String.valueOf(i);
             JButton seatButton = new JButton(seatNumber);
+            seatButton.setBackground(new Color(100, 149, 237));
             seatButton.setFocusable(false);
             seatButton.setFont(new Font("Arial", Font.BOLD, 10));
 
@@ -130,10 +133,10 @@ public class SeatMap extends JPanel implements ActionListener {
             JButton clickedButton = (JButton) e.getSource();
             if (SelectedSeats.contains(clickedButton.getText())) {
                 SelectedSeats.remove(clickedButton.getText());
-                clickedButton.setBackground(Color.BLUE);
+                clickedButton.setBackground(new Color(100, 149, 237));
             } else {
                 SelectedSeats.add(clickedButton.getText());
-                clickedButton.setBackground(Color.GREEN);
+                clickedButton.setBackground(new Color(144, 238, 144));
             }
         }
     }
