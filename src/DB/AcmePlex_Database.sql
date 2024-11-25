@@ -348,6 +348,7 @@ CREATE TABLE `user` (
   `Address` text,
   `PaymentInfo` int DEFAULT NULL,
   `IsRegisteredUser` bit DEFAULT 0,
+  `IsAdmin` bit DEFAULT 0,
   PRIMARY KEY (`UserId`),
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -364,6 +365,10 @@ INSERT INTO `user` (`Username`, `Email`, `Password`, `credits`, `Tickets`, `Addr
 ('fiona_green', 'fiona@example.com', 'password505', 30.00, 0, '505 Spruce St', 9201, 1),
 ('george_harris', 'george@example.com', 'password606', 110.00, 3, '606 Willow St', 1221, 1),
 ('hannah_ivan', 'hannah@example.com', 'password707', 80.00, 2, '707 Fir St', 3241, 0);
+
+-- Create Admin user
+INSERT INTO `user` (`Username`, `Email`, `Password`, `IsAdmin`) VALUES
+('admin', 'admin@example.com', 'admin123', 1);
 
 
 DROP TABLE IF EXISTS `tickets`;
