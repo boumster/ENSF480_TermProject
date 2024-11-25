@@ -38,7 +38,7 @@ public class TheatreSelectionPage extends JPanel {
         JPanel contentPanel = new JPanel(new BorderLayout());
 
         // Left Panel: Theatre names and showtimes
-        JPanel leftPanel = new JPanel();
+        leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(leftPanel); // Add scroll for long lists
         contentPanel.add(scrollPane, BorderLayout.CENTER);
@@ -141,6 +141,7 @@ public class TheatreSelectionPage extends JPanel {
 
         dateDropdown.addActionListener(e -> {
             selectedDate = today.plusDays(dateDropdown.getSelectedIndex());
+            leftPanel.removeAll();
             for (Theatre theatre : theatres){
                 updateShowtimes(app, selectedMovie, theatre, selectedDate);
             }
@@ -162,14 +163,10 @@ public class TheatreSelectionPage extends JPanel {
     }
 
     private void updateShowtimes(MovieTheatreApp app, Movie selectedMovie, Theatre selectedTheatre, LocalDate selectedDate) {
-        // Clear previous showtimes from the UI components
-        leftPanel.removeAll(); 
     
         ShowtimeControl showtimeControl = new ShowtimeControl();
-        // Use the updated method to get showtimes for the selected movie, theatre, and date
         ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, selectedTheatre, selectedDate);
     
-        // If no showtimes are available for the selected date
         if (showtimes.isEmpty()) {
             leftPanel.add(new JLabel("No showtimes available for " + selectedMovie.getTitle() + " on " + selectedDate));
         } else {
