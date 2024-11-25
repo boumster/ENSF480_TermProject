@@ -63,7 +63,7 @@ public class SeatMap extends JPanel implements ActionListener {
         
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e ->{
-            app.switchToPage("BrowseMovies");
+            app.switchToPage("TheatreSelection");
         });
         footerPanel.add(backButton);
 
