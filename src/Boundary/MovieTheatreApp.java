@@ -55,7 +55,7 @@ public class MovieTheatreApp {
 
     public void switchToPage(String pageName){
         if (pageName.equals("TheatreSelection")) {
-            cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
+            cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");         
         } 
         if (pageName.equals("Home")){
             homePage.refresh();
