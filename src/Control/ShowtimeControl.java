@@ -64,8 +64,8 @@ public class ShowtimeControl {
             allShowtimes = Database.getListShowtimes();
             for (Showtime showtime : allShowtimes) {
                 // Check that the movie, theatre, and date match
-                if (showtime.getMovie() == movie &&
-                    showtime.getAuditorium().getTheatre() == theatre &&
+                if (showtime.getMovie().getTitle().equals(movie.getTitle()) &&
+                    showtime.getAuditorium().getTheatre().equals(theatre) &&
                     showtime.getShowtime().toLocalDate().getDayOfMonth() == date.getDayOfMonth()) {
                     filteredShowtimes.add(showtime);
                 }
