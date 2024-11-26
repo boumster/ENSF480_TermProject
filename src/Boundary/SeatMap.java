@@ -126,7 +126,12 @@ public class SeatMap extends JPanel implements ActionListener {
         if (e.getSource() == confirmButton) {
             app.setSelectedShowtime(showtime);
             app.setSelectedSeats(SelectedSeats);
-            app.switchToPage("TicketPayment");
+            if(SelectedSeats.size() == 0){
+                JOptionPane.showMessageDialog(this, "No Seats Selected");
+            } else {
+                app.switchToPage("TicketPayment");
+            }
+            
         } else if (e.getSource() instanceof JButton) {
             // Load the chair images
             Color green = new Color(144, 238, 144);

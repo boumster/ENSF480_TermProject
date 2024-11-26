@@ -57,6 +57,10 @@ public class Showtime {
         return auditorium.getSeats(this);
     }
 
+    public double getPercentOccupied() {
+        return auditorium.getPercentOccupied(this);
+    }
+
     public String toString() {
         return "Showtime: " + showtime + "\nAuditorium: " + auditorium + "\nMovie: " + movie;
     }
