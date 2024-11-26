@@ -286,6 +286,9 @@ public class PaymentPage extends JPanel {
 
     private void refreshTickets() {
         ticketsPanel.removeAll();
+        if (seatsSelected.isEmpty()){
+            app.switchToPage("SeatMap");
+        }
         for (String seat : seatsSelected) {
             JPanel ticketPanel = new JPanel();
             ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));

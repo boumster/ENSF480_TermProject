@@ -129,6 +129,7 @@ public class SeatMap extends JPanel implements ActionListener {
             app.switchToPage("TicketPayment");
         } else if (e.getSource() instanceof JButton) {
             // Load the chair images
+            Color green = new Color(144, 238, 144);
             ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
             Image img = availableIcon.getImage();
             Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
@@ -140,14 +141,15 @@ public class SeatMap extends JPanel implements ActionListener {
             selectedIcon = new ImageIcon(scaledImg);
 
             JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
-            if (clickedButton.getBackground() == Color.GREEN) {
+            if (clickedButton.getBackground().equals(green)) {
                 System.out.println("Seat " + clickedButton.getText() + " unpressed");
                 clickedButton.setBackground(new Color(100, 149, 237)); // Change its color
                 SelectedSeats.remove(clickedButton.getText());
-                clickedButton.setBackground(new Color(100, 149, 237));
+                clickedButton.setIcon(availableIcon);
             } else {
                 SelectedSeats.add(clickedButton.getText());
-                clickedButton.setBackground(new Color(144, 238, 144));
+                clickedButton.setBackground(green);
+                clickedButton.setIcon(selectedIcon);
             }
         }
     }
