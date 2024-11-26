@@ -37,7 +37,7 @@ public class MovieTheatreApp {
         cardPanel.add(new AdminHomePage(this), "AdminHome");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
         //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
-        cardPanel.add(new ShowtimesPage(this), "Showtimes");
+        //cardPanel.add(new ShowtimesPage(this), "Showtimes");
         cardPanel.add(new BookingPage(this), "Booking");
         //cardPanel.add(new SeatMap(this), "SeatMap");
         cardPanel.add(new ConfirmationPage(this), "Confirmation");

@@ -2,6 +2,7 @@ package src.Boundary;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -11,6 +12,7 @@ import src.Entity.DateTime;
 import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
+import src.Entity.Seat;
 
 
 public class TheatreSelectionPage extends JPanel {
@@ -18,6 +20,8 @@ public class TheatreSelectionPage extends JPanel {
     private boolean isRegistered;
     private LocalDate selectedDate;
     private JPanel leftPanel;
+
+    public LocalDateTime dt_t = LocalDateTime.now();
 
     public TheatreSelectionPage(MovieTheatreApp app, Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
@@ -100,23 +104,44 @@ public class TheatreSelectionPage extends JPanel {
 
                 for (Showtime showtime : showtimes) {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
-
-                    // Format the LocalDateTime
                     String formattedDateTime = showtime.getShowtime().format(formatter);
-
-                    // Create the button with the formatted date and time
+                
+                    // create button
                     JButton showtimeButton = new JButton(formattedDateTime);
-
-
-                    showtimeButton.addActionListener(e ->{
+                
+                    
+                    ArrayList<Seat> seatArray = showtime.getSeats();
+                    int bookedSeats = 0;
+                
+                    // Count booked seats
+                    for (Seat seat : seatArray) {
+                        if (seat.getStatus()) {
+                            bookedSeats++;
+                        }
+                    }
+                
+                    // early booking sold-out logic
+                    if (showtime.getShowtime().compareTo(dt_t.plusDays(10)) > 0 && bookedSeats >= 5) {
+                        showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
+                        showtimeButton.setEnabled(false);
+                    }
+                
+                    // general sold-out logic
+                    else if (bookedSeats >= 50) {
+                        showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
+                        showtimeButton.setEnabled(false);
+                    }
+                
+                    // switch page if not disabled
+                    showtimeButton.addActionListener(e -> {
                         app.setSelectedShowtime(showtime);
                         app.switchToPage("SeatMap");
                     });
+                
                     showtimesPanel.add(showtimeButton);
                 }
 
-                // Do not constrain size; let layout managers handle it
-                leftPanel.add(showtimesPanel);
+                leftPanel.add(showtimesPanel);                
             }
 
             leftPanel.add(Box.createVerticalStrut(20)); // Add space after each theatre section
@@ -144,7 +169,6 @@ public class TheatreSelectionPage extends JPanel {
             selectedDate = today.plusDays(dateDropdown.getSelectedIndex());
             leftPanel.removeAll();
             updateShowtimes(app, selectedMovie, selectedDate);
-            
             
         });
 
