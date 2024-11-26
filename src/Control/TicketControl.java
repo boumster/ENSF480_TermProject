@@ -3,7 +3,6 @@ package src.Control;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import src.Boundary.MovieTheatreApp;
 import src.DB.Database;
 import src.Entity.Ticket;
@@ -46,4 +45,30 @@ public class TicketControl {
         }
         return false;
     }
+
+    public static boolean createTicket(int movieID, int showtimeID, int seatNumber, double price, Integer userID) {
+        String insertQuery = "INSERT INTO tickets (userID, movieID, showtimeID, SeatNumber, price) VALUES (?, ?, ?, ?, ?)";
+        try {
+            int result = Database.getInstance().update(insertQuery, userID, movieID, showtimeID, seatNumber, price);
+            if (result > 0) {
+                System.out.println("Ticket created successfully.");
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error creating ticket: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static void deductCredits(int userID, double price, MovieTheatreApp app) {
+        String updateQuery = "UPDATE user SET credits = credits - ? WHERE userID = ?";
+        try {
+            System.out.println("Deducting credits: " + price);
+            Database.getInstance().update(updateQuery, price, userID);
+            app.setCurrentUser(Database.getRegUser(userID));
+        } catch (Exception e) {
+            System.out.println("Error deducting credits: " + e.getMessage());
+        }
+    }
+
 }

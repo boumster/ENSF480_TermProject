@@ -1,8 +1,8 @@
 package src.Control;
 
+import java.sql.ResultSet;
 import src.DB.Database;
 import src.Entity.RegUser;
-import java.sql.ResultSet;
 
 public class LoginControl {
 

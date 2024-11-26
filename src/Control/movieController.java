@@ -24,10 +24,6 @@ public class movieController {
         try {
             // Use the Database's getListMovies method
             movies = Database.getListMovies();
-            for (Movie movie : movies) {
-                // For each movie, get the showtimes
-                System.out.println("Movie: " + movie.getTitle());
-            }
         } catch (Exception e) {
             System.err.println("Error fetching movies from database: " + e.getMessage());
             e.printStackTrace();

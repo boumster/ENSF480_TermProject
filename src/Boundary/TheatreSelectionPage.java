@@ -26,6 +26,7 @@ public class TheatreSelectionPage extends JPanel {
             this.isRegistered = app.getCurrentUser().getIsRegisteredUser();
         } else this.isRegistered = false;
 
+
         // Set BorderLayout for main panel
         setLayout(new BorderLayout());
 

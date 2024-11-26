@@ -22,14 +22,14 @@ public class SeatMap extends JPanel implements ActionListener {
      * 
      * 
      */
-    public SeatMap(MovieTheatreApp app,Showtime showtime) {
+    public SeatMap(MovieTheatreApp app, Showtime showtime) {
         // Set up the JFrame
         this.app = app;
         this.showtime = showtime;
         this.SelectedSeats = new ArrayList<String>();
 
         setLayout(new BorderLayout());
-        JPanel headerPanel = new JPanel(new GridLayout(2,1));
+        JPanel headerPanel = new JPanel(new GridLayout(2, 1));
         headerPanel.setBackground(Color.BLACK);
 
         // Create the JLabels
@@ -60,14 +60,14 @@ public class SeatMap extends JPanel implements ActionListener {
         confirmButton.addActionListener(this);
         confirmButton.setFocusable(false);
         footerPanel.add(confirmButton);
-        
+
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e ->{
+        backButton.addActionListener(e -> {
             app.switchToPage("TheatreSelection");
         });
         footerPanel.add(backButton);
 
-        add(footerPanel,BorderLayout.SOUTH);
+        add(footerPanel, BorderLayout.SOUTH);
     }
 
     private void updateSeatPanel() {
@@ -124,13 +124,12 @@ public class SeatMap extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirmButton) {
-            for (String x : SelectedSeats) {
-                showtime.bookSeat(Integer.parseInt(x));
-            }
-            updateSeatPanel();
-            app.switchToPage("CartPage");
+            app.setSelectedShowtime(showtime);
+            app.setSelectedSeats(SelectedSeats);
+            app.switchToPage("TicketPayment");
         } else if (e.getSource() instanceof JButton) {
             // Load the chair images
+            Color green = new Color(144, 238, 144);
             ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
             Image img = availableIcon.getImage();
             Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
@@ -142,47 +141,50 @@ public class SeatMap extends JPanel implements ActionListener {
             selectedIcon = new ImageIcon(scaledImg);
 
             JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
-            if (clickedButton.getBackground() == Color.GREEN) {
+            if (clickedButton.getBackground().equals(green)) {
                 System.out.println("Seat " + clickedButton.getText() + " unpressed");
                 clickedButton.setBackground(new Color(100, 149, 237)); // Change its color
                 SelectedSeats.remove(clickedButton.getText());
-                clickedButton.setBackground(new Color(100, 149, 237));
+                clickedButton.setIcon(availableIcon);
             } else {
                 SelectedSeats.add(clickedButton.getText());
-                clickedButton.setBackground(new Color(144, 238, 144));
+                clickedButton.setBackground(green);
+                clickedButton.setIcon(selectedIcon);
             }
         }
     }
 }
-/* 
-    public static void main(String[] args) {
-        try {
-            Database db = Database.getInstance();
-            Theatre theatre = new Theatre("test", 1);
-            Auditorium auditorium = new Auditorium(1, 50, theatre);
-            Movie movie = new Movie(1, "Interstellar", "R", "A team of explorers travel through a wormhole in space.",
-                    "Sci-Fi", 123);
-            
-            Showtime showtime = new Showtime(1, LocalDateTime.now(), auditorium, movie);
-
-            showtime.bookSeat(10);
-            showtime.bookSeat(11);
-            showtime.bookSeat(12);
-            showtime.bookSeat(13);
-            showtime.bookSeat(14);
-            showtime.bookSeat(15);
-            ArrayList<Seat> seats = showtime.getSeats();
-            for (Seat seat : seats) {
-                System.out.println(
-                        "Seat " + seat.getSeatNumber() + " status: " + (seat.getStatus() ? "Booked" : "Available"));
-            }
-
-            new SeatMap(showtime, db);
-            db.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-}
-*/
+/*
+ * public static void main(String[] args) {
+ * try {
+ * Database db = Database.getInstance();
+ * Theatre theatre = new Theatre("test", 1);
+ * Auditorium auditorium = new Auditorium(1, 50, theatre);
+ * Movie movie = new Movie(1, "Interstellar", "R",
+ * "A team of explorers travel through a wormhole in space.",
+ * "Sci-Fi", 123);
+ * 
+ * Showtime showtime = new Showtime(1, LocalDateTime.now(), auditorium, movie);
+ * 
+ * showtime.bookSeat(10);
+ * showtime.bookSeat(11);
+ * showtime.bookSeat(12);
+ * showtime.bookSeat(13);
+ * showtime.bookSeat(14);
+ * showtime.bookSeat(15);
+ * ArrayList<Seat> seats = showtime.getSeats();
+ * for (Seat seat : seats) {
+ * System.out.println(
+ * "Seat " + seat.getSeatNumber() + " status: " + (seat.getStatus() ? "Booked" :
+ * "Available"));
+ * }
+ * 
+ * new SeatMap(showtime, db);
+ * db.close();
+ * } catch (SQLException e) {
+ * e.printStackTrace();
+ * }
+ * }
+ * 
+ * }
+ */
