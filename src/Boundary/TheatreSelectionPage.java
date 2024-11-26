@@ -108,27 +108,31 @@ public class TheatreSelectionPage extends JPanel {
                 
                     // create button
                     JButton showtimeButton = new JButton(formattedDateTime);
-                
-                    
-                    // early booking sold-out logic
-                    if (showtime.getPercentOccupied() >= 0.1) {
-                        showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
-                        showtimeButton.setEnabled(false);
-                    }
-                
-                    // general sold-out logic
-                    else if (showtime.getPercentOccupied() >= 1) {
-                        showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
-                        showtimeButton.setEnabled(false);
-                    }
-                
                     // switch page if not disabled
                     showtimeButton.addActionListener(e -> {
                         app.setSelectedShowtime(showtime);
                         app.switchToPage("SeatMap");
                     });
                 
+                    
+                    // early booking sold-out logic
+                    if(showtime.getShowtime().isAfter(dt_t.plusDays(10))){
+                        if (showtime.getPercentOccupied() >= 10) {
+                            showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
+                            showtimeButton.setEnabled(false);
+                        }
+                    }
+                
+                    // general sold-out logic
+                    else if (showtime.getPercentOccupied() >= 100) {
+                        showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
+                        showtimeButton.setEnabled(false);
+                    }
+                
+                    
+                
                     showtimesPanel.add(showtimeButton);
+                    
                 }
 
                 leftPanel.add(showtimesPanel);                
@@ -219,13 +223,26 @@ public class TheatreSelectionPage extends JPanel {
     
                     // Create button for each showtime
                     JButton showtimeButton = new JButton(formattedDateTime);
+                    // switch page if not disabled
                     showtimeButton.addActionListener(e -> {
-                        System.out.println("Selected Showtime: " + formattedDateTime);
                         app.setSelectedShowtime(showtime);
                         app.switchToPage("SeatMap");
                     });
-    
-                    // Add button to the panel
+                
+                    
+                    // early booking sold-out logic
+                    if(showtime.getShowtime().isAfter(dt_t.plusDays(10))){
+                        if (showtime.getPercentOccupied() >= 10) {
+                            showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
+                            showtimeButton.setEnabled(false);
+                        }
+                    }
+                
+                    // general sold-out logic
+                    else if (showtime.getPercentOccupied() >= 100) {
+                        showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
+                        showtimeButton.setEnabled(false);
+                    }
                     showtimesPanel.add(showtimeButton);
                 }
     
