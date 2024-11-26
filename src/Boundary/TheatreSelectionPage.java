@@ -110,24 +110,14 @@ public class TheatreSelectionPage extends JPanel {
                     JButton showtimeButton = new JButton(formattedDateTime);
                 
                     
-                    ArrayList<Seat> seatArray = showtime.getSeats();
-                    int bookedSeats = 0;
-                
-                    // Count booked seats
-                    for (Seat seat : seatArray) {
-                        if (seat.getStatus()) {
-                            bookedSeats++;
-                        }
-                    }
-                
                     // early booking sold-out logic
-                    if (showtime.getShowtime().compareTo(dt_t.plusDays(10)) > 0 && bookedSeats >= 5) {
+                    if (showtime.getPercentOccupied() >= 0.1) {
                         showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
                         showtimeButton.setEnabled(false);
                     }
                 
                     // general sold-out logic
-                    else if (bookedSeats >= 50) {
+                    else if (showtime.getPercentOccupied() >= 1) {
                         showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
                         showtimeButton.setEnabled(false);
                     }
