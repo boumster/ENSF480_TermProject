@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
 import src.Control.LoginControl;
+import src.Control.UserControl;
 import src.Entity.RegUser;
 
 public class LoginPage extends JPanel {
@@ -13,6 +16,7 @@ public class LoginPage extends JPanel {
     private JPasswordField passwordField;
     private JButton showPasswordButton;
     private boolean isPasswordVisible = false;
+    public LocalDate currDate = LocalDate.now();
 
     public LoginPage(MovieTheatreApp app, String type) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -94,6 +98,12 @@ public class LoginPage extends JPanel {
                 if (isAdminLogin) {
                     app.switchToPage("AdminPage");
                 } else {
+                    UserControl controller = new UserControl();
+                    LocalDate currDate = LocalDate.now(); // Get the current date
+                    if (currDate.getMonthValue() == 1 && currDate.getDayOfMonth() == 1) {
+                        // It's January 1st
+                        controller.deductCredit(user.getUserID(), user.getCredits().doubleValue());
+                    }
                     app.switchToPage("Home");
                 }
             } else {

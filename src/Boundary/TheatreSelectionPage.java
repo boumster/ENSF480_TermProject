@@ -111,7 +111,11 @@ public class TheatreSelectionPage extends JPanel {
                     // switch page if not disabled
                     showtimeButton.addActionListener(e -> {
                         app.setSelectedShowtime(showtime);
-                        app.switchToPage("SeatMap");
+                        if(app.getCurrentUser() != null){
+                            app.switchToPage("SeatMap");
+                        } else {
+                            app.switchToPage("Login");
+                        }
                     });
                 
                     
@@ -226,7 +230,11 @@ public class TheatreSelectionPage extends JPanel {
                     // switch page if not disabled
                     showtimeButton.addActionListener(e -> {
                         app.setSelectedShowtime(showtime);
-                        app.switchToPage("SeatMap");
+                        if(app.getCurrentUser() != null){
+                            app.switchToPage("SeatMap");
+                        } else {
+                            app.switchToPage("Login");
+                        }
                     });
                 
                     
@@ -244,7 +252,7 @@ public class TheatreSelectionPage extends JPanel {
                         showtimeButton.setEnabled(false);
                     }
                     showtimesPanel.add(showtimeButton);
-                    System.out.println("PERCENT OCCUPIED: " + showtime.getPercentOccupied() + "********************");
+                    System.out.println("PERCENT OCCUPIED: " + showtime.getPercentOccupied());
                 }
                 
     
