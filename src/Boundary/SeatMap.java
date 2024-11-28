@@ -2,6 +2,7 @@ package src.Boundary;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.*;
 import src.Entity.*;
@@ -12,16 +13,9 @@ public class SeatMap extends JPanel implements ActionListener {
     private ArrayList<String> SelectedSeats;
     private JPanel seatPanel;
     private MovieTheatreApp app;
+    public LocalDateTime dt_t = LocalDateTime.now();
+    public int bookedCounter = 0;
 
-    // to do:
-    /*
-     * 
-     * when you click/remove a seat put it into database for corresponding customer,
-     * figure out logic for multiple seats being selected
-     * when you click continue button put a pop up confirming seat was selected.
-     * 
-     * 
-     */
     public SeatMap(MovieTheatreApp app, Showtime showtime) {
         // Set up the JFrame
         this.app = app;
@@ -106,9 +100,16 @@ public class SeatMap extends JPanel implements ActionListener {
                     seatButton.setEnabled(false);
                     seatButton.setIcon(bookedIcon);
                     isBooked = true;
+                    bookedCounter += 1;
                     break;
                 }
+
             }
+
+            if(showtime.getShowtime().isAfter(dt_t.plusDays(10)) && bookedCounter >= 5){
+                seatButton.setEnabled(false);
+            }
+
             if (!isBooked) {
                 seatButton.setIcon(availableIcon);
             }
@@ -152,9 +153,17 @@ public class SeatMap extends JPanel implements ActionListener {
                 SelectedSeats.remove(clickedButton.getText());
                 clickedButton.setIcon(availableIcon);
             } else {
-                SelectedSeats.add(clickedButton.getText());
-                clickedButton.setBackground(green);
-                clickedButton.setIcon(selectedIcon);
+                if (showtime.getShowtime().isAfter(dt_t.plusDays(10)) && (bookedCounter + SelectedSeats.size()) >= 5) {
+                int allowedSeats = 5 - bookedCounter;
+                JOptionPane.showMessageDialog(this, 
+                    "You can only book " + allowedSeats + " more seat(s) for this early showtime.",
+                    "Booking Limit Reached",
+                    JOptionPane.WARNING_MESSAGE);
+                } else {
+                    SelectedSeats.add(clickedButton.getText());
+                    clickedButton.setBackground(green);
+                    clickedButton.setIcon(selectedIcon);
+                }
             }
         }
     }

@@ -232,19 +232,21 @@ public class TheatreSelectionPage extends JPanel {
                     
                     // early booking sold-out logic
                     if(showtime.getShowtime().isAfter(dt_t.plusDays(10))){
-                        if (showtime.getPercentOccupied() >= 10) {
+                        if (showtime.getPercentOccupied() >= 9.9) {
                             showtimeButton.setText(formattedDateTime + " - EARLY BOOKING SOLD OUT");
                             showtimeButton.setEnabled(false);
                         }
                     }
                 
                     // general sold-out logic
-                    else if (showtime.getPercentOccupied() >= 100) {
+                    else if (showtime.getPercentOccupied() >= 99.9) {
                         showtimeButton.setText(formattedDateTime + " - SHOWING SOLD OUT");
                         showtimeButton.setEnabled(false);
                     }
                     showtimesPanel.add(showtimeButton);
+                    System.out.println("PERCENT OCCUPIED: " + showtime.getPercentOccupied() + "********************");
                 }
+                
     
                 leftPanel.add(showtimesPanel); // Add the panel to the left panel
             }
