@@ -173,9 +173,13 @@ public class PaymentPage extends JPanel {
         // Card Number label and field
         JLabel cardNumberLabel = new JLabel("Card Number:");
         cardNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
+        if (app.getCurrentUser() != null && app.getCurrentUser().getIsRegisteredUser()) {
+            cardNumberField = new JTextField(String.valueOf(app.getCurrentUser().getPaymentCard()), 20);
+        } else {
+            cardNumberField = new JTextField(20);
+        }
         add(cardNumberLabel);
 
-        cardNumberField = new JTextField(20);
         cardNumberField.setMaximumSize(cardNumberField.getPreferredSize());
         cardNumberField.setAlignmentX(CENTER_ALIGNMENT);
         add(cardNumberField);
