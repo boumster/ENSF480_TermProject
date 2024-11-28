@@ -82,6 +82,18 @@ public class PaymentPage extends JPanel {
 
         add(Box.createVerticalStrut(20)); // Add space
 
+        backButton = new JButton("Back");
+        backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.switchToPage("Home");
+            }
+        });
+        add(backButton);
+
+        add(Box.createVerticalStrut(20)); // Add space
+
         // Status label
         statusLabel = new JLabel("");
         statusLabel.setAlignmentX(CENTER_ALIGNMENT);

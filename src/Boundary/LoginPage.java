@@ -21,7 +21,7 @@ public class LoginPage extends JPanel {
     public LoginPage(MovieTheatreApp app, String type) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        if(type == "ADMIN"){
+        if (type == "ADMIN") {
             JLabel headerLabel = new JLabel("Admin Login", SwingConstants.CENTER);
             headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
             headerLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -32,7 +32,6 @@ public class LoginPage extends JPanel {
             headerLabel.setAlignmentX(CENTER_ALIGNMENT);
             add(headerLabel);
         }
-        
 
         add(Box.createVerticalStrut(20)); // Add space
 
@@ -87,14 +86,14 @@ public class LoginPage extends JPanel {
         loginButton.addActionListener(e -> {
             String email = usernameField.getText();
             String password = new String(passwordField.getPassword());
-        
+
             boolean isAdminLogin = type.equals("ADMIN");
-        
-            RegUser user = LoginControl.login(email, password, isAdminLogin);  
+
+            RegUser user = LoginControl.login(email, password, isAdminLogin);
             if (user != null) {
                 app.setCurrentUser(user);
                 JOptionPane.showMessageDialog(this, "Login successful!");
-        
+
                 if (isAdminLogin) {
                     app.switchToPage("AdminPage");
                 } else {
@@ -113,6 +112,15 @@ public class LoginPage extends JPanel {
         add(loginButton);
 
         add(Box.createVerticalStrut(20)); // Add space
+
+        // Register button
+        if (type == "USER") {
+            JButton registerButton = new JButton("Register");
+            registerButton.setAlignmentX(CENTER_ALIGNMENT);
+            registerButton.addActionListener(e -> app.switchToPage("Register"));
+            add(registerButton);
+            add(Box.createVerticalStrut(20)); // Add space
+        }
 
         // Back button
         JButton backButton = new JButton("Back");
