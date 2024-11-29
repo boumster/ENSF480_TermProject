@@ -168,37 +168,3 @@ public class SeatMap extends JPanel implements ActionListener {
         }
     }
 }
-/*
- * public static void main(String[] args) {
- * try {
- * Database db = Database.getInstance();
- * Theatre theatre = new Theatre("test", 1);
- * Auditorium auditorium = new Auditorium(1, 50, theatre);
- * Movie movie = new Movie(1, "Interstellar", "R",
- * "A team of explorers travel through a wormhole in space.",
- * "Sci-Fi", 123);
- * 
- * Showtime showtime = new Showtime(1, LocalDateTime.now(), auditorium, movie);
- * 
- * showtime.bookSeat(10);
- * showtime.bookSeat(11);
- * showtime.bookSeat(12);
- * showtime.bookSeat(13);
- * showtime.bookSeat(14);
- * showtime.bookSeat(15);
- * ArrayList<Seat> seats = showtime.getSeats();
- * for (Seat seat : seats) {
- * System.out.println(
- * "Seat " + seat.getSeatNumber() + " status: " + (seat.getStatus() ? "Booked" :
- * "Available"));
- * }
- * 
- * new SeatMap(showtime, db);
- * db.close();
- * } catch (SQLException e) {
- * e.printStackTrace();
- * }
- * }
- * 
- * }
- */

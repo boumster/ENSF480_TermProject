@@ -36,8 +36,4 @@ public class RegUser extends User {
     public String toString() {
         return super.toString() + "\nAddress: " + address + "\nPayment Card: " + paymentCard;
     }
-
-    public void updateInfo() {
-        // To do: Implement updateInfo Method
-    }
 }

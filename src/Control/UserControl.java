@@ -103,13 +103,6 @@ public class UserControl {
         return null; // Return null if no user is found or an exception occurs
     }
 
-    /*
-     *  movies = Database.getListMovies();
-            for (Movie movie : movies) {
-                // For each movie, get the showtimes
-                System.out.println("Movie: " + movie.getTitle());
-            }
-     */
 
     public Double getCredit(int userId) {
         try {
@@ -192,13 +185,6 @@ public class UserControl {
         return false;
     }
     
-      /*
-     *  movies = Database.getListMovies();
-            for (Movie movie : movies) {
-                // For each movie, get the showtimes
-                System.out.println("Movie: " + movie.getTitle());
-            }
-     */
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
         try {
