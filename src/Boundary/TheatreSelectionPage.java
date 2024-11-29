@@ -5,15 +5,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 import src.Control.ShowtimeControl;
 import src.Control.TheatreControl;
-import src.Entity.DateTime;
 import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
-import src.Entity.Seat;
-
 
 public class TheatreSelectionPage extends JPanel {
     private Movie selectedMovie; 
@@ -207,7 +207,8 @@ public class TheatreSelectionPage extends JPanel {
     
             // Get showtimes for the current theatre
             ArrayList<Showtime> showtimes = showtimeControl.getShowtimesForMovieForTheatreAndDate(selectedMovie, theatre, selectedDate);
-    
+            Collections.sort(showtimes, Comparator.comparing(Showtime::getShowtime));
+
             if (showtimes.isEmpty()) {
                 JLabel noShowtimesLabel = new JLabel("No showtimes available.");
                 noShowtimesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
