@@ -29,6 +29,15 @@ public class AdminPage extends JPanel {
 
         // Add cardPanel to the AdminPage
         add(cardPanel, BorderLayout.CENTER);
+        // Back Button (South)
+        JButton backButton = new JButton("Logout");
+        backButton.addActionListener(e -> {
+            movieTheatreApp.switchToPage("Home");
+            movieTheatreApp.setCurrentUser(null);
+        });
+        JPanel backPanel = new JPanel();
+        backPanel.add(backButton);
+        add(backPanel, BorderLayout.SOUTH);
     }
 
     private JPanel createMainPanel() {
