@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import javax.swing.*;
 import src.Control.ShowtimeControl;
 import src.Control.TheatreControl;
-import src.Entity.DateTime;
 import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
-import src.Entity.Seat;
 
 
 public class TheatreSelectionPage extends JPanel {

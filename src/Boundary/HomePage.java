@@ -1,8 +1,6 @@
 package src.Boundary;
 
 import javax.swing.*;
-import java.awt.*;
-import src.Entity.RegUser;
 
 public class HomePage extends JPanel {
     private JLabel welcomeLabel;

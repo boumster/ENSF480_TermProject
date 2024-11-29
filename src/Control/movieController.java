@@ -2,7 +2,6 @@ package src.Control;
 
 import src.DB.Database;
 import src.Entity.Movie;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 

@@ -8,7 +8,6 @@ import src.Entity.Theatre;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class ShowtimeControl {
     private Database db;

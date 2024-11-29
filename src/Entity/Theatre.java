@@ -1,6 +1,5 @@
 package src.Entity;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Theatre {
@@ -60,29 +59,4 @@ public class Theatre {
         movie.removeShowtime(this, movie.getShowtimesForTheatre(this));
     }
 
-/*
-    public void addShowtime(Movie movie, Showtime showtime) {
-        if (!movie.showtimesByTheatre.containsKey(this)) {
-            showtimes.put(movie, new ArrayList<Showtime>());
-        }
-        showtimes.get(movie).add(showtime);
-    }
-
-    public void removeShowtime(Movie movie, Showtime showtime) {
-        showtimes.get(movie).remove(showtime);
-    }
-
-    public void setShowtimes(Movie movie, ArrayList<Showtime> showtimes) {
-        this.showtimes.put(movie, showtimes);
-    }
-
-    public ArrayList<Showtime> getShowtimes(Movie movie) {
-        return showtimes.get(movie);
-    }
-
-    public void updateShowtime(Movie movie, Showtime oldshowtime, Showtime newShowtime){
-        this.removeShowtime(movie, oldshowtime);
-        this.addShowtime(movie, newShowtime);
-    }
-*/
 }

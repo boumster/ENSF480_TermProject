@@ -1,6 +1,5 @@
 package src.Control;
 
-import java.awt.image.DataBuffer;
 import src.DB.Database;
 import src.Entity.Auditorium;
 import src.Entity.Theatre;
