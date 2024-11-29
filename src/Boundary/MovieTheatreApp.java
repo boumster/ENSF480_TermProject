@@ -6,7 +6,6 @@ import javax.swing.*;
 import src.Entity.Movie;
 import src.Entity.RegUser;
 import src.Entity.Showtime;
-import src.Entity.Ticket;
 
 public class MovieTheatreApp {
     private JFrame frame;

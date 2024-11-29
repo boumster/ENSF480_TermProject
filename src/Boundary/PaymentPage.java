@@ -4,14 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import src.Entity.Ticket;
 import src.Control.TicketControl;
 import src.Control.UserControl;
-
 import src.Control.PaymentControl;
-import src.Entity.User;
 
 public class PaymentPage extends JPanel {
     private JTextField cardNumberField;

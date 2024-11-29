@@ -1,14 +1,9 @@
 package src.Control;
 
-import java.lang.reflect.Array;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import src.DB.Database;
 import src.Entity.Movie;
-import src.Entity.User;
 
 public class AdminControl {
     private Database db;

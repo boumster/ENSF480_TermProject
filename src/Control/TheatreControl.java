@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import src.DB.Database;
 import src.Entity.Auditorium;
-import src.Entity.Movie;
 import src.Entity.Theatre;
 
 public class TheatreControl {

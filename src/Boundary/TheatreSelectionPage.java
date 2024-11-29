@@ -15,6 +15,7 @@ import src.Entity.Movie;
 import src.Entity.Showtime;
 import src.Entity.Theatre;
 
+
 public class TheatreSelectionPage extends JPanel {
     private Movie selectedMovie; 
     private boolean isRegistered;
