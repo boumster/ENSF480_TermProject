@@ -39,18 +39,34 @@ public class HomePage extends JPanel {
         loginButton = new JButton("Login");
         loginButton.setAlignmentX(CENTER_ALIGNMENT);
         loginButton.addActionListener(e -> app.switchToPage("Login"));
+        loginButton.setContentAreaFilled(false);
+        loginButton.setBorderPainted(false);
+        loginButton.setFocusPainted(false);
+        loginButton.setOpaque(false);
 
         guestButton = new JButton("Continue as Guest");
         guestButton.setAlignmentX(CENTER_ALIGNMENT);
         guestButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
+        guestButton.setContentAreaFilled(false);
+        guestButton.setBorderPainted(false);
+        guestButton.setFocusPainted(false);
+        guestButton.setOpaque(false);
 
         adminLoginButton = new JButton("Admin Login");
         adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);
         adminLoginButton.addActionListener(e -> app.switchToPage("AdminLogin"));
+        adminLoginButton.setContentAreaFilled(false);
+        adminLoginButton.setBorderPainted(false);
+        adminLoginButton.setFocusPainted(false);
+        adminLoginButton.setOpaque(false);
 
         registerUser = new JButton("Register");
         registerUser.setAlignmentX(CENTER_ALIGNMENT);
         registerUser.addActionListener(e -> app.switchToPage("Register"));
+        registerUser.setContentAreaFilled(false);
+        registerUser.setBorderPainted(false);
+        registerUser.setFocusPainted(false);
+        adminLoginButton.setOpaque(false);
 
         creditLabel = new JLabel("");
         creditLabel.setAlignmentX(CENTER_ALIGNMENT);
