@@ -33,8 +33,14 @@ public class SeatMap extends JPanel implements ActionListener {
         movieLabel.setFont(new Font("Arial", Font.BOLD, 16));
         headerPanel.add(movieLabel);
 
+        JLabel screenLabel = new JLabel("Screen");
+        screenLabel.setBounds(50,50,700,30);
+        screenLabel.setForeground(Color.WHITE);
+        screenLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        headerPanel.add(screenLabel);
+
         JLabel auditoriumLabel = new JLabel("Auditorium: " + showtime.getAuditorium().getAudId());
-        auditoriumLabel.setBounds(50, 50, 700, 30);
+        auditoriumLabel.setBounds(0, 0, 700, 300);
         auditoriumLabel.setForeground(Color.WHITE);
         auditoriumLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         headerPanel.add(auditoriumLabel);
@@ -72,22 +78,26 @@ public class SeatMap extends JPanel implements ActionListener {
 
         ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
         Image img = availableIcon.getImage();
-        Image scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         availableIcon = new ImageIcon(scaledImg);
 
         ImageIcon bookedIcon = new ImageIcon("src/Boundary/Images/chair-booked.png");
         img = bookedIcon.getImage();
-        scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        scaledImg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         bookedIcon = new ImageIcon(scaledImg);
 
         ImageIcon selectedIcon = new ImageIcon("src/Boundary/Images/chair-selected.png");
         img = selectedIcon.getImage();
-        scaledImg = img.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        scaledImg = img.getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         selectedIcon = new ImageIcon(scaledImg);
 
         for (int i = 1; i <= seatCount; i++) {
             String seatNumber = String.valueOf(i);
             JButton seatButton = new JButton(seatNumber);
+            seatButton.setIcon(availableIcon);
+            seatButton.setContentAreaFilled(false);
+            seatButton.setFocusPainted(false);
+            seatButton.setBorderPainted(false);
             seatButton.setBackground(new Color(100, 149, 237));
             seatButton.setFocusable(false);
             seatButton.setFont(new Font("Arial", Font.BOLD, 10));
@@ -138,12 +148,12 @@ public class SeatMap extends JPanel implements ActionListener {
             Color green = new Color(144, 238, 144);
             ImageIcon availableIcon = new ImageIcon("src/Boundary/Images/chair-available.png");
             Image img = availableIcon.getImage();
-            Image scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+            Image scaledImg = img.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
             availableIcon = new ImageIcon(scaledImg);
 
             ImageIcon selectedIcon = new ImageIcon("src/Boundary/Images/chair-selected.png");
             img = selectedIcon.getImage();
-            scaledImg = img.getScaledInstance(24, 24, java.awt.Image.SCALE_SMOOTH);
+            scaledImg = img.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
             selectedIcon = new ImageIcon(scaledImg);
 
             JButton clickedButton = (JButton) e.getSource(); // Identify the clicked button
