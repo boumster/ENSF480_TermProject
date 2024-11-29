@@ -19,6 +19,7 @@ public class Database {
     private static ArrayList<RegUser> listRegUsers = new ArrayList<RegUser>();
     private static ArrayList<User> listUsers = new ArrayList<User>();
     private static ArrayList<Ticket> listTickets = new ArrayList<Ticket>();
+    private static ArrayList<Ticket> listEmails = new ArrayList<Email>();
 
     // Constructor to establish the database connection
     private Database() throws SQLException {
@@ -54,6 +55,7 @@ public class Database {
         listRegUsers.clear();
         listUsers.clear();
         listTickets.clear();
+        listEmails.clear();
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
@@ -146,6 +148,37 @@ public class Database {
                     Showtime showtime = new Showtime(rs.getInt("showtimeID"), rs.getTimestamp("time").toLocalDateTime(),
                             aud, movie);
                     listShowtimes.add(showtime);
+                }
+            }
+
+            selectQuery = "SELECT * FROM tickets";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    Showtime showtime = null;
+                    for (Showtime s : listShowtimes) {
+                        if (s.getShowtimeId() == rs.getInt("showtimeID")) {
+                            showtime = s;
+                            break;
+                        }
+                    }
+                    RegUser user = null;
+                    int userID = rs.getInt("userID");
+                    if (userID != 0) {
+                        for (RegUser u : listRegUsers) {
+                            if (u.getUserID() == userID) {
+                                user = u;
+                                break;
+                            }
+                        }
+                    }
+                    if (showtime == null || user == null) {
+                        System.out.println("Showtime or user not found for ticket ID: " + rs.getInt("ID"));
+                        continue; // Skip this ticket entry
+                    }
+                    showtime.bookSeat(rs.getInt("seatNumber"));
+                    Ticket ticket = new Ticket(rs.getInt("ID"), showtime, rs.getDouble("price"),
+                            rs.getInt("seatNumber"), user);
+                    listTickets.add(ticket);
                 }
             }
 

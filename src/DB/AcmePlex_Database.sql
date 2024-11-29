@@ -531,6 +531,20 @@ INSERT INTO `tickets` (`userID`, `movieID`, `showtimeID`, `SeatNumber`, `price`)
 (3, 4, 13, 13, 12.00),
 (4, 5, 14, 14, 15.00);
 
+-- Create Emails Table
+CREATE TABLE `emails` (
+  `emailID` int NOT NULL AUTO_INCREMENT,
+  `userID` int DEFAULT NULL,
+  `ticketID` int DEFAULT NULL,
+  `message` text,
+  `time` datetime DEFAULT NULL,
+  PRIMARY KEY (`emailID`),
+  KEY `userID` (`userID`),
+  KEY `ticketID` (`ticketID`),
+  CONSTRAINT `emails_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`UserId`) ON DELETE CASCADE,
+  CONSTRAINT `emails_ibfk_2` FOREIGN KEY (`ticketID`) REFERENCES `tickets` (`ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
