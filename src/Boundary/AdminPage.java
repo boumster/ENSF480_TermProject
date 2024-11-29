@@ -19,7 +19,7 @@ public class AdminPage extends JPanel {
         JPanel mainPanel = createMainPanel();
         JPanel addMoviePanel = createAddMoviePanel();
         JPanel deleteMoviePanel = createDeleteMoviePanel();
-        JPanel sendEmailPanel = createPlaceholderPanel("Send Email Page");
+        JPanel sendEmailPanel = createSendEmailPanel();
 
         // Add panels to cardPanel
         cardPanel.add(mainPanel, "Main");
@@ -181,33 +181,43 @@ public class AdminPage extends JPanel {
         deleteMoviePanel.add(backButton);
     
         return deleteMoviePanel;
+
     }
 
-    private JPanel createPlaceholderPanel(String message) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        JLabel label = new JLabel(message, SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 18));
-        panel.add(label, BorderLayout.CENTER);
-
+    private JPanel createSendEmailPanel() {
+        JPanel sendEmailPanel = new JPanel(new BorderLayout());
+        sendEmailPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JTextArea emailTextArea = new JTextArea(10, 30);
+        emailTextArea.setLineWrap(true);
+        emailTextArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(emailTextArea);
+    
+        JPanel buttonPanel = new JPanel();
+        JButton sendButton = new JButton("Send Email");
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main"));
-        panel.add(backButton, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-   /*  public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Admin Page");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(500, 400);
-            frame.setLocationRelativeTo(null);
-
-            AdminPage adminPage = new AdminPage(new MovieTheatreApp());
-            frame.add(adminPage);
-
-            frame.setVisible(true);
+    
+        sendButton.addActionListener(e -> {
+            String emailContent = emailTextArea.getText().trim();
+            if (emailContent.isEmpty()) {
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                emailTextArea.setText("");
+            }
         });
-    } */
+    
+        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main"));
+    
+        buttonPanel.add(sendButton);
+        buttonPanel.add(backButton);
+        sendEmailPanel.add(new JLabel("Compose Email:"), BorderLayout.NORTH);
+        sendEmailPanel.add(scrollPane, BorderLayout.CENTER);
+        sendEmailPanel.add(buttonPanel, BorderLayout.SOUTH);
+    
+        return sendEmailPanel;
+    }
+    
+
+    
+
 }
