@@ -53,26 +53,24 @@ public class PaymentPage extends JPanel {
         // Pay button
         payButton = new JButton("Pay $20");
         payButton.setAlignmentX(CENTER_ALIGNMENT);
-        payButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle payment logic here
-                int cardNumber = Integer.parseInt(cardNumberField.getText());
+        payButton.addActionListener(e -> {
+            // Handle payment logic here
+            int cardNumber = Integer.parseInt(cardNumberField.getText());
 
-                if (cardNumberField.getText().isEmpty()) {
-                    statusLabel.setText("Please fill in all fields.");
+            if (cardNumberField.getText().isEmpty()) {
+                statusLabel.setText("Please fill in all fields.");
+            } else {
+                // Simulate payment processing
+                boolean paymentSuccess = processPayment(cardNumber);
+                if (paymentSuccess) {
+                    JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
+                    paymentControl.payAnnualFee(app.getCurrentUser(), 20.0, cardNumber);
+                    app.switchToPage("Home");
                 } else {
-                    // Simulate payment processing
-                    boolean paymentSuccess = processPayment(cardNumber);
-                    if (paymentSuccess) {
-                        statusLabel.setText("Payment successful! Thank you.");
-                        paymentControl.payAnnualFee(app.getCurrentUser(), 20.0, cardNumber);
-                        app.switchToPage("Home");
-                    } else {
-                        statusLabel.setText("Payment failed. Please try again.");
-                    }
+                    JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                 }
             }
+
         });
         add(payButton);
 
@@ -127,50 +125,47 @@ public class PaymentPage extends JPanel {
             payCreditsButton = new JButton("Pay with Credits");
             payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
 
-            payCreditsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Check if user has enough credits to pay for the tickets
-                    if (app.getCurrentUser().getCredits().doubleValue() < calculateTotalPrice()) {
-                        System.err.println("Insufficient Credits, please enter card details.");
-                        statusLabel.setText("Insufficient credits. Please enter card details.");
-                    } else {
-                        UserControl controller = new UserControl();
-                        boolean creditsDeducted = controller.deductCredit(app.getCurrentUser().getUserID(),
-                                calculateTotalPrice());
-                        double newCredits = app.getCurrentUser().getCredits().doubleValue() - calculateTotalPrice();
-                        app.getCurrentUser().setCredit(newCredits);
+            payCreditsButton.addActionListener(e -> {
+                // Check if user has enough credits to pay for the tickets
+                if (app.getCurrentUser().getCredits().doubleValue() < calculateTotalPrice()) {
+                    System.err.println("Insufficient Credits, please enter card details.");
+                    statusLabel.setText("Insufficient credits. Please enter card details.");
+                } else {
+                    UserControl controller = new UserControl();
+                    boolean creditsDeducted = controller.deductCredit(app.getCurrentUser().getUserID(),
+                            calculateTotalPrice());
+                    double newCredits = app.getCurrentUser().getCredits().doubleValue() - calculateTotalPrice();
+                    app.getCurrentUser().setCredit(newCredits);
 
-                        if (creditsDeducted) {
-                            boolean allTicketsCreated = true;
-                            for (String seat : seatsSelected) {
-                                int movieID = app.getSelectedMovie().getId();
-                                int showtimeID = app.getSelectedShowtime().getShowtimeId();
-                                int seatNum = Integer.parseInt(seat);
-                                double price = 10.0; // Assuming the price for a ticket is 10.0
-                                Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID()
-                                        : null;
+                    if (creditsDeducted) {
+                        boolean allTicketsCreated = true;
+                        for (String seat : seatsSelected) {
+                            int movieID = app.getSelectedMovie().getId();
+                            int showtimeID = app.getSelectedShowtime().getShowtimeId();
+                            int seatNum = Integer.parseInt(seat);
+                            double price = 10.0; // Assuming the price for a ticket is 10.0
+                            Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID()
+                                    : null;
 
-                                // Attempt to create each ticket
-                                boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum,
-                                        price,
-                                        userID);
-                                if (!ticketCreated) {
-                                    allTicketsCreated = false;
-                                    break;
-                                }
+                            // Attempt to create each ticket
+                            boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum,
+                                    price,
+                                    userID);
+                            if (!ticketCreated) {
+                                allTicketsCreated = false;
+                                break;
                             }
-
-                            // Final response after attempting to create tickets
-                            if (allTicketsCreated) {
-                                statusLabel.setText("Payment successful! Thank you.");
-                                app.switchToPage("Home");
-                            } else {
-                                statusLabel.setText("Payment failed. Please try again.");
-                            }
-                        } else {
-                            statusLabel.setText("Payment failed. Please try again.");
                         }
+
+                        // Final response after attempting to create tickets
+                        if (allTicketsCreated) {
+                            JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
+                            app.switchToPage("Home");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                     }
                 }
             });
@@ -233,9 +228,7 @@ public class PaymentPage extends JPanel {
         // Pay button
         payButton = new JButton("Pay");
         payButton.setAlignmentX(CENTER_ALIGNMENT);
-        payButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        payButton.addActionListener(e-> {
                 // Handle payment logic here
                 String cardNumber = cardNumberField.getText();
                 String cardHolder = cardHolderField.getText();
@@ -264,15 +257,15 @@ public class PaymentPage extends JPanel {
                             }
                         }
                         if (allTicketsCreated) {
-                            statusLabel.setText("Payment successful! Thank you.");
+                            JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
                             app.switchToPage("Home");
                         }
                     } else {
-                        statusLabel.setText("Payment failed. Please try again.");
+                        JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                     }
                 }
             }
-        });
+        );
         add(payButton);
 
         add(Box.createVerticalStrut(20)); // Add space
@@ -298,7 +291,7 @@ public class PaymentPage extends JPanel {
 
     private void refreshTickets() {
         ticketsPanel.removeAll();
-        if (seatsSelected.isEmpty()){
+        if (seatsSelected.isEmpty()) {
             app.switchToPage("SeatMap");
         }
         for (String seat : seatsSelected) {
