@@ -30,7 +30,7 @@ public class PaymentPage extends JPanel {
         paymentControl = new PaymentControl();
         // Render the annual fee payment form
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(65,65,69));
+        setBackground(new Color(65, 65, 69));
         setAlignmentX(CENTER_ALIGNMENT);
         setAlignmentY(CENTER_ALIGNMENT);
 
@@ -48,7 +48,7 @@ public class PaymentPage extends JPanel {
         cardNumberLabel.setForeground(Color.WHITE); // Set text color to white
         add(cardNumberLabel);
 
-        cardNumberField = new JTextField(20);
+        cardNumberField = new JTextField(10);
         cardNumberField.setMaximumSize(cardNumberField.getPreferredSize());
         cardNumberField.setAlignmentX(CENTER_ALIGNMENT);
         add(cardNumberField);
@@ -110,14 +110,12 @@ public class PaymentPage extends JPanel {
         paymentControl = new PaymentControl();
         setForeground(Color.WHITE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(65,65,69));
-        setAlignmentX(CENTER_ALIGNMENT);
-        setAlignmentY(CENTER_ALIGNMENT);
+        setBackground(new Color(65, 65, 69));
 
         JLabel headerLabel = new JLabel("Ticket Payment");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
-        headerLabel.setAlignmentX(CENTER_ALIGNMENT);
         headerLabel.setForeground(Color.WHITE); // Set text color to white
+        headerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(headerLabel);
 
         add(Box.createVerticalStrut(20)); // Add space
@@ -132,15 +130,15 @@ public class PaymentPage extends JPanel {
 
         add(Box.createVerticalStrut(20)); // Add space
 
-        add(Box.createVerticalStrut(20));
         if (app.getCurrentUser() != null) {
             creditsLabel = new JLabel("Credits: $" + app.getCurrentUser().getCredits());
             creditsLabel.setFont(new Font("Arial", Font.BOLD, 18));
-            creditsLabel.setAlignmentX(CENTER_ALIGNMENT);
+            creditsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             creditsLabel.setForeground(Color.WHITE); // Set text color to white
             add(creditsLabel);
+
             payCreditsButton = new JButton("Pay with Credits");
-            payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
+            payCreditsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             payCreditsButton.setBackground(new Color(103, 103, 110)); // Set background color
             payCreditsButton.setForeground(Color.WHITE); // Set text color
             payCreditsButton.addActionListener(e -> {
@@ -167,8 +165,7 @@ public class PaymentPage extends JPanel {
 
                             // Attempt to create each ticket
                             boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum,
-                                    price,
-                                    userID);
+                                    price, userID);
                             if (!ticketCreated) {
                                 allTicketsCreated = false;
                                 break;
@@ -188,68 +185,69 @@ public class PaymentPage extends JPanel {
                 }
             });
             add(payCreditsButton);
-
         }
+
+        add(Box.createVerticalStrut(20)); // Add space
 
         // Card Number label and field
+        JPanel cardNumberPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        cardNumberPanel.setBackground(new Color(65, 65, 69));
         JLabel cardNumberLabel = new JLabel("Card Number:");
-        cardNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
         cardNumberLabel.setForeground(Color.WHITE); // Set text color to white
-        if (app.getCurrentUser() != null && app.getCurrentUser().getIsRegisteredUser()) {
-            cardNumberField = new JTextField(String.valueOf(app.getCurrentUser().getPaymentCard()), 20);
-        } else {
-            cardNumberField = new JTextField(20);
-        }
-        add(cardNumberLabel);
+        cardNumberPanel.add(cardNumberLabel);
 
-        cardNumberField.setMaximumSize(cardNumberField.getPreferredSize());
-        cardNumberField.setAlignmentX(CENTER_ALIGNMENT);
-        add(cardNumberField);
+        cardNumberField = new JTextField(10);
+        cardNumberField.setMaximumSize(new Dimension(200, 10)); // Set maximum size
+        cardNumberPanel.add(cardNumberField);
+        add(cardNumberPanel);
 
-        add(Box.createVerticalStrut(10)); // Add space
+        add(Box.createVerticalStrut(5)); // Add space
 
         // Card Holder label and field
+        JPanel cardHolderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        cardHolderPanel.setBackground(new Color(65, 65, 69));
         JLabel cardHolderLabel = new JLabel("Card Holder Name:");
-        cardHolderLabel.setAlignmentX(CENTER_ALIGNMENT);
         cardHolderLabel.setForeground(Color.WHITE); // Set text color to white
-        add(cardHolderLabel);
+        cardHolderPanel.add(cardHolderLabel);
 
-        cardHolderField = new JTextField(20);
-        cardHolderField.setMaximumSize(cardHolderField.getPreferredSize());
-        cardHolderField.setAlignmentX(CENTER_ALIGNMENT);
-        add(cardHolderField);
+        cardHolderField = new JTextField(10);
+        cardHolderField.setMaximumSize(new Dimension(200, 5)); // Set maximum size
+        cardHolderPanel.add(cardHolderField);
+        add(cardHolderPanel);
 
         add(Box.createVerticalStrut(10)); // Add space
 
         // Expiry Date label and field
+        JPanel expiryDatePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        expiryDatePanel.setBackground(new Color(65, 65, 69));
         JLabel expiryDateLabel = new JLabel("Expiry Date:");
-        expiryDateLabel.setAlignmentX(CENTER_ALIGNMENT);
         expiryDateLabel.setForeground(Color.WHITE); // Set text color to white
-        add(expiryDateLabel);
+        expiryDatePanel.add(expiryDateLabel);
 
-        expiryDateField = new JTextField(20);
-        expiryDateField.setMaximumSize(expiryDateField.getPreferredSize());
-        expiryDateField.setAlignmentX(CENTER_ALIGNMENT);
-        add(expiryDateField);
+        expiryDateField = new JTextField(5);
+        expiryDateField.setMaximumSize(new Dimension(200, 5)); // Set maximum size
+        expiryDatePanel.add(expiryDateField);
+        add(expiryDatePanel);
 
-        add(Box.createVerticalStrut(10)); // Add space
+        add(Box.createVerticalStrut(5)); // Add space
 
         // CVV label and field
+        JPanel cvvPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        cvvPanel.setBackground(new Color(65, 65, 69));
         JLabel cvvLabel = new JLabel("CVV:");
-        cvvLabel.setAlignmentX(CENTER_ALIGNMENT);
         cvvLabel.setForeground(Color.WHITE); // Set text color to white
-        add(cvvLabel);
+        cvvPanel.add(cvvLabel);
 
-        cvvField = new JTextField(20);
-        cvvField.setMaximumSize(cvvField.getPreferredSize());
-        cvvField.setAlignmentX(CENTER_ALIGNMENT);
-        add(cvvField);
+        cvvField = new JTextField(5);
+        cvvField.setMaximumSize(new Dimension(200, 5)); // Set maximum size
+        cvvPanel.add(cvvField);
+        add(cvvPanel);
 
-        add(Box.createVerticalStrut(20)); // Add space
+        add(Box.createVerticalStrut(5)); // Add space
 
         // Pay button
         payButton = new JButton("Pay $" + calculateTotalPrice());
-        payButton.setAlignmentX(CENTER_ALIGNMENT);
+        payButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         payButton.setBackground(new Color(103, 103, 110)); // Set background color
         payButton.setForeground(Color.WHITE); // Set text color
         payButton.addActionListener(e -> {
@@ -269,31 +267,49 @@ public class PaymentPage extends JPanel {
         });
         add(payButton);
 
+        add(Box.createVerticalStrut(20)); // Add space
+
         // Back Button
         backButton = new JButton("Back");
-        backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.setBackground(new Color(103, 103, 110)); // Set background color
         backButton.setForeground(Color.WHITE); // Set text color
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                app.switchToPage("Showtimes");
-            }
-        });
+        backButton.addActionListener(e -> app.switchToPage("SeatMap"));
         add(backButton);
 
         add(Box.createVerticalStrut(20)); // Add space
+
+        // Status label
+        statusLabel = new JLabel("");
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setForeground(Color.WHITE); // Set text color to white
+        add(statusLabel);
     }
 
     private void refreshTickets() {
-        ticketsPanel.removeAll(); // Clear existing ticket labels
+        ticketsPanel.removeAll();
         for (String seat : seatsSelected) {
-            JLabel ticketLabel = new JLabel("Ticket for seat " + seat + " - $10");
-            ticketLabel.setForeground(Color.WHITE); // Ensure ticket label text is white
-            ticketsPanel.add(ticketLabel);
+            JPanel ticketPanel = new JPanel();
+            ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));
+            ticketPanel.setBackground(new Color(65, 65, 69));
+
+            JLabel ticketLabel = new JLabel("Seat: " + seat);
+            ticketLabel.setForeground(Color.WHITE);
+            ticketPanel.add(ticketLabel);
+
+            JButton removeButton = new JButton("Remove");
+            removeButton.addActionListener(e -> {
+                seatsSelected.remove(seat);
+                refreshTickets();
+            });
+            ticketPanel.add(Box.createHorizontalStrut(10));
+            ticketPanel.add(removeButton);
+
+            ticketsPanel.add(ticketPanel);
+            ticketsPanel.add(Box.createVerticalStrut(5)); // Add space between tickets
         }
-        ticketsPanel.revalidate(); // Revalidate to reflect changes
-        ticketsPanel.repaint(); // Repaint to ensure layout updates
+        ticketsPanel.revalidate();
+        ticketsPanel.repaint();
     }
 
     private double calculateTotalPrice() {
