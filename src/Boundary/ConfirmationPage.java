@@ -1,5 +1,6 @@
 package src.Boundary;
 
+import java.awt.*;
 import javax.swing.*;
 
 public class ConfirmationPage extends JPanel {
@@ -9,6 +10,9 @@ public class ConfirmationPage extends JPanel {
         label.setAlignmentX(CENTER_ALIGNMENT);
 
         JButton backButton = new JButton("Back to Home");
+        backButton.setBackground(new Color(103, 103, 110));
+        backButton.setFocusable(false);
+        backButton.setForeground(Color.WHITE);
         backButton.setAlignmentX(CENTER_ALIGNMENT);
         backButton.addActionListener(e -> app.switchToPage("Home"));
 

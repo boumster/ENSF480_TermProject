@@ -61,6 +61,9 @@ public class SeatMap extends JPanel implements ActionListener {
         footerPanel.add(confirmButton);
 
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(103, 103, 110));
+        backButton.setFocusable(false);
+        backButton.setForeground(Color.WHITE);
         backButton.addActionListener(e -> {
             app.switchToPage("TheatreSelection");
         });

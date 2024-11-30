@@ -1,7 +1,7 @@
 package src.Boundary;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 import src.Control.RegisterControl;
 import src.Entity.RegUser;
 
@@ -119,6 +119,9 @@ public class RegisterPage extends JPanel {
         // Back button
         JButton backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setBackground(new Color(103, 103, 110));
+        backButton.setFocusable(false);
+        backButton.setForeground(Color.WHITE);
         backButton.addActionListener(e -> app.switchToPage("Home"));
         add(backButton);
     }

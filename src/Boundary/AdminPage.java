@@ -12,6 +12,7 @@ public class AdminPage extends JPanel {
     public AdminPage(MovieTheatreApp movieTheatreApp) {
         this.adminControl = new AdminControl();
         setLayout(new BorderLayout());
+        setBackground(new Color(65, 65, 69)); // Set background color
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
@@ -31,11 +32,14 @@ public class AdminPage extends JPanel {
         add(cardPanel, BorderLayout.CENTER);
         // Back Button (South)
         JButton backButton = new JButton("Logout");
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(e -> {
             movieTheatreApp.switchToPage("Home");
             movieTheatreApp.setCurrentUser(null);
         });
         JPanel backPanel = new JPanel();
+        backPanel.setBackground(new Color(65, 65, 69)); // Set background color
         backPanel.add(backButton);
         add(backPanel, BorderLayout.SOUTH);
     }
@@ -43,10 +47,17 @@ public class AdminPage extends JPanel {
     private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel(new GridLayout(3, 1, 10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        mainPanel.setBackground(new Color(65, 65, 69)); // Set background color
 
         JButton addMovieButton = new JButton("Add Movie");
+        addMovieButton.setBackground(new Color(65, 65, 69)); // Set background color
+        addMovieButton.setForeground(Color.WHITE); // Set text color
         JButton deleteMovieButton = new JButton("Delete Movie");
+        deleteMovieButton.setBackground(new Color(65, 65, 69)); // Set background color
+        deleteMovieButton.setForeground(Color.WHITE); // Set text color
         JButton sendEmailButton = new JButton("Send Email");
+        sendEmailButton.setBackground(new Color(65, 65, 69)); // Set background color
+        sendEmailButton.setForeground(Color.WHITE); // Set text color
 
         addMovieButton.addActionListener(e -> cardLayout.show(cardPanel, "AddMovie"));
         deleteMovieButton.addActionListener(e -> cardLayout.show(cardPanel, "DeleteMovie"));
@@ -58,27 +69,38 @@ public class AdminPage extends JPanel {
 
         return mainPanel;
     }
+
     private JPanel createAddMoviePanel() {
         JPanel addMoviePanel = new JPanel(new GridLayout(7, 2, 10, 10));
         addMoviePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        addMoviePanel.setBackground(new Color(65, 65, 69)); // Set background color
 
         JLabel nameLabel = new JLabel("Movie Name:");
+        nameLabel.setForeground(Color.WHITE); // Set text color
         JTextField nameField = new JTextField();
 
         JLabel descriptionLabel = new JLabel("Movie Description:");
+        descriptionLabel.setForeground(Color.WHITE); // Set text color
         JTextField descriptionField = new JTextField();
 
         JLabel genreLabel = new JLabel("Movie Genre:");
+        genreLabel.setForeground(Color.WHITE); // Set text color
         JTextField genreField = new JTextField();
 
         JLabel ratingLabel = new JLabel("Movie Rating:");
+        ratingLabel.setForeground(Color.WHITE); // Set text color
         JTextField ratingField = new JTextField();
 
         JLabel durationLabel = new JLabel("Movie Duration (minutes):");
+        durationLabel.setForeground(Color.WHITE); // Set text color
         JTextField durationField = new JTextField();
 
         JButton submitButton = new JButton("Submit");
+        submitButton.setBackground(new Color(65, 65, 69)); // Set background color
+        submitButton.setForeground(Color.WHITE); // Set text color
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
 
         submitButton.addActionListener(e -> {
             String name = nameField.getText();
@@ -131,11 +153,17 @@ public class AdminPage extends JPanel {
     private JPanel createDeleteMoviePanel() {
         JPanel deleteMoviePanel = new JPanel(new GridLayout(3, 1, 10, 10));
         deleteMoviePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        deleteMoviePanel.setBackground(new Color(65, 65, 69)); // Set background color
     
         JLabel movieLabel = new JLabel("Select Movie to Delete:");
+        movieLabel.setForeground(Color.WHITE); // Set text color
         JComboBox<String> movieDropdown = new JComboBox<>();
         JButton submitButton = new JButton("Delete Movie");
+        submitButton.setBackground(new Color(65, 65, 69)); // Set background color
+        submitButton.setForeground(Color.WHITE); // Set text color
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
     
         // Populate dropdown with movie names
         try {
@@ -181,20 +209,25 @@ public class AdminPage extends JPanel {
         deleteMoviePanel.add(backButton);
     
         return deleteMoviePanel;
-
     }
 
     private JPanel createSendEmailPanel() {
         JPanel sendEmailPanel = new JPanel(new BorderLayout());
         sendEmailPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        sendEmailPanel.setBackground(new Color(65, 65, 69)); // Set background color
         JTextArea emailTextArea = new JTextArea(10, 30);
         emailTextArea.setLineWrap(true);
         emailTextArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(emailTextArea);
     
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(65, 65, 69)); // Set background color
         JButton sendButton = new JButton("Send Email");
+        sendButton.setBackground(new Color(65, 65, 69)); // Set background color
+        sendButton.setForeground(Color.WHITE); // Set text color
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
     
         sendButton.addActionListener(e -> {
             String emailContent = emailTextArea.getText().trim();
@@ -216,8 +249,4 @@ public class AdminPage extends JPanel {
     
         return sendEmailPanel;
     }
-    
-
-    
-
 }

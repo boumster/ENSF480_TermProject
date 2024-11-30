@@ -30,10 +30,11 @@ public class PaymentPage extends JPanel {
         paymentControl = new PaymentControl();
         // Render the annual fee payment form
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        setBackground(new Color(65,65,69));
         JLabel headerLabel = new JLabel("Pay Annual Fee");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
         headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+        headerLabel.setForeground(Color.WHITE); // Set text color to white
         add(headerLabel);
 
         add(Box.createVerticalStrut(20)); // Add space
@@ -41,6 +42,7 @@ public class PaymentPage extends JPanel {
         // Card Number label and field
         JLabel cardNumberLabel = new JLabel("Card Number:");
         cardNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
+        cardNumberLabel.setForeground(Color.WHITE); // Set text color to white
         add(cardNumberLabel);
 
         cardNumberField = new JTextField(20);
@@ -53,6 +55,8 @@ public class PaymentPage extends JPanel {
         // Pay button
         payButton = new JButton("Pay $20");
         payButton.setAlignmentX(CENTER_ALIGNMENT);
+        payButton.setBackground(new Color(65, 65, 69)); // Set background color
+        payButton.setForeground(Color.WHITE); // Set text color
         payButton.addActionListener(e -> {
             // Handle payment logic here
             int cardNumber = Integer.parseInt(cardNumberField.getText());
@@ -78,6 +82,8 @@ public class PaymentPage extends JPanel {
 
         backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -91,6 +97,7 @@ public class PaymentPage extends JPanel {
         // Status label
         statusLabel = new JLabel("");
         statusLabel.setAlignmentX(CENTER_ALIGNMENT);
+        statusLabel.setForeground(Color.WHITE); // Set text color to white
         add(statusLabel);
     }
 
@@ -98,11 +105,14 @@ public class PaymentPage extends JPanel {
         this.seatsSelected = seatsSelected;
         this.app = app;
         paymentControl = new PaymentControl();
+        setForeground(Color.WHITE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(new Color(65,65,69));
 
         JLabel headerLabel = new JLabel("Ticket Payment");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
         headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+        headerLabel.setForeground(Color.WHITE); // Set text color to white
         add(headerLabel);
 
         add(Box.createVerticalStrut(20)); // Add space
@@ -121,10 +131,12 @@ public class PaymentPage extends JPanel {
             creditsLabel = new JLabel("Credits: $" + app.getCurrentUser().getCredits());
             creditsLabel.setFont(new Font("Arial", Font.BOLD, 18));
             creditsLabel.setAlignmentX(CENTER_ALIGNMENT);
+            creditsLabel.setForeground(Color.WHITE); // Set text color to white
             add(creditsLabel);
             payCreditsButton = new JButton("Pay with Credits");
             payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
-
+            payCreditsButton.setBackground(new Color(65, 65, 69)); // Set background color
+            payCreditsButton.setForeground(Color.WHITE); // Set text color
             payCreditsButton.addActionListener(e -> {
                 // Check if user has enough credits to pay for the tickets
                 if (app.getCurrentUser().getCredits().doubleValue() < calculateTotalPrice()) {
@@ -176,6 +188,7 @@ public class PaymentPage extends JPanel {
         // Card Number label and field
         JLabel cardNumberLabel = new JLabel("Card Number:");
         cardNumberLabel.setAlignmentX(CENTER_ALIGNMENT);
+        cardNumberLabel.setForeground(Color.WHITE); // Set text color to white
         if (app.getCurrentUser() != null && app.getCurrentUser().getIsRegisteredUser()) {
             cardNumberField = new JTextField(String.valueOf(app.getCurrentUser().getPaymentCard()), 20);
         } else {
@@ -192,6 +205,7 @@ public class PaymentPage extends JPanel {
         // Card Holder label and field
         JLabel cardHolderLabel = new JLabel("Card Holder Name:");
         cardHolderLabel.setAlignmentX(CENTER_ALIGNMENT);
+        cardHolderLabel.setForeground(Color.WHITE); // Set text color to white
         add(cardHolderLabel);
 
         cardHolderField = new JTextField(20);
@@ -204,6 +218,7 @@ public class PaymentPage extends JPanel {
         // Expiry Date label and field
         JLabel expiryDateLabel = new JLabel("Expiry Date (MM/YY):");
         expiryDateLabel.setAlignmentX(CENTER_ALIGNMENT);
+        expiryDateLabel.setForeground(Color.WHITE); // Set text color to white
         add(expiryDateLabel);
 
         expiryDateField = new JTextField(5);
@@ -216,6 +231,7 @@ public class PaymentPage extends JPanel {
         // CVV label and field
         JLabel cvvLabel = new JLabel("CVV:");
         cvvLabel.setAlignmentX(CENTER_ALIGNMENT);
+        cvvLabel.setForeground(Color.WHITE); // Set text color to white
         add(cvvLabel);
 
         cvvField = new JTextField(3);
@@ -226,118 +242,62 @@ public class PaymentPage extends JPanel {
         add(Box.createVerticalStrut(20)); // Add space
 
         // Pay button
-        payButton = new JButton("Pay");
+        payButton = new JButton("Pay $" + calculateTotalPrice());
         payButton.setAlignmentX(CENTER_ALIGNMENT);
-        payButton.addActionListener(e-> {
-                // Handle payment logic here
-                String cardNumber = cardNumberField.getText();
-                String cardHolder = cardHolderField.getText();
-                String expiryDate = expiryDateField.getText();
-                String cvv = cvvField.getText();
-
-                if (cardNumber.isEmpty() || cardHolder.isEmpty() || expiryDate.isEmpty() || cvv.isEmpty()) {
-                    statusLabel.setText("Please fill in all fields.");
+        payButton.setBackground(new Color(65, 65, 69)); // Set background color
+        payButton.setForeground(Color.WHITE); // Set text color
+        payButton.addActionListener(e -> {
+            if (cardNumberField.getText().isEmpty() || cardHolderField.getText().isEmpty()
+                    || expiryDateField.getText().isEmpty() || cvvField.getText().isEmpty()) {
+                statusLabel.setText("Please fill in all fields.");
+            } else {
+                boolean paymentSuccess = processPayment(cardNumberField.getText(), cardHolderField.getText(),
+                        expiryDateField.getText(), cvvField.getText());
+                if (paymentSuccess) {
+                    JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
+                    app.switchToPage("Home");
                 } else {
-                    // Simulate payment processing
-                    boolean paymentSuccess = processPayment(cardNumber, cardHolder, expiryDate, cvv);
-                    if (paymentSuccess) {
-                        boolean allTicketsCreated = true;
-                        for (String seat : seatsSelected) {
-                            int movieID = app.getSelectedMovie().getId();
-                            int showtimeID = app.getSelectedShowtime().getShowtimeId();
-                            int seatNum = Integer.parseInt(seat);
-                            double price = 10.0;
-                            Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID() : null;
-
-                            boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum, price,
-                                    userID);
-                            if (!ticketCreated) {
-                                allTicketsCreated = false;
-                                break;
-                            }
-                        }
-                        if (allTicketsCreated) {
-                            JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
-                            app.switchToPage("Home");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
-                    }
+                    JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                 }
             }
-        );
+        });
         add(payButton);
 
-        add(Box.createVerticalStrut(20)); // Add space
-
-        // Back button
+        // Back Button
         backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.switchToPage("SeatMap");
+                app.switchToPage("Showtimes");
             }
         });
         add(backButton);
 
         add(Box.createVerticalStrut(20)); // Add space
-
-        // Status label
-        statusLabel = new JLabel("");
-        statusLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(statusLabel);
     }
 
-    private void refreshTickets() {
-        ticketsPanel.removeAll();
-        if (seatsSelected.isEmpty()) {
-            app.switchToPage("SeatMap");
-        }
-        for (String seat : seatsSelected) {
-            JPanel ticketPanel = new JPanel();
-            ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));
-            JLabel ticketLabel = new JLabel("Seat: " + seat + ", Price: $10");
-            ticketPanel.add(ticketLabel);
-
-            JButton removeButton = new JButton("Remove");
-            removeButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    seatsSelected.remove(seat);
-                    refreshTickets();
-                }
-            });
-            ticketPanel.add(Box.createHorizontalStrut(10)); // Add space between label and button
-            ticketPanel.add(removeButton);
-
-            ticketsPanel.add(ticketPanel);
-            ticketsPanel.add(Box.createVerticalStrut(5)); // Add space between tickets
-        }
-
-        totalPriceLabel = new JLabel("Total Price: $" + calculateTotalPrice());
-        totalPriceLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        totalPriceLabel.setAlignmentX(CENTER_ALIGNMENT);
-        ticketsPanel.add(totalPriceLabel);
-        ticketsPanel.revalidate();
-        ticketsPanel.repaint();
+    private double calculateTotalPrice() {
+        return seatsSelected.size() * 10.0; // Assuming each ticket costs 10
     }
 
     private boolean processPayment(String cardNumber, String cardHolder, String expiryDate, String cvv) {
         // Simulate payment processing logic
-        // In a real application, you would integrate with a payment gateway here
-
         return true; // Simulate a successful payment
     }
 
     private boolean processPayment(Number cardNumber) {
         // Simulate payment processing logic
-        // In a real application, you would integrate with a payment gateway here
         return true; // Simulate a successful payment
     }
 
-    private Double calculateTotalPrice() {
-        return seatsSelected.size() * 10.0; // Assume each seat costs $10
+    private void refreshTickets() {
+        for (String seat : seatsSelected) {
+            JLabel ticketLabel = new JLabel("Ticket for seat " + seat + " - $10");
+            ticketLabel.setForeground(Color.WHITE);
+            ticketsPanel.add(ticketLabel);
+        }
     }
-
 }
