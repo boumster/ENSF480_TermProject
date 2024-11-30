@@ -1,4 +1,5 @@
 package src.Boundary;
+
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -18,29 +19,29 @@ public class MovieTheatreApp {
     private Showtime selectedShowtime;
     private ArrayList<String> selectedSeats;
 
-    public MovieTheatreApp(){
+    public MovieTheatreApp() {
         frame = new JFrame("Movie Theatre Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Make the window full screen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // frame.setUndecorated(true); // removes border and title and controls, but cause you cant easily close window
+        // frame.setUndecorated(true); // removes border and title and controls, but
+        // cause you cant easily close window
 
-        //CardLayout and Panel
+        // CardLayout and Panel
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-        
-        //Add different pages
+
+        // Add different pages
         homePage = new HomePage(this);
         viewTicketsPage = new ViewTicketsPage(this);
         mailPage = new MailPage(this);
         cardPanel.add(homePage, "Home");
         cardPanel.add(new AdminPage(this), "AdminHome");
-        cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
-        //cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
-        //cardPanel.add(new ShowtimesPage(this), "Showtimes");
-        cardPanel.add(new BookingPage(this), "Booking");
-        //cardPanel.add(new SeatMap(this), "SeatMap");
-        cardPanel.add(new ConfirmationPage(this), "Confirmation");
+        cardPanel.add(new BrowseMovies(this), "BrowseMovies");
+        // cardPanel.add(new TheatreSelectionPage(this, selectedMovie),
+        // "TheatreSelection");
+        // cardPanel.add(new ShowtimesPage(this), "Showtimes");
+        // cardPanel.add(new SeatMap(this), "SeatMap");
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
         cardPanel.add(new AdminPage(this), "AdminPage");
@@ -53,25 +54,26 @@ public class MovieTheatreApp {
         frame.setVisible(true);
     }
 
-    public void switchToPage(String pageName){
+    public void switchToPage(String pageName) {
         if (pageName.equals("TheatreSelection")) {
-            cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");         
-        } 
-        if (pageName.equals("Home")){
+            cardPanel.add(new TheatreSelectionPage(this, selectedMovie), "TheatreSelection");
+        }
+        if (pageName.equals("Home")) {
             homePage.refresh();
-        } if (pageName.equals("ViewTickets")){
+        }
+        if (pageName.equals("ViewTickets")) {
             viewTicketsPage.refreshTickets();
-        } else if(pageName.equals("MailPage")){
+        } else if (pageName.equals("MailPage")) {
             mailPage.refreshMails();
         }
-        if (pageName.equals("SeatMap")){
+        if (pageName.equals("SeatMap")) {
             cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");
         }
-        if (pageName.equals("TicketPayment")){
+        if (pageName.equals("TicketPayment")) {
             cardPanel.add(new PaymentPage(this, selectedSeats), "TicketPayment");
         }
         if (pageName.equals("AdminPage")) {
-            
+
         }
         cardLayout.show(cardPanel, pageName);
     }
@@ -85,19 +87,19 @@ public class MovieTheatreApp {
         return currentUser;
     }
 
-    public void setSelectedMovie(Movie movie){
+    public void setSelectedMovie(Movie movie) {
         System.out.println("Selected movie: in MovieApp " + movie.getTitle());
         this.selectedMovie = movie;
     }
 
     public Movie getSelectedMovie() {
-            return selectedMovie;
-        }
+        return selectedMovie;
+    }
 
     public void setSelectedShowtime(Showtime showtime) {
         this.selectedShowtime = showtime;
     }
-    
+
     public Showtime getSelectedShowtime() {
         return selectedShowtime;
     }
