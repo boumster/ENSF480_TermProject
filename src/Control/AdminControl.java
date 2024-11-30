@@ -12,7 +12,7 @@ import src.Entity.RegUser;
 public class AdminControl {
     private Database db;
 
-    public AdminControl(){
+    public AdminControl() {
         try {
             db = Database.getInstance();
         } catch (Exception e) {
@@ -21,15 +21,15 @@ public class AdminControl {
         }
     }
 
-    public void addMovie(String name, String description, String genre, String rating, int duration) throws SQLException {
+    public void addMovie(String name, String description, String genre, String rating, int duration)
+            throws SQLException {
         try {
             String query = "INSERT INTO movies (Movie_name, Movie_description, Movie_Genre, Movie_rating, Movie_Duration) VALUES (?, ?, ?, ?, ?)";
-            int rowsAffected = db.update(query, name, description, genre, rating,duration);
+            int rowsAffected = db.update(query, name, description, genre, rating, duration);
             if (rowsAffected > 0) {
                 System.out.println("Movie added successfully");
             }
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -52,7 +52,7 @@ public class AdminControl {
     public ArrayList<String> getAllMovieNames() throws SQLException {
         ArrayList<Movie> movies = db.getListMovies();
         ArrayList<String> movieNames = new ArrayList<String>();
-        for (int i = 0; i< movies.size(); i++){
+        for (int i = 0; i < movies.size(); i++) {
             movieNames.add(movies.get(i).getTitle());
 
         }
@@ -61,7 +61,7 @@ public class AdminControl {
 
     public ArrayList<Mail> getUsersMail(int UserID) {
         ArrayList<Mail> userMails = new ArrayList<Mail>();
-        for (Mail mail : db.getListMails()) {
+        for (Mail mail : Database.getListMails()) {
             if (mail.getUser().getUserID() == UserID) {
                 userMails.add(mail);
             }
@@ -103,32 +103,29 @@ public class AdminControl {
             System.err.println("Message cannot be empty.");
             return;
         }
-    
+
         try {
             // Get the list of all registered users
-            ArrayList<RegUser> allRegUsers = db.getListRegUsers(); 
+            ArrayList<RegUser> allRegUsers = db.getListRegUsers();
             System.out.println("Total registered users fetched: " + allRegUsers.size());
-    
+
             // Create a copy of the list to avoid modification while iterating
             ArrayList<RegUser> usersToEmail = new ArrayList<>(allRegUsers);
-    
-            Integer defaultTicketId = null; 
-    
+
+            Integer defaultTicketId = null;
+
             for (RegUser regUser : usersToEmail) {
-                int userId = regUser.getUserID(); 
-                if(regUser.getIsRegisteredUser()){
-                    sendEmail(userId, defaultTicketId, message); 
-                System.out.println("Email sent to registered User ID: " + userId);
+                int userId = regUser.getUserID();
+                if (regUser.getIsRegisteredUser()) {
+                    sendEmail(userId, defaultTicketId, message);
+                    System.out.println("Email sent to registered User ID: " + userId);
                 }
             }
-    
+
         } catch (Exception e) {
             System.err.println("Error sending email to registered users: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    
 
 }
-

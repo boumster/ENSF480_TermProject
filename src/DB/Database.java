@@ -56,6 +56,7 @@ public class Database {
         listRegUsers.clear();
         listUsers.clear();
         listTickets.clear();
+        listMails.clear();
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
