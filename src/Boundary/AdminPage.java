@@ -187,35 +187,78 @@ public class AdminPage extends JPanel {
     private JPanel createSendEmailPanel() {
         JPanel sendEmailPanel = new JPanel(new BorderLayout());
         sendEmailPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    
+        // Text area for composing the email
         JTextArea emailTextArea = new JTextArea(10, 30);
         emailTextArea.setLineWrap(true);
         emailTextArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(emailTextArea);
     
+        // Panel for input fields
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(3, 2)); // 3 rows, 2 columns
+    
+        // Fields for User ID (for individual user email) and Ticket ID (optional if needed)
+        JTextField userIdField = new JTextField(15);
+    
+        // Add components to the input panel
+        inputPanel.add(new JLabel("User ID (leave blank for all registered users):"));
+        inputPanel.add(userIdField);
+    
+        // Panel for buttons
         JPanel buttonPanel = new JPanel();
         JButton sendButton = new JButton("Send Email");
         JButton backButton = new JButton("Back");
     
+        // Create AdminControl instance to call the sendEmail method
+        AdminControl adminControl = new AdminControl();
+    
         sendButton.addActionListener(e -> {
             String emailContent = emailTextArea.getText().trim();
+            String userIdText = userIdField.getText().trim();
+    
             if (emailContent.isEmpty()) {
                 JOptionPane.showMessageDialog(sendEmailPanel, "Email cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                emailTextArea.setText("");
+                return;
             }
+    
+            // If User ID is provided, send to the specific user
+            if (!userIdText.isEmpty()) {
+                int userId = -1;
+                try {
+                    userId = Integer.parseInt(userIdText);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(sendEmailPanel, "User ID must be numeric.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // Send email to the specific user
+                adminControl.sendEmail(userId, null, emailContent); // Send to specific user (no ticket ID required)
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent to User ID: " + userId, "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // If User ID is not provided, send to all registered users
+                adminControl.sendEmailToRegisteredUsers(emailContent); // Use the method for registered users
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent to All Registered Users!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+    
+            // Clear the fields after sending the email
+            emailTextArea.setText(""); // Clear the text area
+            userIdField.setText("");  // Clear the User ID field
         });
     
-        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main"));
+        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main")); // Go back to main page
     
         buttonPanel.add(sendButton);
         buttonPanel.add(backButton);
+    
+        // Add components to the main panel
         sendEmailPanel.add(new JLabel("Compose Email:"), BorderLayout.NORTH);
         sendEmailPanel.add(scrollPane, BorderLayout.CENTER);
+        sendEmailPanel.add(inputPanel, BorderLayout.WEST); // Added input panel for User ID field
         sendEmailPanel.add(buttonPanel, BorderLayout.SOUTH);
     
         return sendEmailPanel;
     }
+    
     
 
     

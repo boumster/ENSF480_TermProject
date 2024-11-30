@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+
+import src.Control.AdminControl;
 import src.Control.TicketControl;
 import src.Entity.Ticket;
 import src.Entity.RegUser;
@@ -76,6 +78,12 @@ public class ViewTicketsPage extends JPanel {
                             JOptionPane.showMessageDialog(null,
                                     "Ticket canceled successfully. Refund amount: $" + refundAmount, "Success",
                                     JOptionPane.INFORMATION_MESSAGE);
+                            AdminControl adminControl = new AdminControl();
+                            String emailMessage = "Your ticket has been successfully cancelled.\n" +
+                                                "Seat: " + ticket.getSeatNumber().toString() + "\n" +
+                                                "Refunded Amount: $" + ticket.getPrice() + "\n" +
+                                                "Hope to see you again soon!";
+                            adminControl.sendEmail(app.getCurrentUser().getUserID(), null, emailMessage);
                         } else {
                             JOptionPane.showMessageDialog(null,
                                     "Cannot cancel ticket less than 72 hours before showtime.", "Error",
