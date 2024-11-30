@@ -109,14 +109,19 @@ public class AdminControl {
             ArrayList<RegUser> allRegUsers = db.getListRegUsers(); // Assuming this method returns a list of registered users
             System.out.println("Total registered users fetched: " + allRegUsers.size());
     
+            // Create a copy of the list to avoid modification while iterating
+            ArrayList<RegUser> usersToEmail = new ArrayList<>(allRegUsers);
+    
             // Define a valid ticket ID (replace this with your actual logic to get a valid ticket ID)
             Integer defaultTicketId = null; // Replace with your actual method to get a valid ticket ID
     
             // Iterate through all registered users and send email
-            for (RegUser regUser : allRegUsers) {
+            for (RegUser regUser : usersToEmail) {
                 int userId = regUser.getUserID(); // Get the user ID
-                sendEmail(userId, defaultTicketId, message); // Send email to each registered user with a valid ticket ID
+                if(regUser.getIsRegisteredUser()){
+                    sendEmail(userId, defaultTicketId, message); // Send email to each registered user with a valid ticket ID
                 System.out.println("Email sent to registered User ID: " + userId);
+                }
             }
     
         } catch (Exception e) {
