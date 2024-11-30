@@ -1,7 +1,7 @@
 package src.Boundary;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 import src.Control.RegisterControl;
 import src.Entity.RegUser;
 
@@ -16,10 +16,12 @@ public class RegisterPage extends JPanel {
 
     public RegisterPage(MovieTheatreApp app) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(new Color(65, 65, 69)); // Set background color
 
         JLabel headerLabel = new JLabel("Register", SwingConstants.CENTER);
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
         headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+        headerLabel.setForeground(Color.WHITE); // Set text color to white
         add(headerLabel);
 
         add(Box.createVerticalStrut(20)); // Add space
@@ -27,6 +29,7 @@ public class RegisterPage extends JPanel {
         // Username label
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setAlignmentX(CENTER_ALIGNMENT);
+        usernameLabel.setForeground(Color.WHITE); // Set text color to white
         add(usernameLabel);
 
         // Username field
@@ -40,6 +43,7 @@ public class RegisterPage extends JPanel {
         // Email label
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setAlignmentX(CENTER_ALIGNMENT);
+        emailLabel.setForeground(Color.WHITE); // Set text color to white
         add(emailLabel);
 
         // Email field
@@ -53,6 +57,7 @@ public class RegisterPage extends JPanel {
         // Password label
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setAlignmentX(CENTER_ALIGNMENT);
+        passwordLabel.setForeground(Color.WHITE); // Set text color to white
         add(passwordLabel);
 
         // Password field
@@ -66,6 +71,7 @@ public class RegisterPage extends JPanel {
         // Confirm Password label
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
         confirmPasswordLabel.setAlignmentX(CENTER_ALIGNMENT);
+        confirmPasswordLabel.setForeground(Color.WHITE); // Set text color to white
         add(confirmPasswordLabel);
 
         // Confirm Password field
@@ -79,6 +85,7 @@ public class RegisterPage extends JPanel {
         // Address label
         JLabel addressLabel = new JLabel("Address:");
         addressLabel.setAlignmentX(CENTER_ALIGNMENT);
+        addressLabel.setForeground(Color.WHITE); // Set text color to white
         add(addressLabel);
 
         // Address field
@@ -90,7 +97,9 @@ public class RegisterPage extends JPanel {
 
         // Register button
         JButton registerButton = new JButton("Register");
+        registerButton.setBackground(new Color(103, 103, 110)); // Set background color
         registerButton.setAlignmentX(CENTER_ALIGNMENT);
+        registerButton.setForeground(Color.WHITE); // Set text color
         registerButton.addActionListener(e -> {
             String username = usernameField.getText();
             String email = emailField.getText();
@@ -119,6 +128,9 @@ public class RegisterPage extends JPanel {
         // Back button
         JButton backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setBackground(new Color(103, 103, 110)); // Set background color
+        backButton.setFocusable(false);
+        backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(e -> app.switchToPage("Home"));
         add(backButton);
     }

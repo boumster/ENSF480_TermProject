@@ -21,10 +21,9 @@ public class SeatMap extends JPanel implements ActionListener {
         this.app = app;
         this.showtime = showtime;
         this.SelectedSeats = new ArrayList<String>();
-
         setLayout(new BorderLayout());
         JPanel headerPanel = new JPanel(new GridLayout(2, 1));
-        headerPanel.setBackground(Color.BLACK);
+        headerPanel.setBackground(new Color(65,65,69));
 
         // Create the JLabels
         JLabel movieLabel = new JLabel("Movie: " + showtime.getMovie().getTitle());
@@ -49,7 +48,7 @@ public class SeatMap extends JPanel implements ActionListener {
 
         // Create the JPanel for seat buttons
         seatPanel = new JPanel();
-        seatPanel.setBackground(Color.LIGHT_GRAY);
+        seatPanel.setBackground(new Color(103, 103, 110));
         add(seatPanel, BorderLayout.CENTER);
 
         updateSeatPanel();
@@ -62,6 +61,9 @@ public class SeatMap extends JPanel implements ActionListener {
         footerPanel.add(confirmButton);
 
         JButton backButton = new JButton("Back");
+        backButton.setBackground(new Color(103, 103, 110));
+        backButton.setFocusable(false);
+        backButton.setForeground(Color.WHITE);
         backButton.addActionListener(e -> {
             app.switchToPage("TheatreSelection");
         });

@@ -1,5 +1,6 @@
 package src.Boundary;
 
+import java.awt.Color;
 import javax.swing.*;
 
 public class HomePage extends JPanel {
@@ -30,27 +31,41 @@ public class HomePage extends JPanel {
 
     public void generateLayout() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(new Color(65,65,69));
         welcomeLabel = new JLabel("Welcome to AcmePlex!");
+        welcomeLabel.setForeground(Color.WHITE);
         welcomeLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         browseMoviesButton = new JButton("Browse Movies");
         browseMoviesButton.setAlignmentX(CENTER_ALIGNMENT);
-        browseMoviesButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
 
+        browseMoviesButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
         loginButton = new JButton("Login");
         loginButton.setAlignmentX(CENTER_ALIGNMENT);
+        loginButton.setBackground(new Color(103, 103, 110));
+        loginButton.setFocusable(false);
+        loginButton.setForeground(Color.WHITE);
         loginButton.addActionListener(e -> app.switchToPage("Login"));
 
         guestButton = new JButton("Continue as Guest");
+        guestButton.setBackground(new Color(103, 103, 110));
+        guestButton.setForeground(Color.WHITE);
         guestButton.setAlignmentX(CENTER_ALIGNMENT);
+        guestButton.setFocusable(false);
         guestButton.addActionListener(e -> app.switchToPage("BrowseMovies"));
 
         adminLoginButton = new JButton("Admin Login");
+        adminLoginButton.setBackground(new Color(103, 103, 110));
+        adminLoginButton.setForeground(Color.WHITE);
         adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);
+        adminLoginButton.setFocusable(false);
         adminLoginButton.addActionListener(e -> app.switchToPage("AdminLogin"));
 
         registerUser = new JButton("Register");
+        registerUser.setBackground(new Color(103, 103, 110));
+        registerUser.setForeground(Color.WHITE);
         registerUser.setAlignmentX(CENTER_ALIGNMENT);
+        registerUser.setFocusable(false);
         registerUser.addActionListener(e -> app.switchToPage("Register"));
 
         creditLabel = new JLabel("");
@@ -59,6 +74,7 @@ public class HomePage extends JPanel {
         if (app.getCurrentUser() != null) {
             welcomeLabel.setText("Welcome, " + app.getCurrentUser().getUsername() + "!");
             creditLabel.setText("Credits: " + app.getCurrentUser().getCredits());
+            creditLabel.setForeground(Color.WHITE);
             viewTicketsButton = new JButton("View Tickets");
             viewTicketsButton.setAlignmentX(CENTER_ALIGNMENT);
             viewTicketsButton.addActionListener(e -> app.switchToPage("ViewTickets"));

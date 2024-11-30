@@ -22,13 +22,17 @@ public class ViewTicketsPage extends JPanel {
 
         JLabel headerLabel = new JLabel("Your Tickets");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
+        headerLabel.setBackground(new Color(103, 103, 110));
         headerLabel.setAlignmentX(CENTER_ALIGNMENT);
+        headerLabel.setForeground(Color.WHITE); // Set header color for better readability
+        setBackground(new Color(103, 103, 110));
         add(headerLabel);
 
         add(Box.createVerticalStrut(20)); // Add space
 
         ticketsPanel = new JPanel();
         ticketsPanel.setLayout(new BoxLayout(ticketsPanel, BoxLayout.Y_AXIS));
+        ticketsPanel.setBackground(new Color(65, 65, 69)); // Set background color for tickets panel
         add(ticketsPanel);
 
         refreshTickets();
@@ -36,6 +40,8 @@ public class ViewTicketsPage extends JPanel {
         // Add back button
         JButton backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
+        backButton.setBackground(new Color(103, 103, 110)); // Neutral button background
+        backButton.setForeground(Color.WHITE); // Button text color
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,6 +61,7 @@ public class ViewTicketsPage extends JPanel {
             for (Ticket ticket : tickets) {
                 JPanel ticketPanel = new JPanel();
                 ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.X_AXIS));
+                ticketPanel.setBackground(new Color(75, 75, 79)); // Slightly darker background for each ticket
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE d, h:mm a");
 
                 // Format the LocalDateTime
@@ -64,8 +71,11 @@ public class ViewTicketsPage extends JPanel {
                         "Ticket ID: " + ticket.getTicketId() + ", Movie: " + ticket.getShowtime().getMovie().getTitle()
                                 + ", Showtime: " + formattedDateTime + ", Seat: " + ticket.getSeatNumber()
                                 + ", Price: $" + ticket.getPrice());
+                ticketLabel.setForeground(Color.WHITE); // Set label text color for readability
 
                 JButton cancelButton = new JButton("Cancel");
+                cancelButton.setBackground(new Color(120, 0, 0)); // Red background for cancel button
+                cancelButton.setForeground(Color.WHITE); // White text for better visibility
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -107,6 +117,7 @@ public class ViewTicketsPage extends JPanel {
         } else {
             JLabel noTicketsLabel = new JLabel("No tickets found.");
             noTicketsLabel.setAlignmentX(CENTER_ALIGNMENT);
+            noTicketsLabel.setForeground(Color.LIGHT_GRAY); // Subtle text color for no tickets found
             ticketsPanel.add(noTicketsLabel);
         }
 
