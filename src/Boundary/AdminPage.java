@@ -188,7 +188,7 @@ public class AdminPage extends JPanel {
         JPanel sendEmailPanel = new JPanel(new BorderLayout());
         sendEmailPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     
-        // Text area for composing the email
+        // Text area for composing email
         JTextArea emailTextArea = new JTextArea(10, 30);
         emailTextArea.setLineWrap(true);
         emailTextArea.setWrapStyleWord(true);
@@ -198,7 +198,6 @@ public class AdminPage extends JPanel {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(3, 2)); // 3 rows, 2 columns
     
-        // Fields for User ID (for individual user email) and Ticket ID (optional if needed)
         JTextField userIdField = new JTextField(15);
     
         // Add components to the input panel
@@ -210,7 +209,6 @@ public class AdminPage extends JPanel {
         JButton sendButton = new JButton("Send Email");
         JButton backButton = new JButton("Back");
     
-        // Create AdminControl instance to call the sendEmail method
         AdminControl adminControl = new AdminControl();
     
         sendButton.addActionListener(e -> {
