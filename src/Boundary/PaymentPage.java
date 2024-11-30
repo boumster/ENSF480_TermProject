@@ -31,6 +31,9 @@ public class PaymentPage extends JPanel {
         // Render the annual fee payment form
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(65,65,69));
+        setAlignmentX(CENTER_ALIGNMENT);
+        setAlignmentY(CENTER_ALIGNMENT);
+
         JLabel headerLabel = new JLabel("Pay Annual Fee");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
         headerLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -108,6 +111,8 @@ public class PaymentPage extends JPanel {
         setForeground(Color.WHITE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(65,65,69));
+        setAlignmentX(CENTER_ALIGNMENT);
+        setAlignmentY(CENTER_ALIGNMENT);
 
         JLabel headerLabel = new JLabel("Ticket Payment");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Set font and style
@@ -120,6 +125,7 @@ public class PaymentPage extends JPanel {
         // Tickets panel
         ticketsPanel = new JPanel();
         ticketsPanel.setLayout(new BoxLayout(ticketsPanel, BoxLayout.Y_AXIS));
+        ticketsPanel.setBackground(new Color(65, 65, 69));
         add(ticketsPanel);
 
         refreshTickets();
@@ -135,7 +141,7 @@ public class PaymentPage extends JPanel {
             add(creditsLabel);
             payCreditsButton = new JButton("Pay with Credits");
             payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
-            payCreditsButton.setBackground(new Color(65, 65, 69)); // Set background color
+            payCreditsButton.setBackground(new Color(103, 103, 110)); // Set background color
             payCreditsButton.setForeground(Color.WHITE); // Set text color
             payCreditsButton.addActionListener(e -> {
                 // Check if user has enough credits to pay for the tickets
@@ -216,12 +222,12 @@ public class PaymentPage extends JPanel {
         add(Box.createVerticalStrut(10)); // Add space
 
         // Expiry Date label and field
-        JLabel expiryDateLabel = new JLabel("Expiry Date (MM/YY):");
+        JLabel expiryDateLabel = new JLabel("Expiry Date:");
         expiryDateLabel.setAlignmentX(CENTER_ALIGNMENT);
         expiryDateLabel.setForeground(Color.WHITE); // Set text color to white
         add(expiryDateLabel);
 
-        expiryDateField = new JTextField(5);
+        expiryDateField = new JTextField(20);
         expiryDateField.setMaximumSize(expiryDateField.getPreferredSize());
         expiryDateField.setAlignmentX(CENTER_ALIGNMENT);
         add(expiryDateField);
@@ -234,7 +240,7 @@ public class PaymentPage extends JPanel {
         cvvLabel.setForeground(Color.WHITE); // Set text color to white
         add(cvvLabel);
 
-        cvvField = new JTextField(3);
+        cvvField = new JTextField(20);
         cvvField.setMaximumSize(cvvField.getPreferredSize());
         cvvField.setAlignmentX(CENTER_ALIGNMENT);
         add(cvvField);
@@ -244,7 +250,7 @@ public class PaymentPage extends JPanel {
         // Pay button
         payButton = new JButton("Pay $" + calculateTotalPrice());
         payButton.setAlignmentX(CENTER_ALIGNMENT);
-        payButton.setBackground(new Color(65, 65, 69)); // Set background color
+        payButton.setBackground(new Color(103, 103, 110)); // Set background color
         payButton.setForeground(Color.WHITE); // Set text color
         payButton.addActionListener(e -> {
             if (cardNumberField.getText().isEmpty() || cardHolderField.getText().isEmpty()
@@ -266,7 +272,7 @@ public class PaymentPage extends JPanel {
         // Back Button
         backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
-        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setBackground(new Color(103, 103, 110)); // Set background color
         backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -279,25 +285,26 @@ public class PaymentPage extends JPanel {
         add(Box.createVerticalStrut(20)); // Add space
     }
 
+    private void refreshTickets() {
+        ticketsPanel.removeAll(); // Clear existing ticket labels
+        for (String seat : seatsSelected) {
+            JLabel ticketLabel = new JLabel("Ticket for seat " + seat + " - $10");
+            ticketLabel.setForeground(Color.WHITE); // Ensure ticket label text is white
+            ticketsPanel.add(ticketLabel);
+        }
+        ticketsPanel.revalidate(); // Revalidate to reflect changes
+        ticketsPanel.repaint(); // Repaint to ensure layout updates
+    }
+
     private double calculateTotalPrice() {
-        return seatsSelected.size() * 10.0; // Assuming each ticket costs 10
+        return seatsSelected.size() * 10.0; // Assuming each ticket costs $10
     }
 
     private boolean processPayment(String cardNumber, String cardHolder, String expiryDate, String cvv) {
-        // Simulate payment processing logic
         return true; // Simulate a successful payment
     }
 
     private boolean processPayment(Number cardNumber) {
-        // Simulate payment processing logic
         return true; // Simulate a successful payment
-    }
-
-    private void refreshTickets() {
-        for (String seat : seatsSelected) {
-            JLabel ticketLabel = new JLabel("Ticket for seat " + seat + " - $10");
-            ticketLabel.setForeground(Color.WHITE);
-            ticketsPanel.add(ticketLabel);
-        }
     }
 }
