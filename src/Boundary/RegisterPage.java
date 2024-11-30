@@ -12,7 +12,6 @@ public class RegisterPage extends JPanel {
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
     private JTextField addressField;
-    private JTextField paymentCardField;
 
     public RegisterPage(MovieTheatreApp app) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

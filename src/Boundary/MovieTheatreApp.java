@@ -24,8 +24,6 @@ public class MovieTheatreApp {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Make the window full screen
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // frame.setUndecorated(true); // removes border and title and controls, but
-        // cause you cant easily close window
 
         // CardLayout and Panel
         cardLayout = new CardLayout();
@@ -38,10 +36,6 @@ public class MovieTheatreApp {
         cardPanel.add(homePage, "Home");
         cardPanel.add(new AdminPage(this), "AdminHome");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies");
-        // cardPanel.add(new TheatreSelectionPage(this, selectedMovie),
-        // "TheatreSelection");
-        // cardPanel.add(new ShowtimesPage(this), "Showtimes");
-        // cardPanel.add(new SeatMap(this), "SeatMap");
         cardPanel.add(new LoginPage(this, "USER"), "Login");
         cardPanel.add(new LoginPage(this, "ADMIN"), "AdminLogin");
         cardPanel.add(new AdminPage(this), "AdminPage");

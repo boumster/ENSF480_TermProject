@@ -51,7 +51,7 @@ public class Theatre {
 
     public void addMovie(Movie movie) {
         movies.add(movie);
-        movie.addShowtime(this, new ArrayList<Showtime>()); //* */
+        movie.addShowtime(this, new ArrayList<Showtime>()); 
     }
 
     public void removeMovie(Movie movie) {

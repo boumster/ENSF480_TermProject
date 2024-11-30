@@ -9,7 +9,7 @@ public class movieController {
 
     public movieController() {
         try {
-            db = Database.getInstance();
+            Database db = Database.getInstance();
         } catch (SQLException e) {
             System.err.println("Error connecting to database: " + e.getMessage());
             e.printStackTrace();
