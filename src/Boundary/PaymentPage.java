@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import src.Control.TicketControl;
 import src.Control.UserControl;
+import src.Control.AdminControl;
 import src.Control.PaymentControl;
 
 public class PaymentPage extends JPanel {
@@ -257,6 +258,13 @@ public class PaymentPage extends JPanel {
                             }
                         }
                         if (allTicketsCreated) {
+                            AdminControl adminControl = new AdminControl();
+                            String emailMessage = "Your ticket(s) have been successfully booked.\n" +
+                                                "Seats: " + seatsSelected.toString() + "\n" +
+                                                "Total Price: $" + calculateTotalPrice() + "\n" +
+                                                "Enjoy your movie!";
+                            adminControl.sendEmail(app.getCurrentUser().getUserID(), null, emailMessage);
+
                             JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
                             app.switchToPage("Home");
                         }
