@@ -58,7 +58,7 @@ public class PaymentPage extends JPanel {
         // Pay button
         payButton = new JButton("Pay $20");
         payButton.setAlignmentX(CENTER_ALIGNMENT);
-        payButton.setBackground(new Color(65, 65, 69)); // Set background color
+        payButton.setBackground(new Color(103, 103, 110)); // Set background color
         payButton.setForeground(Color.WHITE); // Set text color
         payButton.addActionListener(e -> {
             // Handle payment logic here
@@ -85,7 +85,7 @@ public class PaymentPage extends JPanel {
 
         backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
-        backButton.setBackground(new Color(65, 65, 69)); // Set background color
+        backButton.setBackground(new Color(103, 103, 110)); // Set background color
         backButton.setForeground(Color.WHITE); // Set text color
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -137,6 +137,8 @@ public class PaymentPage extends JPanel {
             creditsLabel.setAlignmentX(CENTER_ALIGNMENT);
             add(creditsLabel);
             payCreditsButton = new JButton("Pay with Credits");
+            payCreditsButton.setForeground(Color.WHITE);
+            payCreditsButton.setBackground(new Color(103, 103, 110));
             payCreditsButton.setAlignmentX(CENTER_ALIGNMENT);
 
             payCreditsButton.addActionListener(e -> {
@@ -245,6 +247,8 @@ public class PaymentPage extends JPanel {
 
         // Pay button
         payButton = new JButton("Pay");
+        payButton.setBackground(new Color(103, 103, 110));
+        payButton.setForeground(Color.WHITE);
         payButton.setAlignmentX(CENTER_ALIGNMENT);
         payButton.addActionListener(e -> {
             // Handle payment logic here
@@ -289,6 +293,8 @@ public class PaymentPage extends JPanel {
 
         // Back button
         backButton = new JButton("Back");
+        backButton.setBackground(new Color(103, 103, 110));
+        backButton.setForeground(Color.WHITE);
         backButton.setAlignmentX(CENTER_ALIGNMENT);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -318,10 +324,13 @@ public class PaymentPage extends JPanel {
             ticketPanel.setBackground(new Color(65, 65, 69));
             ticketPanel.setForeground(Color.WHITE);
             JLabel ticketLabel = new JLabel("Seat: " + seat + ", Price: $10");
+            ticketLabel.setBackground(new Color(103, 103, 110));
             ticketLabel.setForeground(Color.WHITE);
             ticketPanel.add(ticketLabel);
 
             JButton removeButton = new JButton("Remove");
+            removeButton.setBackground(new Color(103, 103, 110));
+            removeButton.setForeground(Color.WHITE);
             removeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
