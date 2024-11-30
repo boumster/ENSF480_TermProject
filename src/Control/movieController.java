@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class movieController {
-    private Database db;
 
     public movieController() {
         try {
