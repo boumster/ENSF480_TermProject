@@ -100,6 +100,7 @@ public class MailPage extends JPanel {
 
     private void showMailDetail(int selectedIndex) {
         if (selectedIndex != -1 && selectedIndex < userMails.size()) {
+            System.out.println("Showing mail details for index: " + selectedIndex); // Debugging line
             Mail selectedMail = userMails.get(selectedIndex);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");

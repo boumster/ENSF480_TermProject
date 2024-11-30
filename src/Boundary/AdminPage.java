@@ -1,4 +1,5 @@
 package src.Boundary;
+
 import java.awt.*;
 import java.sql.SQLException;
 import javax.swing.*;
@@ -109,15 +110,18 @@ public class AdminPage extends JPanel {
             String rating = ratingField.getText();
             String durationText = durationField.getText();
 
-            if (name.isEmpty() || description.isEmpty() || genre.isEmpty() || rating.isEmpty() || durationText.isEmpty()) {
-                JOptionPane.showMessageDialog(addMoviePanel, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (name.isEmpty() || description.isEmpty() || genre.isEmpty() || rating.isEmpty()
+                    || durationText.isEmpty()) {
+                JOptionPane.showMessageDialog(addMoviePanel, "All fields are required.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             try {
                 int duration = Integer.parseInt(durationText);
                 adminControl.addMovie(name, description, genre, rating, duration);
-                JOptionPane.showMessageDialog(addMoviePanel, "Movie added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(addMoviePanel, "Movie added successfully!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
 
                 // Clear fields
                 nameField.setText("");
@@ -126,9 +130,11 @@ public class AdminPage extends JPanel {
                 ratingField.setText("");
                 durationField.setText("");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(addMoviePanel, "Duration must be a number.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(addMoviePanel, "Duration must be a number.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(addMoviePanel, "Error adding movie: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(addMoviePanel, "Error adding movie: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -169,57 +175,87 @@ public class AdminPage extends JPanel {
         try {
             java.util.List<String> movieNames = adminControl.getAllMovieNames();
             if (movieNames.isEmpty()) {
-                JOptionPane.showMessageDialog(deleteMoviePanel, "No movies available to delete.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(deleteMoviePanel, "No movies available to delete.", "Info",
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 for (String movieName : movieNames) {
                     movieDropdown.addItem(movieName);
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(deleteMoviePanel, "Error fetching movies: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(deleteMoviePanel, "Error fetching movies: " + e.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-    
+
         submitButton.addActionListener(e -> {
             String selectedMovie = (String) movieDropdown.getSelectedItem();
-    
+
             if (selectedMovie == null || selectedMovie.isEmpty()) {
-                JOptionPane.showMessageDialog(deleteMoviePanel, "Please select a movie to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(deleteMoviePanel, "Please select a movie to delete.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-    
+
             try {
                 adminControl.deleteMovie(selectedMovie);
-                JOptionPane.showMessageDialog(deleteMoviePanel, "Movie deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-    
+                JOptionPane.showMessageDialog(deleteMoviePanel, "Movie deleted successfully!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+
                 movieDropdown.removeAllItems();
                 java.util.List<String> updatedMovieNames = adminControl.getAllMovieNames();
                 for (String movieName : updatedMovieNames) {
                     movieDropdown.addItem(movieName);
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(deleteMoviePanel, "Error deleting movie: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(deleteMoviePanel, "Error deleting movie: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
-    
+
         backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main"));
-    
+
         deleteMoviePanel.add(movieLabel);
         deleteMoviePanel.add(movieDropdown);
         deleteMoviePanel.add(submitButton);
         deleteMoviePanel.add(backButton);
-    
+
         return deleteMoviePanel;
     }
 
     private JPanel createSendEmailPanel() {
-        JPanel sendEmailPanel = new JPanel(new BorderLayout());
+        JPanel sendEmailPanel = new JPanel();
+        sendEmailPanel.setLayout(new BoxLayout(sendEmailPanel, BoxLayout.Y_AXIS));
         sendEmailPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    
+        // Panel for input fields
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for more control
+    
+        // User ID label and field
+        JLabel userIdLabel = new JLabel("User ID (leave blank for all registered users):");
+        JTextField userIdField = new JTextField(10); // Adjusted size to 10 columns
+        userIdField.setMaximumSize(new Dimension(200, 20)); // Set maximum size
+    
+        // Add components to the input panel
+        inputPanel.add(userIdLabel);
+        inputPanel.add(Box.createVerticalStrut(5)); // Add space between label and text field
+        inputPanel.add(userIdField);
+    
+        // Email label and text area
+        JLabel emailLabel = new JLabel("Compose Email:");
         sendEmailPanel.setBackground(new Color(65, 65, 69)); // Set background color
         JTextArea emailTextArea = new JTextArea(10, 30);
         emailTextArea.setLineWrap(true);
         emailTextArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(emailTextArea);
     
+        // Add components to the input panel
+        inputPanel.add(Box.createVerticalStrut(10)); // Add space between sections
+        inputPanel.add(emailLabel);
+        inputPanel.add(Box.createVerticalStrut(5)); // Add space between label and text area
+        inputPanel.add(scrollPane);
+    
+        // Panel for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(65, 65, 69)); // Set background color
         JButton sendButton = new JButton("Send Email");
@@ -229,23 +265,53 @@ public class AdminPage extends JPanel {
         backButton.setBackground(new Color(65, 65, 69)); // Set background color
         backButton.setForeground(Color.WHITE); // Set text color
     
+        AdminControl adminControl = new AdminControl();
+    
         sendButton.addActionListener(e -> {
             String emailContent = emailTextArea.getText().trim();
+            String userIdText = userIdField.getText().trim();
+    
             if (emailContent.isEmpty()) {
-                JOptionPane.showMessageDialog(sendEmailPanel, "Email cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                emailTextArea.setText("");
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email cannot be empty.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
             }
+    
+            // If User ID is provided, send to the specific user
+            if (!userIdText.isEmpty()) {
+                int userId = -1;
+                try {
+                    userId = Integer.parseInt(userIdText);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(sendEmailPanel, "User ID must be numeric.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // Send email to the specific user
+                adminControl.sendEmail(userId, null, emailContent); // Send to specific user (no ticket ID required)
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent to User ID: " + userId, "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // If User ID is not provided, send to all registered users
+                adminControl.sendEmailToRegisteredUsers(emailContent); // Use the method for registered users
+                JOptionPane.showMessageDialog(sendEmailPanel, "Email Sent to All Registered Users!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+    
+            // Clear the fields after sending the email
+            emailTextArea.setText(""); // Clear the text area
+            userIdField.setText(""); // Clear the User ID field
         });
     
-        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main"));
+        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main")); // Go back to main page
     
         buttonPanel.add(sendButton);
         buttonPanel.add(backButton);
-        sendEmailPanel.add(new JLabel("Compose Email:"), BorderLayout.NORTH);
-        sendEmailPanel.add(scrollPane, BorderLayout.CENTER);
-        sendEmailPanel.add(buttonPanel, BorderLayout.SOUTH);
+    
+        // Add components to the main panel
+        sendEmailPanel.add(inputPanel);
+        sendEmailPanel.add(Box.createVerticalStrut(20)); // Add space between input panel and buttons
+        sendEmailPanel.add(buttonPanel);
     
         return sendEmailPanel;
     }

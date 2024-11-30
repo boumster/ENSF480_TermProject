@@ -14,6 +14,7 @@ public class MovieTheatreApp {
     private HomePage homePage;
     private Movie selectedMovie;
     private ViewTicketsPage viewTicketsPage;
+    private MailPage mailPage;
     private Showtime selectedShowtime;
     private ArrayList<String> selectedSeats;
 
@@ -31,6 +32,7 @@ public class MovieTheatreApp {
         //Add different pages
         homePage = new HomePage(this);
         viewTicketsPage = new ViewTicketsPage(this);
+        mailPage = new MailPage(this);
         cardPanel.add(homePage, "Home");
         cardPanel.add(new AdminPage(this), "AdminHome");
         cardPanel.add(new BrowseMovies(this), "BrowseMovies"); 
@@ -45,7 +47,7 @@ public class MovieTheatreApp {
         cardPanel.add(new RegisterPage(this), "Register");
         cardPanel.add(new PaymentPage(this), "FeePayment");
         cardPanel.add(viewTicketsPage, "ViewTickets");
-
+        cardPanel.add(mailPage, "MailPage");
 
         frame.add(cardPanel);
         frame.setVisible(true);
@@ -59,6 +61,8 @@ public class MovieTheatreApp {
             homePage.refresh();
         } if (pageName.equals("ViewTickets")){
             viewTicketsPage.refreshTickets();
+        } else if(pageName.equals("MailPage")){
+            mailPage.refreshMails();
         }
         if (pageName.equals("SeatMap")){
             cardPanel.add(new SeatMap(this, selectedShowtime), "SeatMap");

@@ -13,6 +13,7 @@ public class HomePage extends JPanel {
     private JButton registerUser;
     private JButton logoutButton;
     private JButton payFeeButton;
+    private JButton mailboxButton;
     private JButton viewTicketsButton;
     private MovieTheatreApp app;
 
@@ -78,6 +79,10 @@ public class HomePage extends JPanel {
             viewTicketsButton.setAlignmentX(CENTER_ALIGNMENT);
             viewTicketsButton.addActionListener(e -> app.switchToPage("ViewTickets"));
 
+            mailboxButton = new JButton("Mailbox");
+            mailboxButton.setAlignmentX(CENTER_ALIGNMENT);
+            mailboxButton.addActionListener(e -> app.switchToPage("MailPage"));
+
             logoutButton = new JButton("Logout");
             logoutButton.setAlignmentX(CENTER_ALIGNMENT);
             logoutButton.addActionListener(e -> {
@@ -99,6 +104,8 @@ public class HomePage extends JPanel {
             add(viewTicketsButton);
             add(Box.createVerticalStrut(20));
             add(browseMoviesButton);
+            add(Box.createVerticalStrut(20)); 
+            add(mailboxButton);
             if (!app.getCurrentUser().getIsRegisteredUser()) {
                 add(Box.createVerticalStrut(20));
                 add(payFeeButton);

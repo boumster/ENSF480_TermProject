@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import src.Control.TicketControl;
 import src.Control.UserControl;
+import src.Control.AdminControl;
 import src.Control.PaymentControl;
 
 public class PaymentPage extends JPanel {
@@ -267,22 +268,30 @@ public class PaymentPage extends JPanel {
                         double price = 10.0;
                         Integer userID = app.getCurrentUser() != null ? app.getCurrentUser().getUserID() : null;
 
-                        boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum, price,
-                                userID);
-                        if (!ticketCreated) {
-                            allTicketsCreated = false;
-                            break;
+                            boolean ticketCreated = TicketControl.createTicket(movieID, showtimeID, seatNum, price,
+                                    userID);
+                            if (!ticketCreated) {
+                                allTicketsCreated = false;
+                                break;
+                            }
                         }
+                        if (allTicketsCreated) {
+                            AdminControl adminControl = new AdminControl();
+                            String emailMessage = "Your ticket(s) have been successfully booked.\n" +
+                                                "Seats: " + seatsSelected.toString() + "\n" +
+                                                "Total Price: $" + calculateTotalPrice() + "\n" +
+                                                "Enjoy your movie!";
+                            adminControl.sendEmail(app.getCurrentUser().getUserID(), null, emailMessage);
+
+                            JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
+                            app.switchToPage("Home");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                     }
-                    if (allTicketsCreated) {
-                        JOptionPane.showMessageDialog(this, "Payment successful! Thank you.");
-                        app.switchToPage("Home");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Payment failed. Please try again.");
                 }
             }
-        });
+        );
         add(payButton);
 
         add(Box.createVerticalStrut(20)); // Add space

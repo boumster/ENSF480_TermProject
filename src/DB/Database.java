@@ -2,6 +2,7 @@ package src.DB;
 
 import src.Entity.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Database {
@@ -19,6 +20,7 @@ public class Database {
     private static ArrayList<RegUser> listRegUsers = new ArrayList<RegUser>();
     private static ArrayList<User> listUsers = new ArrayList<User>();
     private static ArrayList<Ticket> listTickets = new ArrayList<Ticket>();
+    private static ArrayList<Mail> listMails = new ArrayList<Mail>();
 
     // Constructor to establish the database connection
     private Database() throws SQLException {
@@ -54,6 +56,7 @@ public class Database {
         listRegUsers.clear();
         listUsers.clear();
         listTickets.clear();
+        listMails.clear();
         try {
             String selectQuery = "SELECT * FROM theatre";
             try (ResultSet rs = read(selectQuery)) {
@@ -180,6 +183,54 @@ public class Database {
                 }
             }
 
+            selectQuery = "SELECT * FROM mails";
+            try (ResultSet rs = read(selectQuery)) {
+                while (rs.next()) {
+                    int mailID = rs.getInt("mailID");
+                    int userID = rs.getInt("userID");
+                    int ticketID = rs.getInt("ticketID");
+                    String message = rs.getString("message");
+                    LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
+
+                    // Find associated User
+                    User user = null;
+                    if (userID != 0) {
+                        for (User u : listRegUsers) { // Assuming listRegUsers is the collection of User objects
+                            if (u.getUserID() == userID) {
+                                user = u;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Find associated Ticket
+                    Ticket ticket = null;
+                    if (ticketID != 0) {
+                        for (Ticket t : listTickets) { // Assuming listTickets is the collection of Ticket objects
+                            if (t.getTicketId() == ticketID) {
+                                ticket = t;
+                                break;
+                            }
+                        }
+                    }
+
+                    // If user or ticket not found, log and skip
+                    if (user == null) {
+                        System.out.println("User not found for Mail ID: " + mailID);
+                    }
+                    if (ticket == null && ticketID != 0) {
+                        System.out.println("Ticket not found for Mail ID: " + mailID);
+                    }
+
+                    // Create Mail object and add it to the list
+                    Mail mail = new Mail(mailID, user, ticket, message, time);
+                    listMails.add(mail); // Assuming listMails is the collection of Mail objects
+                }
+            } catch (SQLException e) {
+                System.err.println("Error fetching mails: " + e.getMessage());
+                e.printStackTrace();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -262,6 +313,10 @@ public class Database {
 
     public static ArrayList<Ticket> getListTickets() {
         return listTickets;
+    }
+
+    public static ArrayList<Mail> getListMails() {
+        return listMails;
     }
 
     public static RegUser getRegUser(int userId) {
