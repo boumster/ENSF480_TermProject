@@ -3,6 +3,7 @@ package src.Boundary;
 import src.Entity.Mail;
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import src.Entity.RegUser;
 import src.Control.AdminControl;
@@ -11,7 +12,7 @@ public class MailPage extends JPanel {
     private MovieTheatreApp app;
     private JList<String> mailList;
     private DefaultListModel<String> mailListModel;
-    private ArrayList<Mail> userMails;  // Store the list of mails for the current user
+    private ArrayList<Mail> userMails; // Store the list of mails for the current user
     private AdminControl adminControl;
 
     public MailPage(MovieTheatreApp app) {
@@ -30,7 +31,7 @@ public class MailPage extends JPanel {
         mailListModel = new DefaultListModel<>();
         mailList = new JList<>(mailListModel);
         mailList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        mailList.setVisibleRowCount(10);  // Display a maximum of 10 mails at a time
+        mailList.setVisibleRowCount(10); // Display a maximum of 10 mails at a time
 
         // Wrap the JList in a JScrollPane
         JScrollPane scrollPane = new JScrollPane(mailList);
@@ -46,24 +47,26 @@ public class MailPage extends JPanel {
         // Add back button
         JButton backButton = new JButton("Back");
         backButton.setAlignmentX(CENTER_ALIGNMENT);
-        backButton.addActionListener(e -> app.switchToPage("Home")); 
+        backButton.addActionListener(e -> app.switchToPage("Home"));
         add(Box.createVerticalStrut(20));
         add(backButton);
 
-        refreshMails(); 
+        refreshMails();
     }
 
     public void refreshMails() {
         System.out.println("Refreshing mails..."); // Debugging line
 
-        RegUser currentUser = app.getCurrentUser(); 
+        RegUser currentUser = app.getCurrentUser();
         if (currentUser != null) {
-            userMails = getUserMails(currentUser.getUserID());  // store fetched mails in userMails
+            userMails = getUserMails(currentUser.getUserID()); // store fetched mails in userMails
             System.out.println("Fetched " + userMails.size() + " mails for user ID: " + currentUser.getUserID());
 
-            mailListModel.clear(); 
+            mailListModel.clear();
             for (Mail mail : userMails) {
-                String mailSummary = "Time: " + mail.getTime() + " | Message: " + mail.getMessage();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
+                String formattedDateTime = mail.getTime().format(formatter);
+                String mailSummary = "Time: " + formattedDateTime + " | Message: " + mail.getMessage();
                 boolean exists = false;
                 for (int i = 0; i < mailListModel.size(); i++) {
                     if (mailListModel.get(i).equals(mailSummary)) {
@@ -72,7 +75,7 @@ public class MailPage extends JPanel {
                     }
                 }
                 if (!exists) {
-                    mailListModel.addElement(mailSummary);  // Only add unique mails
+                    mailListModel.addElement(mailSummary); // Only add unique mails
                 }
             }
         } else {
@@ -98,9 +101,12 @@ public class MailPage extends JPanel {
     private void showMailDetail(int selectedIndex) {
         if (selectedIndex != -1 && selectedIndex < userMails.size()) {
             Mail selectedMail = userMails.get(selectedIndex);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d, h:mm a");
+            String formattedDateTime = selectedMail.getTime().format(formatter);
             JOptionPane.showMessageDialog(this,
                     "\nMessage: " + selectedMail.getMessage() +
-                    "\nTime: " + selectedMail.getTime(),
+                            "\nTime: " + formattedDateTime,
                     "Mail Details",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -108,6 +114,6 @@ public class MailPage extends JPanel {
 
     // Method to trigger mail refresh after actions like booking or refunding
     public void triggerMailUpdate() {
-        refreshMails(); 
+        refreshMails();
     }
 }
