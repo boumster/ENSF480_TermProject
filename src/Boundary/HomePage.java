@@ -1,7 +1,6 @@
 package src.Boundary;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.*;
 
 public class HomePage extends JPanel {
@@ -43,14 +42,12 @@ public class HomePage extends JPanel {
         loginButton = new JButton("Login");
         loginButton.setAlignmentX(CENTER_ALIGNMENT);
         loginButton.setBackground(new Color(103, 103, 110));
-        loginButton.setPreferredSize(new Dimension(400,200)); 
         loginButton.setFocusable(false);
         loginButton.setForeground(Color.WHITE);
         loginButton.addActionListener(e -> app.switchToPage("Login"));
 
         guestButton = new JButton("Continue as Guest");
         guestButton.setBackground(new Color(103, 103, 110));
-        guestButton.setPreferredSize(new Dimension(400,200)); 
         guestButton.setForeground(Color.WHITE);
         guestButton.setAlignmentX(CENTER_ALIGNMENT);
         guestButton.setFocusable(false);
@@ -61,12 +58,10 @@ public class HomePage extends JPanel {
         adminLoginButton.setForeground(Color.WHITE);
         adminLoginButton.setAlignmentX(CENTER_ALIGNMENT);
         adminLoginButton.setFocusable(false);
-        adminLoginButton.setPreferredSize(new Dimension(400,200)); 
         adminLoginButton.addActionListener(e -> app.switchToPage("AdminLogin"));
 
         registerUser = new JButton("Register");
         registerUser.setBackground(new Color(103, 103, 110));
-        registerUser.setPreferredSize(new Dimension(400,200)); 
         registerUser.setForeground(Color.WHITE);
         registerUser.setAlignmentX(CENTER_ALIGNMENT);
         registerUser.setFocusable(false);
