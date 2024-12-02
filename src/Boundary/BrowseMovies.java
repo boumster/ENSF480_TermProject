@@ -56,19 +56,17 @@ public class BrowseMovies extends JPanel {
         ArrayList<Movie> movies = controller.getAllMovies();
 
         if (movies.isEmpty()) {
-            // Display a message if no movies are available
             JLabel noMoviesLabel = new JLabel("No movies available", SwingConstants.CENTER);
             noMoviesLabel.setForeground(Color.WHITE); // Text color
             moviePanel.add(noMoviesLabel);
         } else {
-            // Loop through the list of movies and create a button for each
             for (Movie movie : movies) {
-                // Create a panel to hold the movie content (image and title)
+                // panel to hold the movie content (image and title)
                 JPanel movieContentPanel = new JPanel(new BorderLayout());
                 movieContentPanel.setBackground(new Color(65, 65, 69)); // Match background color
                 movieContentPanel.setPreferredSize(new Dimension(130, 230)); // Adjust as needed
 
-                // Create a button for the movie image
+                // button for the movie image
                 JButton movieButton = new JButton();
                 movieButton.setPreferredSize(new Dimension(120, 180));
                 movieButton.setContentAreaFilled(false);
@@ -76,7 +74,7 @@ public class BrowseMovies extends JPanel {
                 movieButton.setFocusPainted(false);
                 movieButton.setOpaque(false);
 
-                // Construct file paths for the movie image
+                // file paths for the movie image
                 String imageName = movie.getTitle().replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
                 String imagePathJpg = "src/Boundary/Images/" + imageName + ".jpg";
                 String imagePathJpeg = "src/Boundary/Images/" + imageName + ".jpeg";
@@ -86,39 +84,38 @@ public class BrowseMovies extends JPanel {
                     imageFile = new File(imagePathJpeg);
                 }
 
-                // Set the button's image if the file exists
+                // set button's image if the file exists
                 if (imageFile.exists()) {
                     ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
                     Image scaledImage = icon.getImage().getScaledInstance(120, 180, Image.SCALE_SMOOTH);
 
                     movieButton.setIcon(new ImageIcon(scaledImage));
 
-                    // Set hover effect
+                    // hover effect
                     movieButton.setRolloverEnabled(true);
                     Image hoverImage = icon.getImage().getScaledInstance(130, 190, Image.SCALE_SMOOTH);
                     movieButton.setRolloverIcon(new ImageIcon(hoverImage));
                 }
 
-                // Add action listener to the button
                 movieButton.addActionListener(e -> {
                     System.out.println("Selected Movie: " + movie.getTitle());
                     app.setSelectedMovie(movie);
                     app.switchToPage("TheatreSelection");
                 });
 
-                // Add the button (image) to the top of the panel
+                // add button (image) to the top of the panel
                 movieContentPanel.add(movieButton, BorderLayout.CENTER);
 
-                // Create a label for the movie title
+                // label for the movie title
                 JLabel titleLabel = new JLabel(movie.getTitle(), SwingConstants.CENTER);
                 titleLabel.setForeground(Color.WHITE); // Text color
                 titleLabel.setFont(new Font("Arial", Font.PLAIN, 12)); // Optional: Customize font
                 titleLabel.setPreferredSize(new Dimension(130, 30)); // Ensure consistent space for titles
 
-                // Add the title label below the button
+                // title label below the button
                 movieContentPanel.add(titleLabel, BorderLayout.SOUTH);
 
-                // Add the movie content panel to the movie grid
+                // add movie content panel to the movie grid
                 moviePanel.add(movieContentPanel);
             }
         }

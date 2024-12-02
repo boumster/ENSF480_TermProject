@@ -299,18 +299,18 @@ public class AdminPage extends JPanel {
             }
     
             // Clear the fields after sending the email
-            emailTextArea.setText(""); // Clear the text area
-            userIdField.setText(""); // Clear the User ID field
+            emailTextArea.setText(""); 
+            userIdField.setText(""); 
         });
     
-        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main")); // Go back to main page
+        backButton.addActionListener(e -> cardLayout.show(cardPanel, "Main")); 
     
         buttonPanel.add(sendButton);
         buttonPanel.add(backButton);
     
         // Add components to the main panel
         sendEmailPanel.add(inputPanel);
-        sendEmailPanel.add(Box.createVerticalStrut(20)); // Add space between input panel and buttons
+        sendEmailPanel.add(Box.createVerticalStrut(20)); 
         sendEmailPanel.add(buttonPanel);
     
         return sendEmailPanel;
